@@ -20,10 +20,10 @@ from interface import xbridge_client
         2) a small descriptive table with mean, standard deviation, and some quantiles (25%, 50%, 75%).
 """
 
-def test_createtx_garbage_load_v1():
+def test_createtx_garbage_load_v1(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for j in range(10000, 11000):
+    for j in range(10000, 10000+nb_of_runs):
         garbage_input_str1 = xbridge_utils.generate_garbage_input(j)
         garbage_input_str2 = xbridge_utils.generate_garbage_input(j)
         garbage_input_str3 = xbridge_utils.generate_garbage_input(j)
@@ -47,10 +47,10 @@ def test_createtx_garbage_load_v1():
 
 """
 
-def test_createtx_garbage_load_v2():
+def test_createtx_garbage_load_v2(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, 50000):
+    for i in range(1, nb_of_runs):
         garbage_input_str1 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
         garbage_input_str2 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
         garbage_input_str3 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
@@ -75,10 +75,10 @@ def test_createtx_garbage_load_v2():
 
 """
 
-def test_createtx_valid_load():
+def test_createtx_valid_load(number_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, 50000):
+    for i in range(1, number_of_runs):
         garbage_input_str1 = xbridge_utils.generate_garbage_input(64)
         garbage_input_str2 = xbridge_utils.generate_garbage_input(64)
         garbage_input_str3 = xbridge_utils.generate_garbage_input(64)
@@ -97,7 +97,7 @@ def test_createtx_valid_load():
 
 """                       ***  UNIT TESTS ***
 
-        - Here we test combinations of valid and invalid data, to make sure the APIs do not return weird data, or crashes.
+        - Here we test combinations of valid and invalid data.
         - Time is not a consideration here.
 
 """
@@ -124,15 +124,6 @@ class create_Tx_Test(unittest.TestCase):
        self.nb_with_leading_zeros_1 = xbridge_utils.generate_random_number_with_leading_zeros()
        self.nb_with_leading_zeros_2 = xbridge_utils.generate_random_number_with_leading_zeros()
 
-    def tearDown(self):
-        pass
-
-    def test_valid_create_tx(self):
-        # CHECK_CREATE_TX(self.random_src_Address, self.random_src_Token, self.random_positive_nb, self.random_dest_Address, self.random_dest_Token, self.random_positive_nb)
-        # self.assertRaises(subprocess.CalledProcessError, subprocess.check_output, 'dxCreateTransaction', "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", 1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", "SYS", 1)
-        # self.assertEqual(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", 1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", "SYS", 1), None)
-        self.assertEqual(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", 1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", "SYS", 1), dict)
-
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
         # negative_number + positive_number, all other parameters being valid
@@ -154,7 +145,6 @@ class create_Tx_Test(unittest.TestCase):
         self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2), dict)
         self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(" ", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2), dict)
 
-    # TODO: Add combinations
     def test_invalid_create_tx_v3(self):
         # Same source and destination Addresses, all other parameters being valid
         self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
@@ -216,3 +206,4 @@ def repeat_create_tx_unit_tests(nb_of_runs):
         wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
         if not wasSuccessful:
             sys.exit(1)
+
