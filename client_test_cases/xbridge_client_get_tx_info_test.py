@@ -12,9 +12,6 @@ from strgen import StringGenerator
 
     - Only dxGetTransactionInfo is tested here.
 
-    - The number of wanted runs has to be changed in the functions.
-
-    - Python 3.6 is used. Untested on Python 2.7.
 '''
 
 """
