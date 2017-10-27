@@ -4,7 +4,7 @@
 - Untested on Python 2.7
 
 # Required external libraries:
-- pandas 0.20
+- Pandas 0.20
 - StringGenerator 0.2.0
 
 
