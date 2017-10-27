@@ -20,9 +20,9 @@ def test_accept_garbage_load_v1(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
     for j in range(10000, 10000+nb_of_runs):
-        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(j, j))
-        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(j, j))
-        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(j, j))
+        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
+        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
+        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
         ts = time.time()
         xbridge_client.CHECK_ACCEPT_TX(tx_id_str, src_Address_str, dest_Address_str)
         te = time.time()
@@ -40,9 +40,9 @@ def test_accept_garbage_load_v2(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(1, 10000))
-        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(1, 10000))
-        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(xbridge_utils.generate_random_number(1, 10000))
+        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
+        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
+        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
         ts = time.time()
         xbridge_client.CHECK_ACCEPT_TX(tx_id_str, src_Address_str, dest_Address_str)
         te = time.time()
