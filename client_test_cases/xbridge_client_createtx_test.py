@@ -207,4 +207,4 @@ def repeat_create_tx_unit_tests(nb_of_runs):
         if not wasSuccessful:
             sys.exit(1)
 
-unittest.main()
+# unittest.main()

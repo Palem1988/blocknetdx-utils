@@ -8,27 +8,16 @@ from utils import xbridge_utils
 from strgen import StringGenerator
 
 
-'''                       ***  PRELIMINARY REMARKS ***
-
-    - Only dxCancelTransaction is tested here.
-'''
-
 """
     - Here, the length of the garbage data is very high and increased.
     The "j" parameter in the "generate_garbage_input" function is the length of the garbage input we want.
 
-    - Non-numerical parameters are only garbage data.
-
-    - export_data() function generates :
-        1) an Excel File with the recorded timing information.
-        2) a small descriptive table with mean, standard deviation, and some quantiles (25%, 50%, 75%).
-
 """
 
-def test_cancel_load_v1():
+def test_cancel_load_v1(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for j in range(10000, 11000):
+    for j in range(10000, 10000+nb_of_runs):
         garbage_input_str = xbridge_utils.generate_garbage_input(j)
         ts = time.time()
         assert type(xbridge_client.CHECK_CANCEL_TX(garbage_input_str)) == dict
@@ -42,10 +31,10 @@ def test_cancel_load_v1():
 """
     - Here, the length of garbage parameters is random.
 """
-def test_cancel_load_v2():
+def test_cancel_load_v2(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, 50000):
+    for i in range(1, nb_of_runs):
         garbage_input_str = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
         ts = time.time()
         assert type(xbridge_client.CHECK_CANCEL_TX(garbage_input_str)) == dict
@@ -59,10 +48,10 @@ def test_cancel_load_v2():
 """
     - Here, The length of the random parameter is kept fixed, we just increase the number of iterations ==> Pure load test, when resources are available.
 """
-def test_cancel_load_v3():
+def test_cancel_load_v3(nb_of_runs):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, 50000):
+    for i in range(1, nb_of_runs):
         garbage_input_str = xbridge_utils.generate_garbage_input(64)
         ts = time.time()
         assert type(xbridge_client.CHECK_CANCEL_TX(garbage_input_str)) == dict
@@ -82,30 +71,27 @@ def test_cancel_load_v3():
 
 """
 
-class CancelUnitTest(unittest.TestCase):
+class cancel_Tx_UnitTest(unittest.TestCase):
     """
             - Basic tests
     """
-    def invalid_cancel_test_1(self):
+    def test_invalid_cancel_1(self):
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(" "), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(""), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("[]"), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("{}"), dict)
+        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("[[]]"), dict)
+        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("{{}}"), dict)
+        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("{[]}"), dict)
+        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("[{[]}]"), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("''"), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("'"), dict)
-
-    def invalid_cancel_test_1(self):
-        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("d63f5ed682ad744b176af1d58e9602219a40ab9bf3b506baeca81b975d999b38"), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("d63f5ed682ad744b176af1d58e9602219a40ab9bf3b506baeca81b975d999b38-------------"), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX("d63f5ed682ad744b176af1d58e9602219a40ab9bf3b506baeca81b975-------------d999b38"), dict)
-
 
     """
           - We test various random inputs from individual character classes.
           - We then combine those character classes.
           - Size of the input parameter is fixed.
     """
-    def invalid_cancel_test_2(self):
+    def test_invalid_cancel_2(self):
         # We pick from a single class at a time
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\a]{64}').render()), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\p]{64}').render()), dict)
@@ -143,7 +129,7 @@ class CancelUnitTest(unittest.TestCase):
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
     """
-    def invalid_cancel_test_3(self):
+    def test_invalid_cancel_3(self):
        # We pick from a single class at a time
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\a]{9000:11000}').render()), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\p]{9000:11000}').render()), dict)
@@ -181,7 +167,7 @@ class CancelUnitTest(unittest.TestCase):
     """
           - Same as before, but now the random input parameters are of random length [1-11 000]
     """
-    def invalid_cancel_test_4(self):
+    def test_invalid_cancel_4(self):
         # We pick from a single class at a time
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\a]{1:11000}').render()), dict)
         self.assertIsInstance(xbridge_client.CHECK_CANCEL_TX(StringGenerator('[\p]{1:11000}').render()), dict)
@@ -221,3 +207,4 @@ def repeat_cancel_tx_unit_tests(nb_of_runs):
         wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
         if not wasSuccessful:
             sys.exit(1)
+
