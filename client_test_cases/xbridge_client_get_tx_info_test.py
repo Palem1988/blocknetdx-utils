@@ -8,12 +8,6 @@ from utils import xbridge_utils
 from strgen import StringGenerator
 
 
-'''                       ***  PRELIMINARY REMARKS ***
-
-    - Only dxGetTransactionInfo is tested here.
-
-'''
-
 """
     - Here, the length of the garbage data is very high and increased.
     The "j" parameter in the "generate_garbage_input" function is the length of the garbage input we want.
