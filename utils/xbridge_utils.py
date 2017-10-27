@@ -14,6 +14,7 @@ def export_data(filepath, list_to_export):
     my_df.to_excel(writer, 'RawData')
     stat_df.to_excel(writer, 'Summary')
     writer.save()
+    print("created: %s" % filepath_with_time)
 
 
 def generate_random_number(a, b):
@@ -56,6 +57,7 @@ def generate_input_from_random_classes_combinations(lower_bound, upper_bound):
     return StringGenerator(template_str).render()
 
     
+# Generate variable-size malformed data with whitespace + punctuation + digits
 def generate_garbage_input(nb_of_cars):
     nb_of_cars = int(nb_of_cars)
     # return StringGenerator('[\w\d\W]{8}').render()
