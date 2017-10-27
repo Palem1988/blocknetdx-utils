@@ -127,78 +127,78 @@ class create_Tx_Test(unittest.TestCase):
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
         # negative_number + positive_number, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2))
         # positive_number + negative_number, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
         # negative_number + negative_number, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
         # 0 + negative_number, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
         # positive_number + 0, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, 0), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, 0))
         # 0 + 0, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, 0), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, 0))
 
     # Combinations with empty addresses
     def test_invalid_create_tx_v2(self):
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(" ", self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, "SYS", self.valid_positive_nb_2), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(" ", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(" ", self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, "SYS", self.valid_positive_nb_2))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(" ", self.valid_src_Token, self.valid_positive_nb_1, " ", "SYS", self.valid_positive_nb_2))
 
     def test_invalid_create_tx_v3(self):
         # Same source and destination Addresses, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_dest_Token, self.valid_positive_nb_2))
         # Same source and destination Tokens, different addresses, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_src_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_src_Token, self.valid_positive_nb_2))
         # Same source and destination Addresses and Tokens, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_2))
 
     # Combinations of address parameters containing quotes
     def test_invalid_create_tx_v4(self):
         # Address 1 contains quotes, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", self.valid_dest_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", self.valid_dest_Token, self.valid_positive_nb_2))
         # Address 2 contains quotes, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2))
         # Both Addresses contain quotes, all other parameters being valid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2))
 
     # Combinations of quotes + out-of-bounds quantities
     def test_invalid_create_tx_v5(self):
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", "LTC", self.invalid_neg_nb, "'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", "LTC", self.invalid_neg_nb), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.random_positive_nb, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", self.invalid_neg_nb), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.invalid_neg_nb, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", self.random_positive_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", "LTC", self.invalid_neg_nb, "'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", "LTC", self.invalid_neg_nb))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", self.invalid_neg_nb))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.invalid_neg_nb, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", "LTC", self.valid_positive_nb_1))
 
     # Combinations of multiple invalid parameters leading up to ALL parameters being invalid
     def test_invalid_create_tx_v6(self):
         # Only source Address is valid, the rest is invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_Dest_Address, self.invalid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
         # Only source Address + source Token are valid, the rest is invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.invalid_Dest_Address, self.invalid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
         # Only source Address + source Token + source_Quantity are valid, the rest is invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.invalid_Dest_Address, self.invalid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
         # Only (source + dest) Addresses + source Token + source_Quantity are valid, the rest is invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_Dest_Address, self.invalid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
         # Only (source + dest) Addresses + (source + dest)  Tokens + source_Quantity are valid, the rest is invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_Dest_Address, self.valid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
         # All parameters are invalid
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.invalid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_Dest_Address, self.invalid_Dest_Token, self.invalid_neg_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.invalid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
 
     # Combinations of numerical parameters containining leading Zeros, all other parameters being valid
     def test_invalid_create_tx_v7(self):
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_1), dict)
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_2), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_1))
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_2))
 
     # Combinations of very small and very large numerical parameters, all other parameters being valid
     def test_invalid_create_tx_v8(self):
         # very small + very small
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb))
         # very small + very large
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb))
         # very large + very small
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb))
         # very large + very large
-        self.assertIsInstance(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb), dict)
+        self.assertIsNone(xbridge_client.CHECK_CREATE_TX(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb))
 
 
 def repeat_create_tx_unit_tests(nb_of_runs):
@@ -207,3 +207,4 @@ def repeat_create_tx_unit_tests(nb_of_runs):
         if not wasSuccessful:
             sys.exit(1)
 
+unittest.main()
