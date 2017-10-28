@@ -13,8 +13,7 @@ from interface import xbridge_client
 """
 
 # TODO: getservicenodelist
-# TODO : CHECK_CREATE_TX
-def test_random_sequence_long_inputs(nb_of_runs):    
+def test_random_sequence_long_inputs(nb_of_runs):
     no_param_func_list = [xbridge_client.TIMED_CHECK_GET_TX_LIST, xbridge_client.TIMED_CHECK_GET_TX_HISTORY_LIST, xbridge_client.TIMED_CHECK_GET_CURRENCY_LIST]
     # These functions always have bad input
     invalid_usr_func_list = [xbridge_client.TIMED_CHECK_CANCEL_TX_LIST, xbridge_client.TIMED_CHECK_GET_TX_INFO, xbridge_client.TIMED_CHECK_ACCEPT_TX]
@@ -71,7 +70,7 @@ def test_random_sequence_valid_invalid_inputs(nb_of_runs):
     invalid_usr_func_list = [xbridge_client.TIMED_CHECK_CANCEL_TX_LIST, xbridge_client.TIMED_CHECK_GET_TX_INFO, xbridge_client.TIMED_CHECK_ACCEPT_TX]
     raw_func_list = ["sendrawtransaction", "signrawtransaction", "getrawtransaction", "decoderawtransaction"]
     create_raw_tx_func_list = [xbridge_client.CREATE_RAW_TX]
-    create_tx_func_list = [xbridge_client.CREATE_TX]
+    create_tx_func_list = [xbridge_client.CHECK_CREATE_TX]
     func_list = [no_param_func_list, valid_usr_func_list, invalid_usr_func_list, raw_func_list, create_raw_tx_func_list, create_tx_func_list]
     time_distribution = []
     total_elapsed_seconds = 0
@@ -120,7 +119,7 @@ def test_random_sequence_valid_invalid_inputs(nb_of_runs):
             elapsed_Time = xbridge_client.TIMED_GENERIC_RAW_TX(picked_func, txid)
         print("run: %s - picked function : %s" % (str(j), picked_func))
         if elapsed_Time > 1.5:
-                print("outlier - %s: %s - data: %s" % (str(elapsed_Time), picked_func, j) )
+            print("outlier - %s: %s - data: %s" % (str(elapsed_Time), picked_func, j) )
         total_elapsed_seconds += elapsed_Time
         json_str = {"time": elapsed_Time, "API": str(picked_func)}
         time_distribution.append(json_str)
