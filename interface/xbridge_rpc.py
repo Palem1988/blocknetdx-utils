@@ -1,8 +1,8 @@
-# pip install python-bitcoinrpc
+
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+
 port = '8888'
 rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:41414"%('Testuser', 'MySuperPassword'))
-
 
 def get_blockcount():
     blockcount = rpc_connection.getblockcount()
@@ -27,11 +27,22 @@ def decode_raw_tx(txid):
 def cancel_tx(txid):
     return rpc_connection.dxCancelTransaction(txid)
 
+def get_tx_info(txid):
+    return rpc_connection.dxGetTransactionInfo(txid)
+
+def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
+    return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+
 def accept_tx(txid, src, dest):
     return rpc_connection.dxAcceptTransaction(txid, src, dest)
 
 def get_currency_list():
     return rpc_connection.dxGetCurrencyList()
 
-# dxCreateTransaction (address from) (currency from) (amount from) (address to) (currency to) (amount to)
+def get_transaction_list():
+    return rpc_connection.dxGetTransactionList()
+
+def get_transaction_history_list():
+    return rpc_connection.dxGetTransactionsHistoryList()
+
 
