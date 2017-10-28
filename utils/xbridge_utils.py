@@ -4,6 +4,10 @@ from strgen import StringGenerator
 import pandas as pd
 from pandas import ExcelWriter
 
+VALID_DATA = 1
+INVALID_DATA = 2
+RANDOM_VALID_INVALID = 3
+
 # Set for create_tx
 c_src_Address = ""
 c_dest_Address = ""
@@ -19,8 +23,11 @@ a_dest_Address = ""
 ca_random_tx_id = ""
 
 
-def generate_new_set_of_data(invalid):
-    if invalid:
+def generate_new_set_of_data(data_nature):
+    if data_nature == RANDOM_VALID_INVALID:
+        selected_data = random.choice([VALID_DATA, INVALID_DATA])
+        generate_new_set_of_data(selected_data)
+    if data_nature == INVALID_DATA:
         # Set for create_tx
         c_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
         c_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
@@ -36,7 +43,7 @@ def generate_new_set_of_data(invalid):
         a_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
-    else:
+    if data_nature == VALID_DATA:
         # Set for create_tx
         c_src_Address = generate_random_valid_address()
         c_dest_Address = generate_random_valid_address()
