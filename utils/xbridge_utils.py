@@ -5,6 +5,37 @@ import pandas as pd
 from pandas import ExcelWriter
 
 
+
+c_src_Address = ""
+c_dest_Address = ""
+c_src_Token = ""
+c_dest_Token = ""
+source_nb = ""
+dest_nb = ""
+a_random_tx_id = ""
+a_src_Address = ""
+a_dest_Address = ""
+ca_random_tx_id = ""
+
+
+def generate_new_set_of_data():
+    # Set for create_tx
+    c_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    c_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    c_src_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    c_dest_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    source_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
+                                                     999999999999999999999999999999999999999999999999999999999999999)
+    dest_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
+                                                   999999999999999999999999999999999999999999999999999999999999999)
+    # set for accept_tx
+    a_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    a_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    a_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+    ca_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+
+
+
 def export_data(filepath, list_to_export):
     timestr = time.strftime("%Y%m%d-%H%M%S")
     filepath_with_time = timestr + "_" + filepath
