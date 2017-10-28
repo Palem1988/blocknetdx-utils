@@ -84,7 +84,13 @@ def test_get_tx_info_load_v3(nb_of_runs):
 class get_Tx_Info_UnitTest(unittest.TestCase):
     def setUp(self):
         self.random_length_str_with_random_char_class = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
-    
+
+    """
+                - Specific tests with txid = 240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc
+    """
+    def test_specific_tx_id(self):
+        self.assertIsInstance(xbridge_rpc.get_tx_info("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), list)
+
     """
             - Basic tests
     """
