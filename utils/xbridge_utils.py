@@ -4,8 +4,6 @@ from strgen import StringGenerator
 import pandas as pd
 from pandas import ExcelWriter
 
-
-
 c_src_Address = ""
 c_dest_Address = ""
 c_src_Token = ""
@@ -18,22 +16,23 @@ a_dest_Address = ""
 ca_random_tx_id = ""
 
 
-def generate_new_set_of_data():
-    # Set for create_tx
-    c_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    c_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    c_src_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    c_dest_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    source_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
-                                                     999999999999999999999999999999999999999999999999999999999999999)
-    dest_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
-                                                   999999999999999999999999999999999999999999999999999999999999999)
-    # set for accept_tx
-    a_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    a_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    a_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-    ca_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-
+def generate_new_set_of_data(invalid):
+    if invalid:
+        # Set for create_tx
+        c_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+        c_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+        c_src_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+        c_dest_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+        source_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
+                                                         999999999999999999999999999999999999999999999999999999999999999)
+        dest_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
+                                                       999999999999999999999999999999999999999999999999999999999999999)
+        # set for accept_tx
+        a_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
+        a_src_Address = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
+        a_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
+        # set for any function that takes a txid as parameter
+        ca_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
 
 
 def export_data(filepath, list_to_export):
