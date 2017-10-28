@@ -5,7 +5,7 @@ BlocknetDX Utils
 So the longer the tests are run, the better.
 
 - It is therefore **strongly** advised to run these tests for days on a continuous basis
-to let the program generate very high number of combinations that may arise.
+to let the program generate very high number of combinations of scenarios that may arise.
 
 - It would also be advisable to run them on a periodic basis. Because the newly run tests will *always* be different from the previous ones (due to the randomness nature).
 
