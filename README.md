@@ -7,5 +7,11 @@ So the longer the tests are run, the better.
 - It is therefore **strongly** advised to run these tests for days on a continuous basis
 to let the program generate very high number of combinations that may arise.
 
-- It would also be advisable to run them on a periodic basis. Because the newly run tests will always be different from the previous ones (to the randomness nature).
+- It would also be advisable to run them on a periodic basis. Because the newly run tests will *always* be different from the previous ones (to the randomness nature).
+
+- Randomness is used for the following variables:
+  - call order in the sequence
+  - size of parameters sent to the API.
+  - content type
+
 
