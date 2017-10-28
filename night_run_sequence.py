@@ -4,6 +4,7 @@ from test_cases import xbridge_client_get_tx_info_test
 from test_cases import xbridge_client_accept_tx_test
 from test_cases import xbridge_client_canceltx_test
 from test_cases import xbridge_client_createtx_test
+from test_cases import xbridge_client_sequence_test
 
 
 """             INSTRUCTIONS
@@ -52,13 +53,17 @@ xbridge_client_accept_tx_test.test_accept_valid_load(5)
 xbridge_client_accept_tx_test.repeat_accept_tx_unit_tests(5)
 """
 
-"""
+""" RUNS FINE
 xbridge_client_canceltx_test.test_cancel_load_v1(5)
 xbridge_client_canceltx_test.test_cancel_load_v2(5)
 xbridge_client_canceltx_test.test_cancel_load_v3(5)
-"""
 # Unit tests
 from test_cases.xbridge_client_canceltx_test import *
 # unittest.main()
 xbridge_client_canceltx_test.repeat_cancel_tx_unit_tests(3)
+"""
+
+""" RUNS FINE
+"""
+xbridge_client_sequence_test.test_random_sequence_valid_invalid_inputs(10)
 
