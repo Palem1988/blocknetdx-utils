@@ -12,6 +12,9 @@ def get_budget():
     snode_budget = rpc_connection.mnbudget('show')
     return snode_budget
 
+def get_node_list():
+    return rpc_connection.servicenodelist()
+
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
     
@@ -45,4 +48,11 @@ def get_transaction_list():
 def get_transaction_history_list():
     return rpc_connection.dxGetTransactionsHistoryList()
 
+"""
+rst = get_tx_info("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc")
+print(rst)
+print(len(rst))
 
+rst = cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc")
+print(rst)
+"""
