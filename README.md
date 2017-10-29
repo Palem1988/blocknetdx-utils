@@ -1,7 +1,7 @@
 # bdex-utils
 BlocknetDX Utils
 
-- Optional parameters with default values are being added for some functions to make the use easy, and place boundaries on the randomness to test for specific scenarios.
+- Optional parameters with default values are being added for some functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
 
 For example, the following calls do the same thing: 
 ```python
@@ -11,7 +11,7 @@ test_random_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min
 ```
 
 To generate only valid data, set **data_nature=VALID_DATA**. 
-To generate only garbage data, set **data_nature=VALID_DATA**.
+To generate only garbage data, set **data_nature=INVALID_DATA**.
 
 If **data_nature=VALID_DATA**, char_min_size and char_min_size define how long the string will be supplied by the random generator.
 
