@@ -57,9 +57,10 @@ So the longer the tests are run, the better.
 # In Progress
 
 - Better code modularity.
-- Code refactorings, cleaning and improvements.
+- Code refactorings, cleaning and improvements for unit tests.
 - Logging parameters when an assertion error occurs.
 - Central easy-to-use test launchers.
+- Completing defined sequence tests.
 
 # TODO
 
