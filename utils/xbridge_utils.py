@@ -8,6 +8,13 @@ VALID_DATA = 1
 INVALID_DATA = 2
 RANDOM_VALID_INVALID = 3
 
+one_classes_list = ["[\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
+two_classes_list = ["[\p\d]", "[\p\a]", "[\p\h]", "[\s\d]", "[\s\a]", "[\s\h]", "[\s\p]", "[\W\d]", "[\W\a]", "[\W\h]",
+                    "[\W\p]"]
+three_classes_list = ['[\a\d\W]', '[\a\d\h]', '[\a\d\s]', '[\a\d\p]', '[\a\d\W]']
+four_classes_list = ['[\p\d\w\s]', '[\p\d\a\h]', '[\p\d\a\s]']
+five_classes_list = ['[\p\d\W\w\h\a]']
+
 # Set for create_tx
 c_src_Address = ""
 c_dest_Address = ""
