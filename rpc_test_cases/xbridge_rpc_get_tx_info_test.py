@@ -1,6 +1,8 @@
 import unittest
 import time
 import sys
+import glob
+import logging
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
@@ -14,6 +16,7 @@ from strgen import StringGenerator
 def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
+    logging.info("test_started")
     for i in range(1, nb_of_runs):
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
@@ -23,6 +26,7 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils
         json_str = {"time": te - ts, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxGetTxInfo"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("dxGetTransactionInfo_RPC_sequence.xlsx", time_distribution)
+    logging.info("test_finished")
 
 
 """                       ***  UNIT TESTS ***
@@ -31,6 +35,8 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils
     - Speed performance is not a consideration in unit tests. Use sequence functions for that.
 
 """
+
+nb_of_runs = glob.UNIT_TEST_RUN_NB
 
 class get_Tx_Info_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -72,7 +78,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     def test_invalid_get_tx_info_test_3(self):
         try:
             string_length=64
-            nb_of_runs = 3
+            global nb_of_runs
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
@@ -90,7 +96,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         try:
             string_lower_bound=9000
             string_upper_bound=11000
-            nb_of_runs = 3
+            global nb_of_runs
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
@@ -108,7 +114,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         try:
             string_lower_bound=1
             string_upper_bound=4000
-            nb_of_runs = 3
+            global nb_of_runs
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
@@ -128,3 +134,5 @@ def repeat_tx_info_unit_tests(nb_of_runs):
 
 unittest.main()
 """
+
+dxGetTransactionInfo_RPC_sequence(3)

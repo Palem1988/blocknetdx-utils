@@ -6,6 +6,7 @@ from interface import xbridge_rpc
 from utils import xbridge_utils
 
 from strgen import StringGenerator
+import glob
 
 
 """
@@ -35,6 +36,8 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALI
 
 """
 
+nb_of_runs = glob.UNIT_TEST_RUN_NB
+
 class cancel_Tx_UnitTest(unittest.TestCase):
     """
             - Basic tests
@@ -61,8 +64,8 @@ class cancel_Tx_UnitTest(unittest.TestCase):
     """
     def test_invalid_cancel_2(self):
         try:
+            global nb_of_runs
             string_length=64
-            nb_of_runs = 3
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
@@ -78,9 +81,9 @@ class cancel_Tx_UnitTest(unittest.TestCase):
     """
     def test_invalid_cancel_3(self):
         try:
+            global nb_of_runs
             string_lower_bound=9000
             string_upper_bound=11000
-            nb_of_runs = 3
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
@@ -96,9 +99,9 @@ class cancel_Tx_UnitTest(unittest.TestCase):
     """
     def test_invalid_cancel_4(self):
         try:
+            global nb_of_runs
             string_lower_bound=1
             string_upper_bound=4000
-            nb_of_runs = 3
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
