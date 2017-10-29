@@ -77,7 +77,7 @@ So the longer the tests are run, the better.
 - Random multi API sequences.
 - Ordered multi API sequences.
 
-# Difference between Single API sequences and unit tests.
+# Difference between Single API Sequences and Unit Tests.
 
 It's easy to think they are similar, but they do not work the same way.
 - Single API sequence tests use input parameters that are generated from random character classes.
@@ -91,5 +91,5 @@ Both type of tests are therefore complementary and not really overlapping. They 
 
 # Program outputs
 
-- Unit tests log data when there is an assertion error.
+- Unit tests will log data and tell if each test was successful (and the number of runs) and an assertion error was thrown (with the input parameter that was used to make the call).
 - Sequence tests generate an Excel file with the timing distribution.
