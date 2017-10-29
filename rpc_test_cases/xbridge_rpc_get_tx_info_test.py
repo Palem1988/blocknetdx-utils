@@ -8,68 +8,21 @@ from utils import xbridge_utils
 from strgen import StringGenerator
 
 
-'''                       ***  PRELIMINARY REMARKS ***
-
-    - Only dxGetTransactionInfo is tested here.
-
-'''
-
 """
-    - Here, the length of the garbage data is very high and increased.
-    The "j" parameter in the "generate_garbage_input" function is the length of the garbage input we want.
-
-    - export_data() function generates :
-        1) an Excel File with the recorded timing information.
-        2) a small descriptive table with mean, standard deviation, and some quantiles (25%, 50%, 75%).
-
+    - Combine optional parameters in a way that generate the test cases you want.
 """
-def test_get_tx_info_load_v1(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    end_run = 10000+nb_of_runs
-    for j in range(10000, end_run):
-        garbage_input_str = xbridge_utils.generate_garbage_input(j)
-        ts = time.time()
-        assert type(xbridge_rpc.get_tx_info(garbage_input_str)) == list
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxGetTxInfo"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_rpc_get_tx_info_load_v1.xlsx", time_distribution)
-
-
-"""
-    - Here, the length of garbage parameters is random.
-"""
-def test_get_tx_info_load_v2(nb_of_runs):
+def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        garbage_input_str = xbridge_utils.generate_garbage_input(int(xbridge_utils.generate_random_number(1, 10000)))
+        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
-        assert type(xbridge_rpc.get_tx_info(garbage_input_str)) == list
+        assert type(xbridge_rpc.get_tx_info(xbridge_utils.ca_random_tx_id)) == list
         te = time.time()
         total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxGetTxInfo"}
+        json_str = {"time": te - ts, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxGetTxInfo"}
         time_distribution.append(json_str)
-    xbridge_utils.export_data("test_rpc_get_tx_info_load_v2.xlsx", time_distribution)
-
-
-"""
-    - Here, The length of the random parameter is kept fixed, we just increase the number of iterations ==> Pure load test, when resources are available.
-"""
-def test_get_tx_info_load_v3(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
-        garbage_input_str = xbridge_utils.generate_garbage_input(64)
-        ts = time.time()
-        assert type(xbridge_rpc.get_tx_info(garbage_input_str)) == list
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxGetTxInfo"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_rpc_get_tx_info_load_v3.xlsx", time_distribution)
+    xbridge_utils.export_data("dxGetTransactionInfo_RPC_sequence.xlsx", time_distribution)
 
 
 """                       ***  UNIT TESTS ***
