@@ -32,9 +32,9 @@ dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=
 dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
 dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
 
-dxCreate_RPC_sequence(nb_of_runs=x, char_max_size=y)
+dxCreate_RPC_sequence(nb_of_runs=x, char_min_size=y)
 
-dxAccept_RPC_sequence(nb_of_runs=x, char_max_size=y)
+dxAccept_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_max_size=y)
 ```
 
 # Testing model
