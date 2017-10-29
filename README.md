@@ -67,10 +67,6 @@ So the longer the tests are run, the better.
   - call order in the sequence.
   - size of parameters sent to the API.
   - content type.
-  Example of random strings generated:
-*** 4i7E1dX^l_4HlEDYGjYaxLv3 ^H!cZ52i~i8y}B/f[3?\O\_(e1290e7%0+-!8_
-|87'd7?3C^*649A4!9/{?!c#&a=(B/0"f8<4ff505/,^)8[*,"cD>a36+d_&+'!7
-._}a{&_}$^1@{"#+\(	0?27_~#.0)%37[ 	 ['^a$,00*3 ***
   - valid / invalid nature of parameter.
   
 # Testing groups
