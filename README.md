@@ -5,9 +5,9 @@ BlocknetDX Utils
 
 For example, the following calls do the same thing: 
 ```python
-test_random_sequence()
-test_random_sequence(nb_of_runs=1000)
-test_random_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
+test_random_RPC_calls_sequence_()
+test_random_RPC_calls_sequence_(nb_of_runs=1000)
+test_random_RPC_calls_sequence_(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
 ```
 
 To generate only valid data, set **data_nature=VALID_DATA**. 
@@ -17,9 +17,9 @@ If **data_nature=INVALID_DATA**, char_min_size and char_min_size define how long
 
 The following combinations may be used during the testing phase:
 ```python
-test_random_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
-test_random_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
-test_random_sequence(nb_of_runs=50000, char_max_size=1000)
+test_random_RPC_calls_sequence_(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
+test_random_RPC_calls_sequence_(nb_of_runs=50000, data_nature=VALID_DATA)
+test_random_RPC_calls_sequence_(nb_of_runs=50000, char_max_size=1000)
 ```
 
 - The code uses randomness to generate various groups of data and scenarios and mix them together (valid, invalid, out-of-bounds data).
