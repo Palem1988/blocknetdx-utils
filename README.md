@@ -1,7 +1,7 @@
 # bdex-utils
 BlocknetDX Utils
 
-# Usage Examples
+# Sequence Tests Usage Examples
 
 - Optional parameters with default values are being added for some functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
 
@@ -38,6 +38,11 @@ dxAccept_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_max_size=y)
 dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_max_size=y)
 
 ```
+
+
+# Unit Tests Usage Examples
+
+- TODO
 
 # In Progress
 
@@ -93,3 +98,9 @@ Both type of tests are therefore complementary and not really overlapping. They 
 
 - Unit tests will log data and tell if each test was successful (and the number of runs) and an assertion error was thrown (with the input parameter that was used to make the call).
 - Sequence tests generate an Excel file with the timing distribution.
+
+# Global Parameters to set before running the tests
+
+- TODO
+
+
