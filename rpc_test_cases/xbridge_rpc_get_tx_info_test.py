@@ -16,7 +16,6 @@ from strgen import StringGenerator
 def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
-    logging.info("test_started")
     for i in range(1, nb_of_runs):
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
@@ -26,7 +25,6 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils
         json_str = {"time": te - ts, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxGetTxInfo"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("dxGetTransactionInfo_RPC_sequence.xlsx", time_distribution)
-    logging.info("test_finished")
 
 
 """                       ***  UNIT TESTS ***
@@ -52,23 +50,37 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             - Basic tests
     """
     def test_invalid_get_tx_info_1(self):
-        self.assertIsInstance(xbridge_rpc.get_tx_info(" "), list)
-        self.assertIsInstance(xbridge_rpc.get_tx_info(""), list)
-        self.assertIsInstance(xbridge_rpc.get_tx_info("[]"), list)
-        self.assertIsInstance(xbridge_rpc.get_tx_info("{}"), list)
-        self.assertIsInstance(xbridge_rpc.get_tx_info("''"), list)
-        self.assertIsInstance(xbridge_rpc.get_tx_info("'"), list)
-        self.assertIsInstance(xbridge_rpc.cancel_tx("["), list)
-        self.assertIsInstance(xbridge_rpc.cancel_tx("{"), list)
-        self.assertIsInstance(xbridge_rpc.cancel_tx("]"), list)
-        self.assertIsInstance(xbridge_rpc.cancel_tx("}"), list)
-    
+        try:
+            self.assertIsInstance(xbridge_rpc.get_tx_info(" "), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info(""), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("[]"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("{}"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("''"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("'"), list)
+            self.assertIsInstance(xbridge_rpc.cancel_tx("["), list)
+            self.assertIsInstance(xbridge_rpc.cancel_tx("{"), list)
+            self.assertIsInstance(xbridge_rpc.cancel_tx("]"), list)
+            self.assertIsInstance(xbridge_rpc.cancel_tx("}"), list)
+            xbridge_utils.logger.info('dxGetTxInfo unit test 1 tests OK')
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
+        except AssertionError as e:
+            xbridge_utils.logger.info('dxGetTxInfo unit test 1 failed')
+
     """
           - Character classes are chosen randomly
           - Size of the input parameter is chosen randomly too.
     """
     def test_invalid_get_tx_info_2(self):
-        self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
+        try:
+            run_count = 0
+            global nb_of_runs
+            for i in range(1, 1 + nb_of_runs):
+                self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
+                run_count += 1
+            xbridge_utils.logger.info('dxGetTxInfo unit test 2 tests OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
+        except AssertionError as e:
+            xbridge_utils.logger.info('dxGetTxInfo unit test 2 failed on parameter: %s', self.random_length_str_with_random_char_class)
                 
     """
           - We test various random inputs from individual character classes.
@@ -77,6 +89,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     """
     def test_invalid_get_tx_info_test_3(self):
         try:
+            run_count = 0
             string_length=64
             global nb_of_runs
             for i in range(1, 1+nb_of_runs):
@@ -84,16 +97,19 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     for sub_item in itm:
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
-                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
+                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
+                        run_count += 1
+            xbridge_utils.logger.info('dxGetTxInfo unit test 3 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            print("dxGetTxInfo failed on set: %s" % generated_str)
-
+            xbridge_utils.logger.info('dxGetTxInfo unit test 3 failed on parameter: %s', generated_str)
 
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
     """
     def test_invalid_get_tx_info_test_4(self):
         try:
+            run_count = 0
             string_lower_bound=9000
             string_upper_bound=11000
             global nb_of_runs
@@ -103,8 +119,11 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
+                        run_count += 1
+            xbridge_utils.logger.info('dxGetTxInfo unit test 4 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            print("dxGetTxInfo RPC unit test failed on set: %s" % generated_str)
+            xbridge_utils.logger.info('dxGetTxInfo unit test 4 failed on parameter: %s', generated_str)
 
 
     """
@@ -132,7 +151,7 @@ def repeat_tx_info_unit_tests(nb_of_runs):
         if not wasSuccessful:
             sys.exit(1)
 
-unittest.main()
 """
+unittest.main()
 
-dxGetTransactionInfo_RPC_sequence(3)
+# dxGetTransactionInfo_RPC_sequence(3)
