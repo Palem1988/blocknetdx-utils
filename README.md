@@ -54,9 +54,14 @@ So the longer the tests are run, the better.
   - content type.
   - valid / invalid nature of parameter.
 
+# In Progress
 
+- Better code modularity.
+- Code refactorings, cleaning and improvements.
+- Logging parameters when an assertion occurs.
+- Central easy-to-use test launchers.
 
 # TODO
 
 - Add test case where Token and Address are not consistent.
-
+- Running tests and analyzing results.
