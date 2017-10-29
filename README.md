@@ -7,9 +7,9 @@ BlocknetDX Utils
 
 For example, the following calls do the same thing: 
 ```python
-random_RPC_calls_sequence()
-random_RPC_calls_sequence(nb_of_runs=1000)
-random_RPC_calls_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
+random_RPC_sequence()
+random_RPC_sequence(nb_of_runs=1000)
+random_RPC_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
 ```
 
 To generate only valid data, set **data_nature=VALID_DATA**. 
@@ -19,14 +19,14 @@ If **data_nature=INVALID_DATA**, char_min_size and char_min_size define how long
 
 The following combinations may be used during the testing phase, because they generate very different test cases:
 ```python
-random_RPC_calls_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
-random_RPC_calls_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
-random_RPC_calls_sequence(nb_of_runs=50000, char_max_size=1000)
+random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
+random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
+random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
 ```
 
 Same principles apply to:
 ```python
-defined_order_RPC_calls_sequence()
+defined_order_RPC_sequence()
 dxCancel_RPC_sequence()
 ```
 
