@@ -68,6 +68,7 @@ So the longer the tests are run, the better.
   - size of parameters sent to the API.
   - content type.
   - valid / invalid nature of parameter.
+ 
   
 # Testing groups
 
@@ -75,3 +76,9 @@ So the longer the tests are run, the better.
 - Single API sequences.
 - Random multi API sequences.
 - Ordered multi API sequences.
+
+
+# Program outputs
+
+- Unit tests log data when there is an assertion error.
+- Sequence tests generate an Excel file with the timing distribution.
