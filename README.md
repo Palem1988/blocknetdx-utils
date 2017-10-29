@@ -12,10 +12,10 @@ random_RPC_sequence(nb_of_runs=1000)
 random_RPC_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
 ```
 
-To generate only valid data, set **data_nature=VALID_DATA**. 
-To generate only garbage data, set **data_nature=INVALID_DATA**.
+- To generate only valid data, set **data_nature=VALID_DATA**. 
+- To generate only garbage data, set **data_nature=INVALID_DATA**.
 
-If **data_nature=INVALID_DATA**, char_min_size and char_min_size define how long the string will be supplied by the random generator.
+If **data_nature=INVALID_DATA**, *char_min_size* and *char_min_size* define how long the string will be supplied by the random generator.
 
 The following combinations may be used during the testing phase, because they generate very different test cases:
 ```python
