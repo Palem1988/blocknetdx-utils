@@ -9,57 +9,21 @@ from strgen import StringGenerator
 
 
 """
-    - Here, the length of the garbage data is very high and increased.
-    The "j" parameter in the "generate_garbage_input" function is the length of the garbage input we want.
-
+    - Combine optional parameters in a way that generate the test cases you want.
 """
-
-def test_cancel_load_v1(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for j in range(10000, 10000+nb_of_runs):
-        garbage_input_str = xbridge_utils.generate_garbage_input(j)
-        ts = time.time()
-        assert type(xbridge_rpc.cancel_tx(garbage_input_str)) == dict
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxCancel"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_rpc_cancel_load_v1.xlsx", time_distribution)
-
-
-"""
-    - Here, the length of garbage parameters is random.
-"""
-def test_cancel_load_v2(nb_of_runs):
+def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        garbage_input_str = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
+        input_str = xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
-        assert type(xbridge_rpc.cancel_tx(garbage_input_str)) == dict
+        assert type(xbridge_rpc.cancel_tx(input_str)) == dict
         te = time.time()
         total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxCancel"}
+        json_str = {"time": te - ts, "char_nb": len(input_str), "API": "dxCancel"}
         time_distribution.append(json_str)
-    xbridge_utils.export_data("test_cancel_load_v2.xlsx", time_distribution)
+    xbridge_utils.export_data("dxCancel_RPC_sequence.xlsx", time_distribution)
 
-
-"""
-    - Here, The length of the random parameter is kept fixed, we just increase the number of iterations ==> Pure load test, when resources are available.
-"""
-def test_cancel_load_v3(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
-        garbage_input_str = xbridge_utils.generate_garbage_input(64)
-        ts = time.time()
-        assert type(xbridge_rpc.cancel_tx(garbage_input_str)) == dict
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(garbage_input_str), "API": "dxCancel"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_cancel_load_v3.xlsx", time_distribution)
 
 
 """                       ***  UNIT TESTS ***
@@ -83,6 +47,10 @@ class cancel_Tx_UnitTest(unittest.TestCase):
         self.assertIsInstance(xbridge_rpc.cancel_tx("{{}}"), dict)
         self.assertIsInstance(xbridge_rpc.cancel_tx("{[]}"), dict)
         self.assertIsInstance(xbridge_rpc.cancel_tx("[{[]}]"), dict)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("["), dict)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("{"), dict)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("]"), dict)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("}"), dict)
         self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
         self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
 
@@ -202,7 +170,7 @@ class cancel_Tx_UnitTest(unittest.TestCase):
         self.assertIsInstance(xbridge_rpc.cancel_tx(StringGenerator('[\p\d\W\w\h\a]{1:11000}').render()), dict)
 
 
-def repeat_cancel_tx_unit_tests(runs):
+def repeat_cancel_tx_unit_tests(runs=1000):
     for j in (1, runs):
         wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
         if not wasSuccessful:
