@@ -11,7 +11,7 @@ from interface import xbridge_rpc
     - Combine optional parameters in a way that generate the test cases you want.
 """
 
-def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=1200):
+def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):

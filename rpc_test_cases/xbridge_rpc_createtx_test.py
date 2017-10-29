@@ -6,100 +6,27 @@ from utils import xbridge_utils
 from interface import xbridge_rpc
 
 
-"""                       ***  COMMENT ***
-
-    - Here, the length of the garbage data is very high and increased.
-    The "j" parameter in the "generate_garbage_input" function is the length of the garbage input we want.
-
-    - Non-numerical parameters are only garbage data.
-
-    - Numerical parameters are both valid and out-of-bounds numbers.
-
-    - export_data() function generates :
-        1) an Excel File with the recorded timing information.
-        2) a small descriptive table with mean, standard deviation, and some quantiles (25%, 50%, 75%).
+"""
+    - Combine optional parameters in a way that generate the test cases you want.
 """
 
-def test_createtx_garbage_load_v1(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for j in range(10000, 10000+nb_of_runs):
-        garbage_input_str1 = xbridge_utils.generate_garbage_input(j)
-        garbage_input_str2 = xbridge_utils.generate_garbage_input(j)
-        garbage_input_str3 = xbridge_utils.generate_garbage_input(j)
-        garbage_input_str4 = xbridge_utils.generate_garbage_input(j)
-        source_nb = xbridge_utils.generate_random_number(-99999999999999999999999999999999999999999999999, 99999999999999999999999999999999999999999999999)
-        dest_nb = xbridge_utils.generate_random_number(-99999999999999999999999999999999999999999999999, 99999999999999999999999999999999999999999999999)
-        ts = time.time()
-        xbridge_rpc.create_tx(garbage_input_str1, garbage_input_str2, source_nb, garbage_input_str3, garbage_input_str4,
-                            dest_nb)
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "API": "dxCreateTransaction"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_createtx_garbage_load_v1.xlsx", time_distribution)
-
-
-"""                       ***  COMMENT ***
-
-    1. Here, the length of garbage parameters is random.
-    2. Numerical parameters are both valid and out-of-bounds numbers.
-
-"""
-
-def test_createtx_garbage_load_v2(nb_of_runs):
+def dxCreate_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        garbage_input_str1 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
-        garbage_input_str2 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
-        garbage_input_str3 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
-        garbage_input_str4 = xbridge_utils.generate_garbage_input(xbridge_utils.generate_random_number(1, 10000))
-        source_nb = xbridge_utils.generate_random_number(-99999999999999999999999999999999999999999999999, 99999999999999999999999999999999999999999999999)
-        dest_nb = xbridge_utils.generate_random_number(-99999999999999999999999999999999999999999999999, 99999999999999999999999999999999999999999999999)
+        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
-        xbridge_rpc.create_tx(garbage_input_str1, garbage_input_str2, source_nb, garbage_input_str3, garbage_input_str4,
-                            dest_nb)
+        xbridge_rpc.create_tx(xbridge_utils.c_src_Address, xbridge_utils.c_src_Token, xbridge_utils.source_nb, xbridge_utils.c_dest_Address, xbridge_utils.c_dest_Token,
+                              xbridge_utils.dest_nb)
         te = time.time()
         total_elapsed_seconds += te - ts
         json_str = {"time": te - ts, "API": "dxCreateTransaction"}
         time_distribution.append(json_str)
-    xbridge_utils.export_data("test_createtx_garbage_load_v2.xlsx", time_distribution)
-
-
-"""                       ***  COMMENT ***
-
-    1. Here, The length of parameters is kept fixed, we just increase the number of iterations ==> Pure load test, when resources are available.
-    2. Numerical parameters are both valid and out-of-bounds numbers.
-    3. Address and tokens parameters are garbage data.
-
-"""
-
-def test_createtx_valid_load(number_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for i in range(1, number_of_runs):
-        garbage_input_str1 = xbridge_utils.generate_garbage_input(64)
-        garbage_input_str2 = xbridge_utils.generate_garbage_input(64)
-        garbage_input_str3 = xbridge_utils.generate_garbage_input(64)
-        garbage_input_str4 = xbridge_utils.generate_garbage_input(64)
-        source_nb = xbridge_utils.generate_random_number(0.1, 1000)
-        dest_nb = xbridge_utils.generate_random_number(0.1, 1000)
-        ts = time.time()
-        xbridge_rpc.create_tx(garbage_input_str1, garbage_input_str2, source_nb, garbage_input_str3, garbage_input_str4,
-                            dest_nb)
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": 64, "API": "dxCreateTransaction"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_createtx_valid_load.xlsx", time_distribution)
+    xbridge_utils.export_data("dxCreate_RPC_sequence.xlsx", time_distribution)
 
 
 """                       ***  UNIT TESTS ***
-
-        - Here we test combinations of valid and invalid data.
         - Time is not a consideration here.
-
 """
 
 class create_Tx_Test(unittest.TestCase):
