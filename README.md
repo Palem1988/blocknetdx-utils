@@ -39,6 +39,21 @@ dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_m
 
 ```
 
+# In Progress
+
+- Better code modularity.
+- Code refactorings, cleaning and improvements for unit tests.
+- Logging parameters when an assertion error occurs.
+- Central easy-to-use test launchers.
+- Completing defined sequence tests.
+
+# TODO
+
+- Add test case where Token and Address are not consistent.
+- Running tests and analyzing results.
+- Comment improvements.
+
+
 # Testing model
 
 - The code uses randomness to generate various groups of data and scenarios and mix them together (valid, invalid, out-of-bounds data).
@@ -53,17 +68,10 @@ So the longer the tests are run, the better.
   - size of parameters sent to the API.
   - content type.
   - valid / invalid nature of parameter.
+  
+# Testing groups
 
-# In Progress
-
-- Better code modularity.
-- Code refactorings, cleaning and improvements for unit tests.
-- Logging parameters when an assertion error occurs.
-- Central easy-to-use test launchers.
-- Completing defined sequence tests.
-
-# TODO
-
-- Add test case where Token and Address are not consistent.
-- Running tests and analyzing results.
-- Comment improvements.
+- Unit tests for each API.
+- Single API sequences.
+- Random multi API sequences.
+- Ordered multi API sequences.
