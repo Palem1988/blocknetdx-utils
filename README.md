@@ -21,9 +21,10 @@ The following combinations may be used during the testing phase, because they ge
 ```python
 random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
 random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
+# This will generate both valid and invalid data, because the parameter is not specified.
 random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
 
-defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
+defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=5000, char_max_size=12000)
 defined_order_RPC_sequence(nb_of_runs=30000, data_nature=VALID_DATA)
 defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=10000)
 
