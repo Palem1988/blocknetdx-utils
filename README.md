@@ -29,7 +29,6 @@ Same principles apply to:
 test_defined_order_RPC_calls_sequence()
 ```
 
----
 
 # Testing model
 
@@ -46,7 +45,7 @@ So the longer the tests are run, the better.
   - content type.
   - valid / invalid nature of parameter.
 
----
+
 
 # TODO
 
