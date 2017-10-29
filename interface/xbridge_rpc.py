@@ -19,10 +19,16 @@ def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
     
 def send_tx(txid):
-    return rpc_connection.sendrawtransaction(txid)
+    try:
+        return rpc_connection.sendrawtransaction(txid)
+    except JSONRPCException:
+        return None
     
 def sign_tx(txid):
-    return rpc_connection.signrawtransaction(txid)
+    try:
+        return rpc_connection.signrawtransaction(txid)
+    except JSONRPCException:
+        return None
 
 def decode_raw_tx(txid):
     return rpc_connection.decoderawtransaction(txid)
@@ -34,10 +40,16 @@ def get_tx_info(txid):
     return rpc_connection.dxGetTransactionInfo(txid)
 
 def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
-    return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+    try:
+        return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+    except JSONRPCException:
+        return None
 
 def accept_tx(txid, src, dest):
-    return rpc_connection.dxAcceptTransaction(txid, src, dest)
+    try:
+        return rpc_connection.dxAcceptTransaction(txid, src, dest)
+    except JSONRPCException:
+        return None
 
 def get_currency_list():
     return rpc_connection.dxGetCurrencyList()
