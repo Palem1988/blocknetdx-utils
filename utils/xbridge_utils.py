@@ -23,26 +23,26 @@ a_dest_Address = ""
 ca_random_tx_id = ""
 
 
-def generate_new_set_of_data(data_nature):
+def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     if data_nature == RANDOM_VALID_INVALID:
         selected_data = random.choice([VALID_DATA, INVALID_DATA])
         generate_new_set_of_data(selected_data)
     if data_nature == INVALID_DATA:
         # Set for create_tx
-        c_src_Address = generate_input_from_random_classes_combinations(0, 12000)
-        c_dest_Address = generate_input_from_random_classes_combinations(0, 12000)
-        c_src_Token = generate_input_from_random_classes_combinations(0, 12000)
-        c_dest_Token = generate_input_from_random_classes_combinations(0, 12000)
+        c_src_Address = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        c_dest_Address = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        c_src_Token = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        c_dest_Token = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
         source_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
                                                          999999999999999999999999999999999999999999999999999999999999999)
         dest_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
                                                        999999999999999999999999999999999999999999999999999999999999999)
         # set for accept_tx
-        a_random_tx_id = generate_input_from_random_classes_combinations(1, 12000)
-        a_src_Address = generate_input_from_random_classes_combinations(1, 12000)
-        a_dest_Address = generate_input_from_random_classes_combinations(1, 12000)
+        a_random_tx_id = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        a_src_Address = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        a_dest_Address = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
         # set for any function that takes a txid as parameter
-        ca_random_tx_id = generate_input_from_random_classes_combinations(1, 12000)
+        ca_random_tx_id = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
     if data_nature == VALID_DATA:
         # Set for create_tx
         c_src_Address = generate_random_valid_address()
