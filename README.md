@@ -58,7 +58,7 @@ So the longer the tests are run, the better.
 
 - Better code modularity.
 - Code refactorings, cleaning and improvements.
-- Logging parameters when an assertion occurs.
+- Logging parameters when an assertion error occurs.
 - Central easy-to-use test launchers.
 
 # TODO
