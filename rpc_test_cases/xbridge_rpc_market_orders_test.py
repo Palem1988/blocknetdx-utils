@@ -14,7 +14,7 @@ from interface import xbridge_rpc
     - CANCELTX + ACCEPT_TX + CREATE_TX
 """
 
-def random_seq_market_actions_api_calls(nb_of_runs, data_nature):
+def random_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
@@ -44,7 +44,7 @@ def random_seq_market_actions_api_calls(nb_of_runs, data_nature):
     - CANCELTX + ACCEPT_TX + CREATE_TX
 """
 
-def defined_seq_market_actions_api_calls(nb_of_runs, data_nature):
+def defined_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
