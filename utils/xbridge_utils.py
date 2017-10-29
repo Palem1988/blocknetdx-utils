@@ -29,20 +29,20 @@ def generate_new_set_of_data(data_nature):
         generate_new_set_of_data(selected_data)
     if data_nature == INVALID_DATA:
         # Set for create_tx
-        c_src_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-        c_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-        c_src_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
-        c_dest_Token = generate_input_from_random_classes_combinations(generate_random_number(0, 12000))
+        c_src_Address = generate_input_from_random_classes_combinations(0, 12000)
+        c_dest_Address = generate_input_from_random_classes_combinations(0, 12000)
+        c_src_Token = generate_input_from_random_classes_combinations(0, 12000)
+        c_dest_Token = generate_input_from_random_classes_combinations(0, 12000)
         source_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
                                                          999999999999999999999999999999999999999999999999999999999999999)
         dest_nb = generate_random_number(-999999999999999999999999999999999999999999999999999999999999999,
                                                        999999999999999999999999999999999999999999999999999999999999999)
         # set for accept_tx
-        a_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
-        a_src_Address = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
-        a_dest_Address = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
+        a_random_tx_id = generate_input_from_random_classes_combinations(1, 12000)
+        a_src_Address = generate_input_from_random_classes_combinations(1, 12000)
+        a_dest_Address = generate_input_from_random_classes_combinations(1, 12000)
         # set for any function that takes a txid as parameter
-        ca_random_tx_id = generate_input_from_random_classes_combinations(generate_random_number(1, 12000))
+        ca_random_tx_id = generate_input_from_random_classes_combinations(1, 12000)
     if data_nature == VALID_DATA:
         # Set for create_tx
         c_src_Address = generate_random_valid_address()
@@ -50,8 +50,7 @@ def generate_new_set_of_data(data_nature):
         c_src_Token = generate_random_valid_token()
         c_dest_Token = generate_random_valid_token()
         source_nb = generate_random_number(1, 1000)
-        dest_nb = generate_random_number((1, 1000)
-        # set for accept_tx
+        dest_nb = generate_random_number(1, 1000)
         a_random_tx_id = generate_random_valid_txid()
         a_src_Address = generate_random_valid_address()
         a_dest_Address = generate_random_valid_address()
