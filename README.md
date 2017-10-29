@@ -27,6 +27,10 @@ Same principles apply to:
 test_defined_order_RPC_calls_sequence()
 ```
 
+---
+
+# Testing model
+
 - The code uses randomness to generate various groups of data and scenarios and mix them together (valid, invalid, out-of-bounds data).
 So the longer the tests are run, the better.
 
@@ -40,5 +44,9 @@ So the longer the tests are run, the better.
   - content type.
   - valid / invalid nature of parameter.
 
-- TODO: Add test case where Token and Address are not consistent.
+---
+
+# TODO
+
+- Add test case where Token and Address are not consistent.
 
