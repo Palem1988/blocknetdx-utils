@@ -66,7 +66,7 @@ So the longer the tests are run, the better.
 - Randomness is used for the following variables:
   - call order in the sequence.
   - size of parameters sent to the API.
-  - content type.
+  - content type (hexadecimal, numeric, alpha-numeric, garbage data, or a mix of them).
   - valid / invalid nature of parameter.
  
   
