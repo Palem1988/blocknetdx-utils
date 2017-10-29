@@ -28,6 +28,7 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils
 """                       ***  UNIT TESTS ***
 
     - We test many combinations. But additional scenarios may have to be added.
+    - Speed performance is not a consideration in unit tests. Use sequence functions for that.
 
 """
 
@@ -97,12 +98,12 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
 
 
     """
-          - Same as before, but now the random input parameters are of random length [1-11 000]
+          - Same as before, but now the random input parameters are of random length [1-4 000]
     """
     def test_invalid_get_tx_info_test_5(self):
         try:
             string_lower_bound=1
-            string_upper_bound=11000
+            string_upper_bound=4000
             nb_of_runs = 3
             for i in range(1, nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
