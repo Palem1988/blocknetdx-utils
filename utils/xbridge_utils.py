@@ -3,17 +3,19 @@ import random
 from strgen import StringGenerator
 import pandas as pd
 from pandas import ExcelWriter
+import logging
+
 
 VALID_DATA = 1
 INVALID_DATA = 2
 RANDOM_VALID_INVALID = 3
 
-one_classes_list = ["[\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
-two_classes_list = ["[\p\d]", "[\p\a]", "[\p\h]", "[\s\d]", "[\s\a]", "[\s\h]", "[\s\p]", "[\W\d]", "[\W\a]", "[\W\h]",
+one_classes_list = ["[\\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
+two_classes_list = ["[\p\d]", "[\p\\a]", "[\p\h]", "[\s\d]", "[\s\\a]", "[\s\h]", "[\s\p]", "[\W\d]", "[\W\\a]", "[\W\h]",
                     "[\W\p]"]
-three_classes_list = ['[\a\d\W]', '[\a\d\h]', '[\a\d\s]', '[\a\d\p]', '[\a\d\W]']
-four_classes_list = ['[\p\d\w\s]', '[\p\d\a\h]', '[\p\d\a\s]']
-five_classes_list = ['[\p\d\W\w\h\a]']
+three_classes_list = ['[\\a\d\W]', '[\a\d\h]', '[\a\d\s]', '[\\a\d\p]', '[\\a\d\W]']
+four_classes_list = ['[\p\d\w\s]', '[\p\d\\a\h]', '[\p\d\\a\s]']
+five_classes_list = ['[\p\d\W\w\h\\a]']
 
 # Set for create_tx
 c_src_Address = ""
@@ -28,6 +30,17 @@ a_src_Address = ""
 a_dest_Address = ""
 # set for any function that takes a txid as parameter
 ca_random_tx_id = ""
+
+
+log_time_str = time.strftime("%Y%m%d-%H%M%S")
+log_file_name_str = log_time_str + "_testing_log.txt"
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(log_file_name_str)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
