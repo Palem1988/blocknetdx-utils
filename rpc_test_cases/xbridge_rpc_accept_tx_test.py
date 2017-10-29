@@ -7,70 +7,22 @@ from utils import xbridge_utils
 from interface import xbridge_rpc
 
 
-"""                       ***  COMMENT ***
-
-    - Here, the length of the garbage data is very high and increased.
-    The "j" parameter in the "generate_input_from_random_classes_combinations" function is the length of the garbage input we want.
-
-    - export_data() function generates :
-        1) an Excel File with the recorded timing information.
-        2) a small descriptive table with mean, standard deviation, and some quantiles (25%, 50%, 75%).
 """
-def test_accept_garbage_load_v1(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for j in range(10000, 10000+nb_of_runs):
-        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
-        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
-        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(j, j)
-        ts = time.time()
-        xbridge_rpc.accept_tx(tx_id_str, src_Address_str, dest_Address_str)
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "API": "dxAcceptTransaction"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_accept_garbage_load_v1.xlsx", time_distribution)
-
-
-"""                       ***  COMMENT ***
-    - Here, the length of garbage parameters is random.
+    - Combine optional parameters in a way that generate the test cases you want.
 """
 
-def test_accept_garbage_load_v2(nb_of_runs):
+def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=1200):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        tx_id_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
-        src_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
-        dest_Address_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
+        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
-        xbridge_rpc.accept_tx(tx_id_str, src_Address_str, dest_Address_str)
+        xbridge_rpc.accept_tx(xbridge_utils.a_random_tx_id, xbridge_utils.a_src_Address, xbridge_utils.a_dest_Address)
         te = time.time()
         total_elapsed_seconds += te - ts
         json_str = {"time": te - ts, "API": "dxAcceptTransaction"}
         time_distribution.append(json_str)
-    xbridge_utils.export_data("test_accept_garbage_load_v2.xlsx", time_distribution)
-
-
-"""                       ***  COMMENT ***
-        - Only valid data is thrown at the API. Load test only.
-"""
-
-def test_accept_valid_load(nb_of_runs):
-    time_distribution = []
-    total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
-        tx_id_str = xbridge_utils.generate_random_valid_txid()
-        src_Address_str = xbridge_utils.generate_random_valid_address()
-        dest_Address_str = xbridge_utils.generate_random_valid_address()
-        ts = time.time()
-        xbridge_rpc.accept_tx(tx_id_str, src_Address_str, dest_Address_str)
-        te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "API": "dxAcceptTransaction"}
-        time_distribution.append(json_str)
-    xbridge_utils.export_data("test_accept_tx_valid_load.xlsx", time_distribution)
-
+    xbridge_utils.export_data("dxAccept_RPC_sequence.xlsx", time_distribution)
 
 
 """                       ***  UNIT TESTS ***
