@@ -52,6 +52,10 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         self.assertIsInstance(xbridge_rpc.get_tx_info("{}"), list)
         self.assertIsInstance(xbridge_rpc.get_tx_info("''"), list)
         self.assertIsInstance(xbridge_rpc.get_tx_info("'"), list)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("["), list)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("{"), list)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("]"), list)
+        self.assertIsInstance(xbridge_rpc.cancel_tx("}"), list)
     
     """
           - Character classes are chosen randomly
@@ -69,14 +73,14 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         try:
             string_length=64
             nb_of_runs = 3
-            for i in range(1, nb_of_runs):
+            for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
         except AssertionError as e:
-            print("failed on set: %s" % generated_str)
+            print("dxGetTxInfo failed on set: %s" % generated_str)
 
 
     """
@@ -87,14 +91,14 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             string_lower_bound=9000
             string_upper_bound=11000
             nb_of_runs = 3
-            for i in range(1, nb_of_runs):
+            for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
         except AssertionError as e:
-            print("failed on set: %s" % generated_str)
+            print("dxGetTxInfo RPC unit test failed on set: %s" % generated_str)
 
 
     """
@@ -105,14 +109,14 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             string_lower_bound=1
             string_upper_bound=4000
             nb_of_runs = 3
-            for i in range(1, nb_of_runs):
+            for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
         except AssertionError as e:
-            print("failed on set: %s" % generated_str)
+            print("dxGetTxInfo RPC unit test failed on set: %s" % generated_str)
 
 
 """
