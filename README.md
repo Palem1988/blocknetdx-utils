@@ -22,14 +22,16 @@ The following combinations may be used during the testing phase, because they ge
 random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
 random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
 random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
-```
 
-Same principles apply to:
-```python
-defined_order_RPC_sequence()
-dxCancel_RPC_sequence()
-```
+defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
+defined_order_RPC_sequence(nb_of_runs=30000, data_nature=VALID_DATA)
+defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=10000)
 
+dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+```
 
 # Testing model
 
