@@ -77,6 +77,17 @@ So the longer the tests are run, the better.
 - Random multi API sequences.
 - Ordered multi API sequences.
 
+# Difference between Single API sequences and unit tests.
+
+It's easy to think they are similar, but they do not work the same way.
+- Single API sequence tests use input parameters that are generated from random character classes.
+User can set boundaries to randomness and even choose to generate valid data or a mix of valid / invalid data.
+- Unit tests will test *for sure* some defined character class and combinations of them to generate invalid data.
+
+In short, the source of the randomness is not the same.
+Moreover, Single API sequence tests record the timing distribution for further analysis. To check for example for RPC slowing response times. There is no speed consideration in Unit Tests.
+
+Both type of tests are therefore complementary and not really overlapping. They may occasionally overlap, but only on rare instances.
 
 # Program outputs
 
