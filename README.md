@@ -66,3 +66,4 @@ So the longer the tests are run, the better.
 
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
+- Comment improvements.
