@@ -57,6 +57,8 @@ dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_m
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - Comment improvements.
+- Define more precise assertion checks once the Dex is loaded with test data.
+- Add more APIs once they are available.
 
 
 # Testing model
