@@ -65,6 +65,7 @@ class cancel_Tx_UnitTest(unittest.TestCase):
     def test_invalid_cancel_2(self):
         try:
             global nb_of_runs
+            run_count = 0
             string_length=64
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -72,9 +73,12 @@ class cancel_Tx_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
+                        run_count += 1
+            xbridge_utils.logger.info('dxCancel unit test group 2 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            print("dxCancel RPC unit test failed on set: %s" % generated_str)
-
+            xbridge_utils.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
+        
 
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
@@ -84,14 +88,18 @@ class cancel_Tx_UnitTest(unittest.TestCase):
             global nb_of_runs
             string_lower_bound=9000
             string_upper_bound=11000
+            run_count = 0
             for i in range(1, 1+nb_of_runs):
                 for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                     for sub_item in itm:
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
+                        run_count += 1
+            xbridge_utils.logger.info('dxCancel unit test group 3 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            print("dxCancel RPC unit test failed on set: %s" % generated_str)
+            xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
 
 
     """
@@ -100,6 +108,7 @@ class cancel_Tx_UnitTest(unittest.TestCase):
     def test_invalid_cancel_4(self):
         try:
             global nb_of_runs
+            run_count = 0
             string_lower_bound=1
             string_upper_bound=4000
             for i in range(1, 1+nb_of_runs):
@@ -108,9 +117,13 @@ class cancel_Tx_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
+                        run_count += 1
+            xbridge_utils.logger.info('dxCancel unit test group 3 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            print("dxCancel RPC unit test failed on set: %s" % generated_str)
+            xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
 
+            
 """
 def repeat_cancel_tx_unit_tests(runs=1000):
     for j in (1, runs):
