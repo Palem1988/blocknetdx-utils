@@ -58,6 +58,7 @@ class accept_Tx_Test(unittest.TestCase):
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.invalid_dest_Address), dict)
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address), dict)
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_dest_Address), dict)
+           xbridge_utils.logger.info('-------- dxAccept unit test group 1 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 1 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -71,9 +72,9 @@ class accept_Tx_Test(unittest.TestCase):
     def test_invalid_accept_tx_2(self):
         try:
             # Test many combinations of 0 to 10 000 white spaces
-            whitespace_str_1 = StringGenerator('[\s]{0:10000}').render()
-            whitespace_str_2 = StringGenerator('[\s]{0:10000}').render()
-            whitespace_str_3 = StringGenerator('[\s]{0:10000}').render()
+            whitespace_str_1 = StringGenerator('[\s]{1:10000}').render()
+            whitespace_str_2 = StringGenerator('[\s]{1:10000}').render()
+            whitespace_str_3 = StringGenerator('[\s]{1:10000}').render()
             self.assertIsInstance(xbridge_rpc.accept_tx(whitespace_str_1, whitespace_str_2, whitespace_str_3), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.valid_src_Address, self.valid_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.valid_dest_Address), dict)
@@ -82,6 +83,7 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, "", self.valid_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, ""), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", "", ""), dict)
+            xbridge_utils.logger.info('-------- dxAccept unit test group 2 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 2 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -103,8 +105,9 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3), dict)
+            xbridge_utils.logger.info('-------- dxAccept unit test group 3 OK --------')
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 2 FAILED --------')
+            xbridge_utils.logger.info('-------- dxAccept unit test group 3 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_utils.logger.info('input_str_from_random_classes_1: %s', self.input_str_from_random_classes_1)
             xbridge_utils.logger.info('input_str_from_random_classes_2: %s', self.input_str_from_random_classes_2)
@@ -124,6 +127,7 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.long_txid, self.valid_src_Address, self.long_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.long_src_Address, self.long_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.long_txid, self.long_src_Address, self.long_dest_Address), dict)
+            xbridge_utils.logger.info('-------- dxAccept unit test group 4 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 4 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -144,6 +148,7 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(invalid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.invalid_src_Address), dict)
+            xbridge_utils.logger.info('-------- dxAccept unit test group 5 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 5 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
