@@ -118,10 +118,10 @@ class cancel_Tx_UnitTest(unittest.TestCase):
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
                         run_count += 1
-            xbridge_utils.logger.info('dxCancel unit test group 3 finished OK: %s runs', str(run_count))
+            xbridge_utils.logger.info('dxCancel unit test group 4 finished OK: %s runs', str(run_count))
             xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
+            xbridge_utils.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
 
             
 """
