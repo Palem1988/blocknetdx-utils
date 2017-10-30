@@ -28,6 +28,97 @@ from rpc_test_cases import xbridge_rpc_get_tx_info_test
 
 """
 
+
+"""            
+        *************************************************************
+        ******************   RPC SEQUENCE TESTS    ******************
+        *************************************************************
+"""
+
+# When data_nature is not specified, this will generate both valid and invalid data.
+
+
+random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
+random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
+random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
+
+
+defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=5000, char_max_size=12000)
+defined_order_RPC_sequence(nb_of_runs=30000, data_nature=VALID_DATA)
+defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=1000)
+
+
+dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+
+dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxCreate_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+
+dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxAccept_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+
+dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxAccept_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+
+dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
+dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
+dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+
+
+
+"""            
+        *******************************************************************
+        ******************   RPC UNIT TESTS LAUNCHERS    ******************
+        *******************************************************************
+"""
+
+"""                 RPC DX_CANCEL_TX
+"""
+
+""" RUNS FINE
+from rpc_test_cases.xbridge_rpc_canceltx_test import *
+xbridge_rpc_canceltx_test.repeat_cancel_tx_unit_tests(4)
+"""
+
+"""                 RPC DX_GET_TRANSACTION_INFO
+"""
+
+""" RUNS FINE
+from rpc_test_cases.xbridge_rpc_get_tx_info_test import *
+xbridge_rpc_get_tx_info_test.repeat_tx_info_unit_tests(2)
+"""
+
+
+""" TESTME
+from rpc_test_cases.xbridge_rpc_get_createtx_test import *
+xbridge_rpc_get_createtx_test.repeat_tx_info_unit_tests(2)
+"""
+
+
+
+"""            
+        *******************************************************************
+        **********************   CLIENT LAUNCHERS    **********************
+        *******************************************************************
+"""
+
+
+
+"""             INSTRUCTIONS
+
+    - DO NOT RUN FOR NOW.
+
+"""
+
+
 """                 CLIENT DX_GET_TRANSACTION_INFO
 """
 
@@ -39,16 +130,6 @@ xbridge_client_get_tx_info_test.test_get_tx_info_load_v2(5)
 xbridge_client_get_tx_info_test.test_get_tx_info_load_v3(5)
 xbridge_client_get_tx_info_test.repeat_tx_info_unit_tests(2)
 
-"""
-
-"""                 RPC DX_GET_TRANSACTION_INFO
-"""
-
-""" RUNS FINE
-xbridge_rpc_get_tx_info_test.test_get_tx_info_load_v1(5)
-xbridge_rpc_get_tx_info_test.test_get_tx_info_load_v2(5)
-from rpc_test_cases.xbridge_rpc_get_tx_info_test import *
-xbridge_rpc_get_tx_info_test.repeat_tx_info_unit_tests(2)
 """
 
 
@@ -84,22 +165,5 @@ xbridge_client_canceltx_test.test_cancel_load_v3(5)
 from test_cases.xbridge_client_canceltx_test import *
 # unittest.main()
 xbridge_client_canceltx_test.repeat_cancel_tx_unit_tests(3)
-"""
-
-"""                 RPC DX_CANCEL_TX
-"""
-
-""" RUNS FINE
-xbridge_rpc_canceltx_test.test_cancel_load_v1(5)
-xbridge_rpc_canceltx_test.test_cancel_load_v2(5)
-xbridge_rpc_canceltx_test.test_cancel_load_v3(5)
-from rpc_test_cases.xbridge_rpc_canceltx_test import *
-xbridge_rpc_canceltx_test.repeat_cancel_tx_unit_tests(4)
-"""
-
-
-""" RUNS FINE
-xbridge_client_sequence_test.test_random_sequence_valid_invalid_inputs(10)
-xbridge_client_sequence_test.test_random_sequence_long_inputs(10)
 """
 
