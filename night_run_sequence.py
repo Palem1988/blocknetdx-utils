@@ -9,11 +9,15 @@ from test_cases import xbridge_client_sequence_test
 from rpc_test_cases import xbridge_rpc_accept_tx_test
 from rpc_test_cases import xbridge_rpc_canceltx_test
 from rpc_test_cases import xbridge_rpc_get_tx_info_test
+from rpc_test_cases import xbridge_rpc_createtx_test
+from rpc_test_cases import xbridge_rpc_market_orders_test
+from rpc_test_cases import xbridge_rpc_heavy_polling_test
+from rpc_test_cases import xbridge_rpc_sequence_test
+
+
 
 
 """             INSTRUCTIONS
-
-    - DO NOT RUN FOR NOW. Very early code.
 
     - All tests can be run from there.
 
@@ -38,39 +42,54 @@ from rpc_test_cases import xbridge_rpc_get_tx_info_test
 # When data_nature is not specified, this will generate both valid and invalid data.
 
 
-random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
-random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
-random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
+xbridge_rpc_sequence_test.random_RPC_sequence(nb_of_runs=50000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=10000, char_max_size=12000)
+xbridge_rpc_sequence_test.random_RPC_sequence(nb_of_runs=50000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_sequence_test.random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
 
 
-defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=5000, char_max_size=12000)
-defined_order_RPC_sequence(nb_of_runs=30000, data_nature=VALID_DATA)
-defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=1000)
+xbridge_rpc_sequence_test.defined_order_RPC_sequence(nb_of_runs=30000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=5000, char_max_size=12000)
+xbridge_rpc_sequence_test.defined_order_RPC_sequence(nb_of_runs=30000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_sequence_test.defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=1000)
 
 
-dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+xbridge_rpc_canceltx_test.dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_canceltx_test.dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_canceltx_test.dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
 
 
-dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxCreate_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+xbridge_rpc_createtx_test.dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_createtx_test.dxCreate_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_createtx_test.dxCreate_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
 
 
-dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxAccept_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+xbridge_rpc_accept_tx_test.dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_accept_tx_test.dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_accept_tx_test.dxAccept_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
 
 
-dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxAccept_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxAccept_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+xbridge_rpc_get_tx_info_test.dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_get_tx_info_test.dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_get_tx_info_test.dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
 
 
-dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxGetTransactionInfo_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
+xbridge_rpc_heavy_polling_test.random_seq_polling_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_heavy_polling_test.random_seq_polling_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_heavy_polling_test.random_seq_polling_rpc_calls(nb_of_runs=20000, char_max_size=5000)
+
+
+xbridge_rpc_heavy_polling_test.defined_seq_polling_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_heavy_polling_test.defined_seq_polling_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_heavy_polling_test.defined_seq_polling_rpc_calls(nb_of_runs=20000, char_max_size=5000)
+
+
+xbridge_rpc_market_orders_test.random_seq_market_actions_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_market_orders_test.random_seq_market_actions_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_market_orders_test.random_seq_market_actions_rpc_calls(nb_of_runs=20000, char_max_size=5000)
+
+
+xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=15000)
+xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=20000, data_nature=xbridge_utils.VALID_DATA)
+xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=20000, char_max_size=5000)
 
 
 
