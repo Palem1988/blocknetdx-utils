@@ -15,7 +15,7 @@ from strgen import StringGenerator
 def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1+nb_of_runs):
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
         assert type(xbridge_rpc.get_tx_info(xbridge_utils.ca_random_tx_id)) == list
@@ -79,7 +79,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             xbridge_utils.logger.info('dxGetTxInfo unit test group 2 finished OK: %s runs', str(run_count))
             xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            xbridge_utils.logger.info('dxGetTxInfo unit test 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
+            xbridge_utils.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
                 
     """
           - We test various random inputs from individual character classes.
@@ -101,7 +101,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             xbridge_utils.logger.info('dxGetTxInfo unit test group 3 finished OK: %s runs', str(run_count))
             xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
-            xbridge_utils.logger.info('dxGetTxInfo unit test 3 FAILED on parameter: %s', generated_str)
+            xbridge_utils.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
 
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
@@ -147,13 +147,9 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             xbridge_utils.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
 
 
-"""
 def repeat_tx_info_unit_tests(nb_of_runs):
-    for i in (1, nb_of_runs):
+    for i in (1, 1+nb_of_runs):
         wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
         if not wasSuccessful:
             sys.exit(1)
-unittest.main()
 
-dxGetTransactionInfo_RPC_sequence(3)
-"""
