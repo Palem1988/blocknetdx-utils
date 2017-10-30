@@ -1,5 +1,4 @@
-# bdex-utils
-BlocknetDX Utils
+## BlocknetDX Utils
 
 # Sequence Tests Usage Examples
 
