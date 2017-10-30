@@ -81,7 +81,7 @@ class cancel_Tx_UnitTest(unittest.TestCase):
         
 
     """
-          - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
+          - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
     def test_invalid_cancel_3(self):
         try:
@@ -103,7 +103,7 @@ class cancel_Tx_UnitTest(unittest.TestCase):
 
 
     """
-          - Same as before, but now the random input parameters are of random length [1-11 000]
+          - Same as before, but now the random input parameters are of random length [1-4 000]
     """
     def test_invalid_cancel_4(self):
         try:
