@@ -1,5 +1,22 @@
 ## BlocknetDX Utils
 
+# In Progress
+
+- Use to subtests to distinguish test iterations.
+- Better code modularity.
+- Code refactorings, cleaning and improvements for unit tests.
+- Logging parameters when an assertion error occurs.
+- Central easy-to-use test launchers.
+- Completing defined sequence tests.
+
+# TODO
+
+- Add test case where Token and Address are not consistent.
+- Running tests and analyzing results.
+- Comment improvements.
+- Define more precise assertion checks once the Dex is loaded with test data.
+- Add more APIs once they are available.
+
 # Sequence Tests Usage Examples
 
 - Optional parameters with default values are being added for some functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
@@ -42,24 +59,6 @@ dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_m
 # Unit Tests Usage Examples
 
 - TODO
-
-# In Progress
-
-- Use to subtests to distinguish test iterations.
-- Better code modularity.
-- Code refactorings, cleaning and improvements for unit tests.
-- Logging parameters when an assertion error occurs.
-- Central easy-to-use test launchers.
-- Completing defined sequence tests.
-
-# TODO
-
-- Add test case where Token and Address are not consistent.
-- Running tests and analyzing results.
-- Comment improvements.
-- Define more precise assertion checks once the Dex is loaded with test data.
-- Add more APIs once they are available.
-
 
 # Testing model
 
