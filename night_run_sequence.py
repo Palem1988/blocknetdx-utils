@@ -122,9 +122,9 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
         *****************************************************************************************
 """
 
+# xbridge_rpc_createtx_test is not in the list because the client keeps displaying dialog boxes
 unit_tests_module_strings = [xbridge_rpc_canceltx_test,
                              xbridge_rpc_accept_tx_test,
-                             xbridge_rpc_createtx_test,
                              xbridge_rpc_get_tx_info_test]
 
 for i in range(1, 2):
