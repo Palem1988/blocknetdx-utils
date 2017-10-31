@@ -11,11 +11,16 @@
 
 # TODO
 
+- Support for script optional arguments (for build time automation).
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - Comment improvements.
 - Define more precise assertion checks once the Dex is loaded with test data.
 - Add more APIs once they are available.
+
+# Requirements
+
+- This code won't run on Python < 3 because of the use of subtests.
 
 # Sequence Tests Usage Examples
 
