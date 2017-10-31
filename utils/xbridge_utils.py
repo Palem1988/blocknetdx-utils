@@ -79,6 +79,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
 
 
 def export_data(filepath, list_to_export):
+    if len(list_to_export) == 0:
+        return
     timestr = time.strftime("%Y%m%d-%H%M%S")
     filepath_with_time = timestr + "_" + filepath
     my_df = pd.DataFrame(list_to_export)
