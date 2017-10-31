@@ -22,8 +22,8 @@
 
 All optional arguments are optional. If not specified, they each carry a default value of 100.
 
-- Use -s or --sequence argument to specify the number of sequence tests to run.
-- Use -u or --unittest argument to specify the number of unit tests to run.
+- Use '''-s''' or '''--sequence''' argument to specify the number of sequence tests to run.
+- Use '''-u''' or '''--unittest''' argument to specify the number of unit tests to run.
 
 ## Caution
 The number specified for each argument applies to **each** APIs.
