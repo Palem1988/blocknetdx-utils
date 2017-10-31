@@ -38,7 +38,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
             te = time.time()
             elapsed_Time = te - ts
         total_elapsed_seconds += te - ts
-        json_str = {"time": elapsed_Time, "API": picked_func}
+        json_str = {"time": elapsed_Time, "API": str(picked_func)}
         time_distribution.append(json_str)
     xbridge_utils.export_data("random_seq_polling_rpc_calls.xlsx", time_distribution)
 
@@ -63,7 +63,7 @@ def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAN
             func_str = "get_transaction_history_list"
         te = time.time()
         total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "API": func_str}
+        json_str = {"time": te - ts, "API": str(func_str)}
         time_distribution.append(json_str)
     xbridge_utils.export_data("defined_seq_polling_rpc_calls.xlsx", time_distribution)
 
