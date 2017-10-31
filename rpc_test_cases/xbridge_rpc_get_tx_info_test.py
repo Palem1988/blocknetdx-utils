@@ -72,13 +72,9 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     """
     def test_invalid_get_tx_info_2(self):
         try:
-            run_count = 0
-            for i in range(1, 1 + nb_of_runs):
-                with self.subTest(i=i):
-                    self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
-                    run_count += 1
+            with self.subTest("_"):
+                self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
             xbridge_utils.logger.info('dxGetTxInfo unit test group 2 finished OK: %s runs', str(run_count))
-            xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
             xbridge_utils.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
                 

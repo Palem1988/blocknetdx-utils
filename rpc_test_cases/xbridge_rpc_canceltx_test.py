@@ -80,7 +80,7 @@ class cancel_UnitTest(unittest.TestCase):
             string_length=64
             for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                 for sub_item in itm:
-                    with self.subTest(itm=itm):
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
@@ -101,7 +101,7 @@ class cancel_UnitTest(unittest.TestCase):
             run_count = 0
             for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                 for sub_item in itm:
-                    with self.subTest(itm=itm):
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
@@ -122,7 +122,7 @@ class cancel_UnitTest(unittest.TestCase):
             string_upper_bound=4000
             for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
                 for sub_item in itm:
-                    with self.subTest(itm=itm):
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
