@@ -105,17 +105,6 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
 """
 
 """
-from rpc_test_cases.xbridge_rpc_canceltx_test import *
-xbridge_rpc_canceltx_test.repeat_cancel_tx_unit_tests(4)
-# unittest.main()
-# unittest.main(defaultTest="cancel_UnitTest.test_invalid_cancel_1", exit=False)
-
-suite = unittest.TestSuite()
-suite.addTest(cancel_UnitTest('test_invalid_cancel_1'))
-print(suite)
-unittest.TextTestRunner().run(suite)
-"""
-
 
 stream = io.StringIO()
 runner = unittest.TextTestRunner(stream=stream)
@@ -124,7 +113,6 @@ full_Test_Suite = unittest.TestSuite()
 for i in range(1,3):
     full_Test_Suite.addTest(xbridge_rpc_canceltx_test.cancel_UnitTest())
     full_Test_Suite.addTest(xbridge_rpc_get_tx_info_test.get_Tx_Info_UnitTest())
-    # full_Test_Suite.addTest(unittest.makeSuite(xbridge_rpc_canceltx_test.cancel_UnitTest))
 
 testResult = runner.run(full_Test_Suite)
 xbridge_utils.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s', % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors))
