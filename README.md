@@ -1,6 +1,6 @@
 ## BlocknetDX Utils
 
-# In Progress
+# Current focus
 
 - Use of subtests to distinguish test iterations.
 - Better code modularity.
