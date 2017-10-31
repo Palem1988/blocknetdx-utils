@@ -104,8 +104,6 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
 """                 RPC DX_CANCEL_TX
 """
 
-"""
-
 stream = io.StringIO()
 runner = unittest.TextTestRunner(stream=stream)
 full_Test_Suite = unittest.TestSuite()
