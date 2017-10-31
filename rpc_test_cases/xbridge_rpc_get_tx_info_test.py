@@ -55,10 +55,10 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.get_tx_info("{}"), list)
             self.assertIsInstance(xbridge_rpc.get_tx_info("''"), list)
             self.assertIsInstance(xbridge_rpc.get_tx_info("'"), list)
-            self.assertIsInstance(xbridge_rpc.cancel_tx("["), list)
-            self.assertIsInstance(xbridge_rpc.cancel_tx("{"), list)
-            self.assertIsInstance(xbridge_rpc.cancel_tx("]"), list)
-            self.assertIsInstance(xbridge_rpc.cancel_tx("}"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("["), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("{"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("]"), list)
+            self.assertIsInstance(xbridge_rpc.get_tx_info("}"), list)
         except AssertionError as e:
             xbridge_utils.logger.info('dxGetTxInfo unit test group 1 FAILED')
 
