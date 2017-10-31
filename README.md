@@ -18,6 +18,17 @@
 - Define more precise assertion checks once the Dex is loaded with test data.
 - Add more APIs once they are available.
 
+# Command-Line options for build-time automation
+
+All optional arguments are optional. If not specified, they each carry a default value of 100.
+
+- Use -s or -sequence argument to specify the number of sequence tests to run.
+- Use -u or -unittest argument to specify the number of unit tests to run.
+
+## Caution
+The number specified for each argument applies to **each** APIs.
+
+
 # Requirements
 
 - This code won't run on Python < 3 because of the use of subtests.
