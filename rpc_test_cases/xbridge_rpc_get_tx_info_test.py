@@ -8,6 +8,7 @@ from utils import xbridge_utils
 
 from strgen import StringGenerator
 
+
 """
     - Combine optional parameters in a way that generate the test cases you want.
 """
@@ -72,10 +73,10 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     def test_invalid_get_tx_info_2(self):
         try:
             run_count = 0
-            global nb_of_runs
             for i in range(1, 1 + nb_of_runs):
-                self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
-                run_count += 1
+                with self.subTest(i=i):
+                    self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
+                    run_count += 1
             xbridge_utils.logger.info('dxGetTxInfo unit test group 2 finished OK: %s runs', str(run_count))
             xbridge_utils.logger.info('--------------------------------------------------------------------------')
         except AssertionError as e:
@@ -90,10 +91,9 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         try:
             run_count = 0
             string_length=64
-            global nb_of_runs
-            for i in range(1, 1+nb_of_runs):
-                for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                    for sub_item in itm:
+            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+                for sub_item in itm:
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
@@ -111,10 +111,9 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             run_count = 0
             string_lower_bound=9000
             string_upper_bound=11000
-            global nb_of_runs
-            for i in range(1, 1+nb_of_runs):
-                for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                    for sub_item in itm:
+            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+                for sub_item in itm:
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
@@ -133,10 +132,9 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             run_count = 0
             string_lower_bound=1
             string_upper_bound=4000
-            global nb_of_runs
-            for i in range(1, 1+nb_of_runs):
-                for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                    for sub_item in itm:
+            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+                for sub_item in itm:
+                    with self.subTest(sub_item=sub_item):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)

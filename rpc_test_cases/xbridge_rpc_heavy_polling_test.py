@@ -15,7 +15,7 @@ from interface import xbridge_rpc
     - GET_TX_LIST + GET_TRANSACTION_HISTORY + GET_TX_INFO
 """
 
-def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID):
+def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     no_param_func_list = [xbridge_rpc.get_transaction_list, xbridge_rpc.get_transaction_history_list,
@@ -24,7 +24,6 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
     for i in range(1, nb_of_runs):
         func_list = random.choice([no_param_func_list, xbridge_rpc.get_tx_info])
         # print("#%s" % str(i))
-        func_str = ""
         if func_list == no_param_func_list:
             picked_func = random.choice(no_param_func_list)
             ts = time.time()
@@ -32,7 +31,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
             te = time.time()
             elapsed_Time = te - ts
         if func_list == xbridge_rpc.get_tx_info:
-            xbridge_utils.generate_new_set_of_data(data_nature)
+            xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
             picked_func = "get_tx_info"
             ts = time.time()
             xbridge_rpc.get_tx_info()
@@ -49,7 +48,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
     - GET_TX_LIST + GET_TRANSACTION_HISTORY
 """
 
-def defined_seq_polling_rpc_calls(nb_of_runs=1000):
+def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
