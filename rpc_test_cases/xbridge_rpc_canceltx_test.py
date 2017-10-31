@@ -31,8 +31,7 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALI
 
 """
 
-class cancel_UnitTest(unittest.TestCase):
-    
+class cancelUnitTest(unittest.TestCase):
     @unittest.skip("no_reason")
     def testTrue(self):
         assert True
@@ -41,9 +40,6 @@ class cancel_UnitTest(unittest.TestCase):
     def testFail(self):
         assert False
 
-    """
-                - Specific tests with txid = 240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc
-    """
     def test_valid_tx_id_1(self):
         self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
     
@@ -102,7 +98,7 @@ class cancel_UnitTest(unittest.TestCase):
                     clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                     try:
                         generated_str = StringGenerator(clss_str).render()
-                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
+                        self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
                         xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
@@ -127,8 +123,7 @@ class cancel_UnitTest(unittest.TestCase):
                     except AssertionError as e:
                         xbridge_utils.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
 
-                        
-            
+
 """
 def repeat_cancel_tx_unit_tests(runs=1000):
     for j in (1, runs):
@@ -138,4 +133,9 @@ def repeat_cancel_tx_unit_tests(runs=1000):
 
 # unittest.main()
 repeat_cancel_tx_unit_tests(2)
+"""
+
+"""
+if __name__ == '__main__':
+    unittest.main()
 """
