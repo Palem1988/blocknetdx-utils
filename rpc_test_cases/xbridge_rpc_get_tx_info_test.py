@@ -87,7 +87,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     try:
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
-                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
+                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
                         run_count += 1
                     except AssertionError as e:
                         xbridge_utils.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
