@@ -91,14 +91,13 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=xbridge_utils.
             elapsed_Time = te - ts
         if func_to_run in no_param_func_list:
             ts = time.time()
-            picked_func()
+            func_to_run()
             te = time.time()
             elapsed_Time = te - ts
         if func_to_run == txid_func_list:
             xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
-            picked_func = random.choice(txid_func_list)
             ts = time.time()
-            picked_func(xbridge_utils.ca_random_tx_id)
+            func_to_run(xbridge_utils.ca_random_tx_id)
             te = time.time()
             elapsed_Time = te - ts
         run_count += 1
