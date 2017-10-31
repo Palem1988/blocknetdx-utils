@@ -17,7 +17,7 @@ def random_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=xbridge_uti
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
-        xbridge_utils.generate_new_set_of_data(data_nature, data_nature, char_min_size, char_max_size)
+        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         func_list = [xbridge_rpc.create_tx, xbridge_rpc.accept_tx, xbridge_rpc.cancel_tx]
         selected_func = random.choice(func_list)
         func_str = ""
@@ -47,7 +47,7 @@ def defined_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=xbridge_ut
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
-        xbridge_utils.generate_new_set_of_data(data_nature, data_nature, char_min_size, char_max_size)
+        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         func_str = ""
         ts = time.time()
         if i % 3 == 0:
