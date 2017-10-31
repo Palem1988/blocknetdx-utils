@@ -3,8 +3,8 @@ import random
 from strgen import StringGenerator
 import pandas as pd
 from pandas import ExcelWriter
-import logging
-
+import os, errno
+import xbridge_logger
 
 VALID_DATA = 1
 INVALID_DATA = 2
@@ -31,16 +31,18 @@ a_dest_Address = ""
 # set for any function that takes a txid as parameter
 ca_random_tx_id = ""
 
+os.chdir(os.path.dirname(__file__))
+program_dir = os.getcwd()
 
-log_time_str = time.strftime("%Y%m%d-%H%M%S")
-log_file_name_str = log_time_str + "_testing_log.txt"
+LOG_DIR = program_dir + "\\test_outputs\\"
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = logging.FileHandler(log_file_name_str)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+try:
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR)
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        LOG_DIR = ""
+        raise
 
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
@@ -82,7 +84,7 @@ def export_data(filepath, list_to_export):
     if len(list_to_export) == 0:
         return
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    filepath_with_time = timestr + "_" + filepath
+    filepath_with_time = xbridge_logger.LOG_DIR + timestr + "_" + filepath
     my_df = pd.DataFrame(list_to_export)
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
