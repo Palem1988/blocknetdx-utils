@@ -1,5 +1,15 @@
 ## BlocknetDX Utils
 
+# Command-Line options for build-time automation
+
+All arguments are optional. If not specified, they each carry **a default value of 100**.
+- Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
+- Use *-u* or *--unittest* argument to specify the number of unit tests to run.
+
+### Caution
+
+The number specified for each argument applies to **each** API.
+
 # Current focus
 
 - Use of subtests to distinguish test iterations.
@@ -11,23 +21,11 @@
 
 # TODO
 
-- Support for script optional arguments (for build time automation).
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - Comment improvements.
 - Define more precise assertion checks once the Dex is loaded with test data.
 - Add more APIs once they are available.
-
-# Command-Line options for build-time automation
-
-All arguments are optional. If not specified, they each carry **a default value of 100**.
-
-- Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
-- Use *-u* or *--unittest* argument to specify the number of unit tests to run.
-
-### Caution
-The number specified for each argument applies to **each** APIs.
-
 
 # Requirements
 
