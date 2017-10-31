@@ -122,19 +122,12 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
         *****************************************************************************************
 """
 
-stream = io.StringIO()
-runner = unittest.TextTestRunner(stream=stream)
-full_Test_Suite = unittest.TestSuite()
-
 unit_tests_module_strings = [xbridge_rpc_canceltx_test, xbridge_rpc_get_tx_info_test]
 suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
+
 test_suite = unittest.TestSuite(suites)
 testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
-# print('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
+
 xbridge_utils.logger.info('----------------------------------------------------------------------------------------------------------------------------------------------------------')
 xbridge_utils.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
 
-stream.seek(0)
-"""
-print('Test output\n', stream.read())
-"""
