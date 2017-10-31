@@ -58,8 +58,6 @@ class accept_Tx_Test(unittest.TestCase):
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.invalid_dest_Address), dict)
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address), dict)
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_dest_Address), dict)
-           if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('-------- dxAccept unit test group 1 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 1 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -84,8 +82,6 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, "", self.valid_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, ""), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", "", ""), dict)
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('-------- dxAccept unit test group 2 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 2 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -107,8 +103,6 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3), dict)
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('-------- dxAccept unit test group 3 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 3 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -130,8 +124,6 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.long_txid, self.valid_src_Address, self.long_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.long_src_Address, self.long_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.long_txid, self.long_src_Address, self.long_dest_Address), dict)
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('-------- dxAccept unit test group 4 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 4 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
@@ -152,8 +144,6 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(invalid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.invalid_src_Address), dict)
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('-------- dxAccept unit test group 5 OK --------')
         except AssertionError as e:
             xbridge_utils.logger.info('-------- dxAccept unit test group 5 FAILED --------')
             xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)

@@ -44,7 +44,7 @@ class cancel_UnitTest(unittest.TestCase):
     """
                 - Specific tests with txid = 240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc
     """
-    def test_specific_tx_id(self):
+    def test_valid_tx_id_1(self):
         self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
     
     """
@@ -65,8 +65,6 @@ class cancel_UnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.cancel_tx("}"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('dxCancel unit test group 1 finished OK')
         except AssertionError as e:
             xbridge_utils.logger.info('dxCancel unit test group 1 FAILED')
 
@@ -76,66 +74,60 @@ class cancel_UnitTest(unittest.TestCase):
           - Size of the input parameter is fixed.
     """
     def test_invalid_cancel_2(self):
-        try:
-            run_count = 0
-            string_length=64
-            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                for sub_item in itm:
-                    with self.subTest(sub_item=sub_item):
-                        clss_str = sub_item + "{" + str(string_length) + "}"
+        run_count = 0
+        string_length=64
+        for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+            for sub_item in itm:
+                with self.subTest(sub_item=sub_item):
+                    clss_str = sub_item + "{" + str(string_length) + "}"
+                    try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('dxCancel unit test group 2 finished OK: %s runs', str(run_count))
-                xbridge_utils.logger.info('--------------------------------------------------------------------------')
-        except AssertionError as e:
-            xbridge_utils.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
-        
+                    except AssertionError as e:
+                        xbridge_utils.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
+                        run_count += 1
 
+                    
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
     def test_invalid_cancel_3(self):
-        try:
-            string_lower_bound=9000
-            string_upper_bound=11000
-            run_count = 0
-            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                for sub_item in itm:
-                    with self.subTest(sub_item=sub_item):
-                        clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
+        string_lower_bound=9000
+        string_upper_bound=11000
+        run_count = 0
+        for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+            for sub_item in itm:
+                with self.subTest(sub_item=sub_item):
+                    clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
+                    try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
                         run_count += 1
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('dxCancel unit test group 3 finished OK: %s runs', str(run_count))
-                xbridge_utils.logger.info('--------------------------------------------------------------------------')
-        except AssertionError as e:
-            xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
+                    except AssertionError as e:
+                        xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
+                        run_count += 1
 
-
+                            
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
     def test_invalid_cancel_4(self):
-        try:
-            run_count = 0
-            string_lower_bound=1
-            string_upper_bound=4000
-            for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-                for sub_item in itm:
-                    with self.subTest(sub_item=sub_item):
-                        clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
+        run_count = 0
+        string_lower_bound=1
+        string_upper_bound=4000
+        for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+            for sub_item in itm:
+                with self.subTest(sub_item=sub_item):
+                    clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
+                    try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
                         run_count += 1
-            if glob.UT_LOG_SUCCESS:
-                xbridge_utils.logger.info('dxCancel unit test group 4 finished OK: %s runs', str(run_count))
-                xbridge_utils.logger.info('--------------------------------------------------------------------------')
-        except AssertionError as e:
-            xbridge_utils.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
+                    except AssertionError as e:
+                        xbridge_utils.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
 
+                        
             
 """
 def repeat_cancel_tx_unit_tests(runs=1000):
