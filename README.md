@@ -11,7 +11,7 @@ All arguments are optional. If not specified, they each carry **a default value 
 - Use of subtests to distinguish test iterations.
 - Better code modularity.
 - Code refactorings, cleaning and improvements for unit tests.
-- Logging.
+- Logging output improvements.
 - Centralized easy-to-use test launchers.
 - Completing defined sequence tests.
 
@@ -25,7 +25,7 @@ All arguments are optional. If not specified, they each carry **a default value 
 
 # Requirements
 
-- This code won't run on Python < 3 because of the use of subtests.
+- This code won't run on Python < 3.4 because of the use of subtests.
 
 # Sequence Tests Usage Examples
 
