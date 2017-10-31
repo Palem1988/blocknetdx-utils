@@ -6,10 +6,6 @@ All arguments are optional. If not specified, they each carry **a default value 
 - Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
 - Use *-u* or *--unittest* argument to specify the number of unit tests to run.
 
-### Caution
-
-The number specified for each argument applies to **each** API.
-
 # Current focus
 
 - Use of subtests to distinguish test iterations.
