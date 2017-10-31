@@ -2,10 +2,6 @@ import unittest
 import argparse
 from utils import xbridge_utils
 import xbridge_logger
-import logging
-import time
-import os, errno
-
 
 """
 from test_cases import xbridge_client_get_tx_info_test
