@@ -107,6 +107,7 @@ Both type of tests are therefore complementary and not really overlapping. They 
 
 # Global Parameters to set before running the tests
 
-- TODO
+- set UT_LOG_SUCCESS=True if you want unit tests to log successes.
+
 
 
