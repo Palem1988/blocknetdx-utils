@@ -2,7 +2,7 @@
 
 # In Progress
 
-- Use to subtests to distinguish test iterations.
+- Use of subtests to distinguish test iterations.
 - Better code modularity.
 - Code refactorings, cleaning and improvements for unit tests.
 - Logging parameters when an assertion error occurs.
