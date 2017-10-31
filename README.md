@@ -5,8 +5,8 @@
 - Use of subtests to distinguish test iterations.
 - Better code modularity.
 - Code refactorings, cleaning and improvements for unit tests.
-- Logging parameters when an assertion error occurs.
-- Central easy-to-use test launchers.
+- Logging.
+- Centralized easy-to-use test launchers.
 - Completing defined sequence tests.
 
 # TODO
