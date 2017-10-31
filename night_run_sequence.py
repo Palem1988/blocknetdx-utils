@@ -147,7 +147,7 @@ for i in range(1, UNIT_TESTS_NB_OF_RUNS):
     full_Test_Suite.addTest(xbridge_rpc_accept_tx_test.accept_Tx_Test())
     
 testResult = runner.run(full_Test_Suite)
-xbridge_utils.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s', % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors))
+xbridge_utils.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
 
 stream.seek(0)
 """
