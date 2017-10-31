@@ -34,7 +34,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
             xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
             picked_func = "get_tx_info"
             ts = time.time()
-            xbridge_rpc.get_tx_info()
+            xbridge_rpc.get_tx_info(xbridge_utils.ca_random_tx_id)
             te = time.time()
             elapsed_Time = te - ts
         total_elapsed_seconds += te - ts
