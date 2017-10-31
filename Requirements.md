@@ -1,7 +1,6 @@
 
 # Python Version
 - Python version: 3.6
-- Untested on Python 2.7
 
 # Required external libraries:
 - Pandas 0.20
