@@ -138,10 +138,10 @@ class accept_Tx_Test(unittest.TestCase):
     # Combinations of same source and dest Addresses
     def test_invalid_accept_tx_5(self):
         try:
-            self.assertIsInstance(xbridge_rpc.accept_tx(invalid_txid, self.valid_src_Address, self.valid_src_Address), dict)
+            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.valid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.valid_src_Address, self.valid_src_Address), dict)
-            self.assertIsInstance(xbridge_rpc.accept_tx(invalid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
+            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.invalid_src_Address), dict)
         except AssertionError as e:
