@@ -2,7 +2,7 @@ from strgen import StringGenerator
 import time
 import unittest
 import sys
-import glob
+import xbridge_logger
 
 from utils import xbridge_utils
 from interface import xbridge_rpc
@@ -12,7 +12,7 @@ from interface import xbridge_rpc
     - Combine optional parameters in a way that generate the test cases you want.
 """
 
-def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
@@ -59,13 +59,13 @@ class accept_Tx_Test(unittest.TestCase):
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address), dict)
            self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_dest_Address), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 1 FAILED --------')
-            xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
-            xbridge_utils.logger.info('invalid_txid: %s', self.invalid_txid)
-            xbridge_utils.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_utils.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
-            xbridge_utils.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
-            xbridge_utils.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 1 FAILED --------')
+            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
+            xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
+            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
+            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
+            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
 
     # Combinations of empty parameters
     def test_invalid_accept_tx_2(self):
@@ -83,16 +83,16 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, ""), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", "", ""), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 2 FAILED --------')
-            xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
-            xbridge_utils.logger.info('invalid_txid: %s', self.invalid_txid)
-            xbridge_utils.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_utils.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
-            xbridge_utils.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
-            xbridge_utils.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
-            xbridge_utils.logger.info('whitespace_str_1 length: %s', len(whitespace_str_1))
-            xbridge_utils.logger.info('whitespace_str_2 length: %s', len(whitespace_str_2))
-            xbridge_utils.logger.info('whitespace_str_3 length: %s', len(whitespace_str_3))
+            xbridge_logger.logger.info('-------- dxAccept unit test group 2 FAILED --------')
+            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
+            xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
+            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
+            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
+            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
+            xbridge_logger.logger.info('whitespace_str_1 length: %s', len(whitespace_str_1))
+            xbridge_logger.logger.info('whitespace_str_2 length: %s', len(whitespace_str_2))
+            xbridge_logger.logger.info('whitespace_str_3 length: %s', len(whitespace_str_3))
             
     
     # Input parameter(s) is from combination of random character classes
@@ -104,15 +104,15 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 3 FAILED --------')
-            xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
-            xbridge_utils.logger.info('input_str_from_random_classes_1: %s', self.input_str_from_random_classes_1)
-            xbridge_utils.logger.info('input_str_from_random_classes_2: %s', self.input_str_from_random_classes_2)
-            xbridge_utils.logger.info('input_str_from_random_classes_3: %s', self.input_str_from_random_classes_3)
-            xbridge_utils.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_utils.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
-            xbridge_utils.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
-            xbridge_utils.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 3 FAILED --------')
+            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
+            xbridge_logger.logger.info('input_str_from_random_classes_1: %s', self.input_str_from_random_classes_1)
+            xbridge_logger.logger.info('input_str_from_random_classes_2: %s', self.input_str_from_random_classes_2)
+            xbridge_logger.logger.info('input_str_from_random_classes_3: %s', self.input_str_from_random_classes_3)
+            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
+            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
+            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
         
     
     # Combinations of very long addresses and transaction ids
@@ -125,15 +125,15 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.long_src_Address, self.long_dest_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx(self.long_txid, self.long_src_Address, self.long_dest_Address), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 4 FAILED --------')
-            xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
-            xbridge_utils.logger.info('long_txid: %s', self.long_txid)
-            xbridge_utils.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_utils.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
-            xbridge_utils.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
-            xbridge_utils.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
-            xbridge_utils.logger.info('long_src_Address: %s', self.long_src_Address)
-            xbridge_utils.logger.info('long_dest_Address: %s', self.long_dest_Address)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 4 FAILED --------')
+            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
+            xbridge_logger.logger.info('long_txid: %s', self.long_txid)
+            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
+            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
+            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
+            xbridge_logger.logger.info('long_src_Address: %s', self.long_src_Address)
+            xbridge_logger.logger.info('long_dest_Address: %s', self.long_dest_Address)
     
     # Combinations of same source and dest Addresses
     def test_invalid_accept_tx_5(self):
@@ -145,11 +145,11 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_src_Address), dict)
             self.assertIsInstance(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.invalid_src_Address), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('-------- dxAccept unit test group 5 FAILED --------')
-            xbridge_utils.logger.info('valid_txid: %s', self.valid_txid)
-            xbridge_utils.logger.info('invalid_txid: %s', self.invalid_txid)
-            xbridge_utils.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_utils.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 5 FAILED --------')
+            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
+            xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
+            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
+            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
         
 
 def repeat_accept_tx_unit_tests(nb_of_runs):

@@ -13,7 +13,7 @@ from strgen import StringGenerator
     - Combine optional parameters in a way that generate the test cases you want.
 """
 
-def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
@@ -33,7 +33,6 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils
 
 """
 
-nb_of_runs = glob.UNIT_TEST_RUN_NB
 
 class get_Tx_Info_UnitTest(unittest.TestCase):
     def setUp(self):

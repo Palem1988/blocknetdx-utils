@@ -15,7 +15,7 @@ no_param_func_list = [xbridge_rpc.get_transaction_list, xbridge_rpc.get_transact
 txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info, xbridge_rpc.decode_raw_tx, xbridge_rpc.send_tx, xbridge_rpc.sign_tx]
     
 
-def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
     global txid_func_list
     time_distribution = []
@@ -65,7 +65,7 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_
 
 """
 
-def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
     global txid_func_list
     merged_list = no_param_func_list

@@ -1,18 +1,17 @@
 import unittest
 import time
-import sys
+import xbridge_logger
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
 from strgen import StringGenerator
-import glob
 
 
 """
     - Combine optional parameters in a way that generate the test cases you want.
 """
-def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
@@ -62,7 +61,7 @@ class cancelUnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
         except AssertionError as e:
-            xbridge_utils.logger.info('dxCancel unit test group 1 FAILED')
+            xbridge_logger.logger.info('dxCancel unit test group 1 FAILED')
 
     """
           - We test various random inputs from individual character classes.
@@ -81,7 +80,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
                         run_count += 1
 
                     
@@ -101,7 +100,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
                         run_count += 1
 
                             
@@ -121,7 +120,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
 
 
 """

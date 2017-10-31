@@ -15,7 +15,7 @@ from interface import xbridge_rpc
     - GET_TX_LIST + GET_TRANSACTION_HISTORY + GET_TX_INFO
 """
 
-def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     no_param_func_list = [xbridge_rpc.get_transaction_list, xbridge_rpc.get_transaction_history_list,
@@ -48,7 +48,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RAND
     - GET_TX_LIST + GET_TRANSACTION_HISTORY
 """
 
-def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
