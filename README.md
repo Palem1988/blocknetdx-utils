@@ -45,6 +45,7 @@ dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_m
 
 # In Progress
 
+- Use to subtests to distinguish test iterations.
 - Better code modularity.
 - Code refactorings, cleaning and improvements for unit tests.
 - Logging parameters when an assertion error occurs.
