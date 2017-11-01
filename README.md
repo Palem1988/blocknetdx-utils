@@ -1,6 +1,4 @@
-## BlocknetDX Utils
-
-## Changelog
+## BlocknetDX Utils Changelog
 
 - Added support for a configuration file for easier use.
 
