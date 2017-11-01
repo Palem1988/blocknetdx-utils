@@ -2,7 +2,7 @@
 
 ## Changelog
 
-In progress
+- Added support for a configuration file for easier use.
 
 
 # Running the tests
@@ -10,13 +10,13 @@ In progress
 1. Update the tests.conf file with your credential parameters, and adjust the options to control some
 behaviors of the program.
 
-  - If some required parameters are not filled, the program will stop.
-  - Also set the number of runs you want launch by default, when command line parameters are not provided.
-  - Make sure the **tests.conf** file is in the same directory as the main program.
+    - If some required parameters are not filled, the program will stop.
+    - Also set the number of runs you want launch by default, when command line parameters are not provided.
+    - Make sure the **tests.conf** file is in the same directory as the main program.
 
 2. Run the python with or without the optional parameters.
 
-If you don't specify the optional parameters, those in the tests.conf file will be used.
+If you don't specify the optional parameters, those in the **tests.conf** file will be used.
 
 
 ```
@@ -37,15 +37,16 @@ or set them accordingly in the **tests.conf** file.
 
 
 
-# Command-Line options for build-time automation
+# Optional command-Line options for build-time automation
 
 All arguments are optional. If not specified, they each carry **a default value of 1**.
 - Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
 - Use *-u* or *--unittest* argument to specify the number of unit tests to run.
 
+You can avoid using these parameters if you set the **tests.conf** file properly.
+
 # Current focus
 
-- Setting up a configuration file for getting up and running faster.
 - Code refactorings, cleaning and improvements for unit tests.
 - Logging output improvements.
 - Completing defined sequence tests.
