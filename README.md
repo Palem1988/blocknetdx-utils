@@ -1,5 +1,10 @@
 ## BlocknetDX Utils
 
+## Changelog
+
+In progress
+
+
 # Running the tests
 
 1. Update the tests.conf file with your credential parameters, and adjust the options to control some
@@ -26,7 +31,7 @@ Do not rely on your console for that. The console will only display what the pro
 ## Remarks !
 
 - By default, the sequence tests will output a lot of Excel files, with the timing information.
-You can turn that off, by specifying LOG_EXCEL_FILES = no in the **tests.conf** file.
+You can turn that off, by specifying **LOG_EXCEL_FILES = no** in the **tests.conf** file.
 - If you want for example run only unittests, just put **--unittest=100 --sequence=0**.
 or set them accordingly in the **tests.conf** file.
 
