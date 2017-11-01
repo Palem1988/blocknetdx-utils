@@ -2,6 +2,7 @@ import unittest
 import argparse
 from utils import xbridge_utils
 import xbridge_logger
+import xbridge_config
 
 """
 from test_cases import xbridge_client_get_tx_info_test
@@ -41,21 +42,36 @@ from rpc_test_cases import xbridge_rpc_sequence_test
         *****************************************************************************************
 """
 
-# SOME OTHER OPTIONS HAVE TO MODIFIED IN THE GLOB.PY MODULE
+
+if xbridge_config.get_conf_sequence_run_number() > 0:
+    NUMBER_OF_WANTED_RUNS = xbridge_config.get_conf_sequence_run_number()
+else:
+    NUMBER_OF_WANTED_RUNS = 1
+
+
+if xbridge_config.get_conf_unit_tests_run_number() > 0:
+    UNIT_TESTS_NB_OF_RUNS = xbridge_config.get_conf_unit_tests_run_number()
+else:
+    UNIT_TESTS_NB_OF_RUNS = 1
+
 
 parser = argparse.ArgumentParser(description='API testing')
-parser.add_argument('-s','--sequence', type=int, help='Number of sequence tests run', default=1)
-parser.add_argument('-u','--unittest', type=int, help='Number of unit tests to run', default=1)
+parser.add_argument('-s','--sequence', type=int, help='Number of sequence tests run')
+parser.add_argument('-u','--unittest', type=int, help='Number of unit tests to run')
 
 args = parser.parse_args()
 
-NUMBER_OF_WANTED_RUNS = args.sequence
-UNIT_TESTS_NB_OF_RUNS = args.unittest
+if args.sequence is not None:
+    NUMBER_OF_WANTED_RUNS = args.sequence
+
+if args.unittest is not None:
+    UNIT_TESTS_NB_OF_RUNS = args.unittest
 
 """
 NUMBER_OF_WANTED_RUNS = 2
 UNIT_TESTS_NB_OF_RUNS = 3
 """
+
 
 """            
         *****************************************************************************************
@@ -123,8 +139,9 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
         *****************************************************************************************
 """
 
-xbridge_logger.logger.info('')
-xbridge_logger.logger.info('Starting unit tests...')
+if UNIT_TESTS_NB_OF_RUNS > 0:
+    xbridge_logger.logger.info('')
+    xbridge_logger.logger.info('Starting unit tests...')
 
 # _test is not in the list because the client keeps displaying dialog boxes
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
@@ -137,9 +154,9 @@ for i in range(1, 1+UNIT_TESTS_NB_OF_RUNS):
     test_suite = unittest.TestSuite(suites)
     testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
 
-
-xbridge_logger.logger.info('')
-xbridge_logger.logger.info('Unit tests are done...')
+if UNIT_TESTS_NB_OF_RUNS > 0:
+    xbridge_logger.logger.info('')
+    xbridge_logger.logger.info('Unit tests are done...')
 
 # xbridge_logger.logger.info('----------------------------------------------------------------------------------------------------------------------------------------------------------')
 # xbridge_logger.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
