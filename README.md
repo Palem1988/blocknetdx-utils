@@ -1,4 +1,4 @@
-## BlocknetDX Utils Changelog
+## BlocknetDX Utils Last Changelog
 
 - Code fixes in dxGetTransactionInfo
 - Fixed wrong log string in createTx.
