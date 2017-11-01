@@ -7,7 +7,6 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 conf_file_path = os.path.join(__location__, 'tests.conf')
 
 config.read(conf_file_path)
-# print(config.sections())
 
 def conf_exists():
     if not os.path.exists(conf_file_path):
@@ -25,7 +24,6 @@ def get_conf_log_dir():
             return ""
     except KeyError:
             return ""
-
 
 def get_conf_login():
     try:
@@ -92,5 +90,6 @@ def get_conf_unit_tests_run_number():
             return 1
     except KeyError:
             return 1
+
 
 
