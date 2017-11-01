@@ -84,7 +84,7 @@ You can avoid using these parameters if you set the **tests.conf** file properly
 
 # Sequence Tests Usage Examples
 
-- Optional parameters with default values are being added for some functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
+- Optional parameters are available for sequence test functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
 
 For example, the following calls do the same thing: 
 ```python
