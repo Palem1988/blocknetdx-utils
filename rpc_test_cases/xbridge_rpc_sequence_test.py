@@ -106,6 +106,5 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
     xbridge_utils.export_data("test_rpc_defined_order_sequence.xlsx", time_distribution)
 
 
-
 # random_RPC_calls_sequence(nb_of_runs=1000)
-defined_order_RPC_calls_sequence(nb_of_runs=1000)
+# defined_order_RPC_calls_sequence(nb_of_runs=1000)
