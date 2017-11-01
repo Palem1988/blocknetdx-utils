@@ -144,9 +144,5 @@ Both type of tests are therefore complementary and not really overlapping. They 
 - Unit tests will log data and tell if each test was successful (and the number of runs) and an assertion error was thrown (with the input parameter that was used to make the call).
 - Sequence tests generate an Excel file with the timing distribution.
 
-# Global Parameters to set before running the tests
-
-- set UT_LOG_SUCCESS=True if you want unit tests to log successes.
-
 
 
