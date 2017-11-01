@@ -57,17 +57,17 @@ class create_Tx_Test(unittest.TestCase):
     def test_invalid_create_tx_v1(self):
         try:
             # negative_number + positive_number, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
             # positive_number + negative_number, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
             # negative_number + negative_number, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
             # 0 + negative_number, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
             # positive_number + 0, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, 0))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, 0), dict)
             # 0 + 0, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, 0))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, 0, self.valid_dest_Address, self.valid_dest_Token, 0), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 1 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -82,9 +82,9 @@ class create_Tx_Test(unittest.TestCase):
     # Combinations with empty addresses
     def test_invalid_create_tx_v2(self):
         try:
-            self.assertIsNone(xbridge_rpc.create_tx(" ", self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2))
-            self.assertIsNone(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, " ", self.valid_dest_Token, self.valid_positive_nb_2))
-            self.assertIsNone(xbridge_rpc.create_tx(" ", self.valid_src_Token, self.valid_positive_nb_1, " ", self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(" ", self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, " ", self.valid_dest_Token, self.valid_positive_nb_2), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx(" ", self.valid_src_Token, self.valid_positive_nb_1, " ", self.valid_dest_Token, self.valid_positive_nb_2), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 2 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy")
@@ -98,11 +98,11 @@ class create_Tx_Test(unittest.TestCase):
     def test_invalid_create_tx_v3(self):
         try:
             # Same source and destination Addresses, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
             # Same source and destination Tokens, different addresses, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_src_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_src_Token, self.valid_positive_nb_2), dict)
             # Same source and destination Addresses and Tokens, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_2), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 3 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -119,11 +119,11 @@ class create_Tx_Test(unittest.TestCase):
     def test_invalid_create_tx_v4(self):
         try:
             # Address 1 contains quotes, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey", self.valid_dest_Token, self.valid_positive_nb_2), dict)
             # Address 2 contains quotes, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2), dict)
             # Both Addresses contain quotes, all other parameters being valid
-            self.assertIsNone(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2))
+            self.assertIsInstance(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.valid_positive_nb_1, "'12BueeBVD2uiAHViXf7jPVQb2MSQ1Eggey'", self.valid_dest_Token, self.valid_positive_nb_2), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 4 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -139,9 +139,9 @@ class create_Tx_Test(unittest.TestCase):
     # Combinations of quotes + out-of-bounds quantities
     def test_invalid_create_tx_v5(self):
         try:
-            self.assertIsNone(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.invalid_neg_nb, "'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_dest_Token, self.invalid_neg_nb))
-            self.assertIsNone(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_dest_Token, self.invalid_neg_nb))
-            self.assertIsNone(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.invalid_neg_nb, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_dest_Token, self.valid_positive_nb_1))
+            self.assertIsInstance(xbridge_rpc.create_tx("'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_src_Token, self.invalid_neg_nb, "'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'", self.valid_dest_Token, self.invalid_neg_nb), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.valid_positive_nb_1, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_dest_Token, self.invalid_neg_nb), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx("LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_src_Token, self.invalid_neg_nb, "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy", self.valid_dest_Token, self.valid_positive_nb_1), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 5 FAILED --------')
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
@@ -160,17 +160,17 @@ class create_Tx_Test(unittest.TestCase):
     def test_invalid_create_tx_v6(self):
         try:
             # Only source Address is valid, the rest is invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb), dict)
             # Only source Address + source Token are valid, the rest is invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb), dict)
             # Only source Address + source Token + source_Quantity are valid, the rest is invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb), dict)
             # Only (source + dest) Addresses + source Token + source_Quantity are valid, the rest is invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb), dict)
             # Only (source + dest) Addresses + (source + dest)  Tokens + source_Quantity are valid, the rest is invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.invalid_neg_nb), dict)
             # All parameters are invalid
-            self.assertIsNone(xbridge_rpc.create_tx(self.invalid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.invalid_src_Address, self.invalid_src_Token, self.invalid_neg_nb, self.invalid_dest_Address, self.invalid_dest_Token, self.invalid_neg_nb), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 6 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -186,9 +186,9 @@ class create_Tx_Test(unittest.TestCase):
     # Combinations of numerical parameters containining leading Zeros, all other parameters being valid
     def test_invalid_create_tx_v7(self):
         try:
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2))
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_1))
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_2))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_1), dict)
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_2), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 7 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -205,13 +205,13 @@ class create_Tx_Test(unittest.TestCase):
     def test_invalid_create_tx_v8(self):
         try:
             # very small + very small
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb), dict)
             # very small + very large
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb), dict)
             # very large + very small
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb), dict)
             # very large + very large
-            self.assertIsNone(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb))
+            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb, self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('-------- dxCreate unit test group 8 FAILED --------')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
