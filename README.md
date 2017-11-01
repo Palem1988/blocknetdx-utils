@@ -1,5 +1,21 @@
 ## BlocknetDX Utils
 
+# Running the tests
+
+1. Update your credentials in the /interface/xbridge_rpc.py file.
+2. Update the LOG_DIR variable in the xbridge_logger.py file to define the output folder where you want log files to be stored.
+3. Run the python with the number of tests you want.
+
+```
+python build_time_tests.py --unittest=100 --sequence=100
+```
+
+If you want to run only sequence tests, use:
+```
+python build_time_tests.py --unittest=100 --sequence=0
+```
+
+
 # Command-Line options for build-time automation
 
 All arguments are optional. If not specified, they each carry **a default value of 100**.
@@ -8,11 +24,9 @@ All arguments are optional. If not specified, they each carry **a default value 
 
 # Current focus
 
-- Use of subtests to distinguish test iterations.
-- Better code modularity.
+- Setting up a configuration file for getting up and running faster.
 - Code refactorings, cleaning and improvements for unit tests.
 - Logging output improvements.
-- Centralized easy-to-use test launchers.
 - Completing defined sequence tests.
 
 # TODO
