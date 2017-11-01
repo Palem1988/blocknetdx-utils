@@ -41,7 +41,6 @@ All arguments are optional. If not specified, they each carry **a default value 
 
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
-- Comment improvements.
 - Define more precise assertion checks once the Dex is loaded with test data.
 - Add more APIs once they are available.
 
