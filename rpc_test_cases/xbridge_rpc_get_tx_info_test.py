@@ -21,8 +21,10 @@ def dxGetTransactionInfo_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_s
         ts = time.time()
         assert type(xbridge_rpc.get_tx_info(xbridge_utils.ca_random_tx_id)) == list
         te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxGetTxInfo"}
+        elapsed_Time = te - ts
+        total_elapsed_seconds += elapsed_Time
+        print("single API seq - dxGetTxInfo - elapsedTime: %s" % (str(elapsed_Time)))
+        json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxGetTxInfo"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("dxGetTransactionInfo_RPC_sequence.xlsx", time_distribution)
 

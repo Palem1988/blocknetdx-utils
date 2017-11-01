@@ -14,13 +14,16 @@ from strgen import StringGenerator
 def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
+        elapsed_Time = 0
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
         assert type(xbridge_rpc.cancel_tx(xbridge_utils.ca_random_tx_id)) == dict
         te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxCancel"}
+        elapsed_Time = te - ts
+        total_elapsed_seconds += elapsed_Time
+        print("single API seq - dxCancel - elapsedTime: %s" % (str(elapsed_Time)))
+        json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxCancel"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("dxCancel_RPC_sequence.xlsx", time_distribution)
 
