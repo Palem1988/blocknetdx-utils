@@ -1,7 +1,7 @@
 import unittest
 import time
 import sys
-import glob
+import xbridge_logger
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
@@ -62,7 +62,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.get_tx_info("]"), list)
             self.assertIsInstance(xbridge_rpc.get_tx_info("}"), list)
         except AssertionError as e:
-            xbridge_utils.logger.info('dxGetTxInfo unit test group 1 FAILED')
+            xbridge_logger.logger.info('dxGetTxInfo unit test group 1 FAILED')
 
     """
           - Character classes are chosen randomly
@@ -72,7 +72,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         try:
             self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
         except AssertionError as e:
-            xbridge_utils.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
+            xbridge_logger.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
                 
     """
           - We test various random inputs from individual character classes.
@@ -91,7 +91,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
                         run_count += 1
 
     """
@@ -110,7 +110,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxGetTxInfo unit test group 4 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxGetTxInfo unit test group 4 FAILED on parameter: %s', generated_str)
                         run_count += 1
 
 
@@ -130,7 +130,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
                         run_count += 1
                     except AssertionError as e:
-                        xbridge_utils.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
 
 
 def repeat_tx_info_unit_tests(nb_of_runs):
