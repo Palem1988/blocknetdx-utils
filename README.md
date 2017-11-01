@@ -1,8 +1,9 @@
-## BlocknetDX Utils Last Changelog
+## BlocknetDX Utils Recent Changelog
 
+- (Upcoming) Unit tests for getblockcount, servicenodelist, getbudget
 - Code fixes in dxGetTransactionInfo
 - Fixed wrong log string in createTx.
-- Added support for a configuration file for easier use.
+- Added support for a configuration file for easier deployment.
 
 
 # Running the tests
@@ -62,17 +63,20 @@ All arguments are optional.
 
 You can avoid using these parameters if you set the **tests.conf** file properly.
 
+# Current known issues
+
+- dxCreateTx test group fail assertions without known reason for now.
+
 # Current focus
 
-- Code refactorings, cleaning and improvements for unit tests.
-- Logging output improvements.
 - Completing defined sequence tests.
 
 # TODO
 
+- Add unit tests with valid data present in the dex once it's loaded.
+- Define more precise assertion checks once the Dex is loaded with test data.
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
-- Define more precise assertion checks once the Dex is loaded with test data.
 - Add more APIs once they are available.
 
 # Requirements
