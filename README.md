@@ -12,6 +12,7 @@ behaviors of the program.
 
   - If some required parameters are not filled, the program will stop.
   - Also set the number of runs you want launch by default, when command line parameters are not provided.
+  - Make sure the **tests.conf** file is in the same directory as the main program.
 
 2. Run the python with or without the optional parameters.
 
