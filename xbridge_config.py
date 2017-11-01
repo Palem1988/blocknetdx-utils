@@ -72,24 +72,24 @@ def should_log_Excel_files():
 def get_conf_sequence_run_number():
     try:
         if not conf_exists():
-            return 1
+            return 0
         if "DEFAULT_NUMBER_OF_RUNS" in config.sections():
             return config.getint('DEFAULT_NUMBER_OF_RUNS', 'SEQUENCE_TESTS_NB_OF_RUNS')
         else:
-            return 1
+            return 0
     except KeyError:
-            return 1
+            return 0
 
 def get_conf_unit_tests_run_number():
     try:
         if not conf_exists():
-            return 1
+            return 0
         if "DEFAULT_NUMBER_OF_RUNS" in config.sections():
             return config.getint('DEFAULT_NUMBER_OF_RUNS', 'UNIT_TESTS_NB_OF_RUNS')
         else:
-            return 1
+            return 0
     except KeyError:
-            return 1
+            return 0
 
 
 
