@@ -1,5 +1,7 @@
 ## BlocknetDX Utils Changelog
 
+- Code fixes in dxGetTransactionInfo
+- Fixed wrong log string in createTx.
 - Added support for a configuration file for easier use.
 
 
