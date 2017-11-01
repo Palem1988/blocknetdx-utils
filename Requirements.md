@@ -7,5 +7,6 @@
 - StringGenerator 0.2.0
 - python-bitcoinrpc
 - openpyxl
+- setuptools
 
 
