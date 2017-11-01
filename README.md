@@ -6,6 +6,7 @@
 2. Update the LOG_DIR variable in the *xbridge_logger.py* file to define the output folder where you want log files to be stored.
 
 ** Caution for Linux users !**
+
 Adjust the form of the path to match the one of your platform.
 
 3. Run the python with the number of tests you want.
