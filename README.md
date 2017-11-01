@@ -65,7 +65,7 @@ You can avoid using these parameters if you set the **tests.conf** file properly
 
 # Current known issues
 
-- dxCreateTx test group fail assertions without known reason for now.
+- dxCreateTx test group 8 failed assertions without known reason for now.
 
 # Current focus
 
