@@ -44,8 +44,8 @@ from rpc_test_cases import xbridge_rpc_sequence_test
 # SOME OTHER OPTIONS HAVE TO MODIFIED IN THE GLOB.PY MODULE
 
 parser = argparse.ArgumentParser(description='API testing')
-parser.add_argument('-s','--sequence', type=int, help='Number of sequence tests run', default=2)
-parser.add_argument('-u','--unittest', type=int, help='Number of unit tests to run', default=2)
+parser.add_argument('-s','--sequence', type=int, help='Number of sequence tests run', default=1)
+parser.add_argument('-u','--unittest', type=int, help='Number of unit tests to run', default=1)
 
 args = parser.parse_args()
 
@@ -123,6 +123,9 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
         *****************************************************************************************
 """
 
+xbridge_logger.logger.info('')
+xbridge_logger.logger.info('Starting unit tests...')
+
 # _test is not in the list because the client keeps displaying dialog boxes
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
                              xbridge_rpc_canceltx_test,
@@ -133,6 +136,10 @@ for i in range(1, 1+UNIT_TESTS_NB_OF_RUNS):
     suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
     test_suite = unittest.TestSuite(suites)
     testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
+
+
+xbridge_logger.logger.info('')
+xbridge_logger.logger.info('Unit tests are done...')
 
 # xbridge_logger.logger.info('----------------------------------------------------------------------------------------------------------------------------------------------------------')
 # xbridge_logger.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
