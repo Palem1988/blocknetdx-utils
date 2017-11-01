@@ -74,7 +74,6 @@ You can avoid using these parameters if you set the **tests.conf** file properly
 # TODO
 
 - Add unit tests with valid data present in the dex once it's loaded.
-- Define more precise assertion checks once the Dex is loaded with test data.
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - Add more APIs once they are available.
