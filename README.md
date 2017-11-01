@@ -34,6 +34,23 @@ You can turn that off, by specifying **LOG_EXCEL_FILES = no** in the **tests.con
 or set them accordingly in the **tests.conf** file.
 
 
+# Tests.conf file
+
+```
+[CONNECTION]
+IP = 127.0.0.1:41414
+LOGIN = Your_login
+PASSWORD = Your_password
+
+[OUTPUT]
+LOG_DIR = C:\Users\kbentahmed\Dropbox\__ALTCOINS\Blocknet_unit_tests\test_outputs\
+LOG_EXCEL_FILES = yes
+
+[DEFAULT_NUMBER_OF_RUNS]
+SEQUENCE_TESTS_NB_OF_RUNS = 1
+UNIT_TESTS_NB_OF_RUNS = 1
+```
+
 
 # Optional command-Line options for build-time automation
 
