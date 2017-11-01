@@ -10,9 +10,8 @@ In progress
 1. Update the tests.conf file with your credential parameters, and adjust the options to control some
 behaviors of the program.
 
-If some required parameters are not filled, the program will stop.
-
-Also set the number of runs you want launch by default, when command line parameters are not provided.
+  - If some required parameters are not filled, the program will stop.
+  - Also set the number of runs you want launch by default, when command line parameters are not provided.
 
 2. Run the python with or without the optional parameters.
 
