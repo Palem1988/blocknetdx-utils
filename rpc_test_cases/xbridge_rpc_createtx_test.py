@@ -227,7 +227,7 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCancel unit test group 8 subtest-1 FAILED on parameter: %s',
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-1 FAILED on parameter: %s',
                                            self.invalid_sm_positive_nb)
                 xbridge_logger.logger.info('')
         # very small + very large
@@ -239,7 +239,7 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCancel unit test group 8 subtest-2 FAILED on parameter: %s and %s',
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-2 FAILED on parameter: %s and %s',
                                            self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
                 xbridge_logger.logger.info('')
         # very large + very small
@@ -251,7 +251,7 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCancel unit test group 8 subtest-3 FAILED on parameter: %s and %s',
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-3 FAILED on parameter: %s and %s',
                                            self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
                 xbridge_logger.logger.info('')
         # very large + very large
@@ -263,7 +263,7 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCancel unit test group 8 subtest-4 FAILED on parameter: %s and %s',
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-4 FAILED on parameter: %s and %s',
                                            self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
                 xbridge_logger.logger.info('')
 
