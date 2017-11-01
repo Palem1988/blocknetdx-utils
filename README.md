@@ -2,14 +2,17 @@
 
 # Running the tests
 
-1. Update your credentials in the */interface/xbridge_rpc.py* file.
-2. Update the LOG_DIR variable in the *xbridge_logger.py* file to define the output folder where you want log files to be stored.
+1. Update the tests.conf file with your credential parameters, and adjust the options to control some
+behaviors of the program.
 
-** Caution for Linux users !**
+If some required parameters are not filled, the program will stop.
 
-Adjust the form of the path to match the one of your platform.
+Also set the number of runs you want launch by default, when command line parameters are not provided.
 
-3. Run the python with the number of tests you want.
+2. Run the python with or without the optional parameters.
+
+If you don't specify the optional parameters, those in the tests.conf file will be used.
+
 
 ```
 python build_time_tests.py --unittest=100 --sequence=100
@@ -20,8 +23,19 @@ If you want to run only unit tests, use:
 python build_time_tests.py --unittest=100 --sequence=0
 ```
 
-4. Check the logs (log and Excel files) to analyze results.
+If you want for example run only unittests, just put --unittest=100 --sequence=0
+or set them accordingly in the tests.conf file.
+
+
+3. Check the logs (log and Excel files) to analyze results.
 Do not rely on your console for that. The console will only display what the program is currently doing, not the results.
+
+
+## Remark !
+
+- By default, the sequence tests will output a lot of Excel files, with the timing information.
+You can turn that off, by specifying LOG_EXCEL_FILES = no in the tests.conf file.
+
 
 
 # Command-Line options for build-time automation
