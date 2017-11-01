@@ -71,6 +71,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 1 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
@@ -89,6 +90,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 2 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy")
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
@@ -109,6 +111,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 3 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
@@ -131,6 +134,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 4 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
@@ -150,6 +154,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 5 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
@@ -180,6 +185,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 6 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
@@ -199,6 +205,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 7 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
@@ -223,6 +230,7 @@ class create_Tx_Test(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('')
             xbridge_logger.logger.info('-------- dxCreate unit test group 8 FAILED --------')
+            xbridge_logger.logger.info('')
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
