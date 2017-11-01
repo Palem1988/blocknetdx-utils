@@ -34,14 +34,6 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
 """
 
 class cancelUnitTest(unittest.TestCase):
-    @unittest.skip("no_reason")
-    def testTrue(self):
-        assert True
-
-    @unittest.skip("no_reason")
-    def testFail(self):
-        assert False
-
     def test_valid_tx_id_1(self):
         self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
     
