@@ -20,6 +20,9 @@ If you want to run only unit tests, use:
 python build_time_tests.py --unittest=100 --sequence=0
 ```
 
+4. Check the logs (log and Excel files) to analyze results.
+Do not rely on your console for that. The console will only display what the program is currently doing, not the results.
+
 
 # Command-Line options for build-time automation
 
