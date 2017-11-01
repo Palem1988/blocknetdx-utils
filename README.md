@@ -56,7 +56,7 @@ UNIT_TESTS_NB_OF_RUNS = 1
 
 # Optional command-Line options for build-time automation
 
-All arguments are optional. If not specified, they each carry **a default value of 1**.
+All arguments are optional.
 - Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
 - Use *-u* or *--unittest* argument to specify the number of unit tests to run.
 
