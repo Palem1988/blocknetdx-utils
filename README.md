@@ -14,7 +14,7 @@ Adjust the form of the path to match the one of your platform.
 python build_time_tests.py --unittest=100 --sequence=100
 ```
 
-If you want to run only sequence tests, use:
+If you want to run only unit tests, use:
 ```
 python build_time_tests.py --unittest=100 --sequence=0
 ```
