@@ -17,17 +17,12 @@ behaviors of the program.
 2. Run the python with or without the optional parameters.
 
        - If you don't specify the optional parameters, those in the **tests.conf** file will be used.
+       - If you specify them, they have priority over the ones in the **tests.conf** file.
 
 ```
 python build_time_tests.py
-```
-
-        - If you specify them, they have priority over the ones in the **tests.conf** file.
-
-```
 python build_time_tests.py --unittest=100 --sequence=200
 ```
-
 
 3. Check the logs (log and Excel files) to analyze results.
 Do not rely on your console for that. The console will only display what the program is currently doing, not the results.
