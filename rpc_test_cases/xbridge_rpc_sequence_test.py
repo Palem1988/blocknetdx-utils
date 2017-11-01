@@ -49,7 +49,7 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, c
             picked_func(xbridge_utils.ca_random_tx_id)
             te = time.time()
             elapsed_Time = te - ts
-        # print("run: %s - picked function : %s" % (str(j), picked_func))
+        print("random_seq - picked function : %s" % (picked_func))
         # if elapsed_Time > 1.5:
         #    print("outlier - %s: %s - data: %s" % (str(elapsed_Time), picked_func, j) )
         run_count += 1
@@ -68,7 +68,7 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, c
 def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
     global txid_func_list
-    merged_list = no_param_func_list
+    merged_list = no_param_func_list.copy()
     merged_list.extend(txid_func_list)
     time_distribution = []
     total_elapsed_seconds = 0
@@ -76,7 +76,7 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
     run_count = 0
     while run_count < nb_of_runs:
         func_to_run = merged_list[run_count % len(merged_list)]
-        # print("defined order RPC sequence #%s" % str(func_to_run))
+        print("defined order RPC sequence #%s" % str(func_to_run))
         if func_to_run == xbridge_rpc.create_tx:
             xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)       
             ts = time.time()
@@ -105,4 +105,7 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
         time_distribution.append(json_str)
     xbridge_utils.export_data("test_rpc_defined_order_sequence.xlsx", time_distribution)
 
-    
+
+
+# random_RPC_calls_sequence(nb_of_runs=1000)
+defined_order_RPC_calls_sequence(nb_of_runs=1000)
