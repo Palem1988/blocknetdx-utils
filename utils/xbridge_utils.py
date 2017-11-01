@@ -5,6 +5,7 @@ import pandas as pd
 from pandas import ExcelWriter
 import os, errno
 import xbridge_logger
+import xbridge_config
 
 VALID_DATA = 1
 INVALID_DATA = 2
@@ -30,19 +31,6 @@ a_src_Address = ""
 a_dest_Address = ""
 # set for any function that takes a txid as parameter
 ca_random_tx_id = ""
-
-os.chdir(os.path.dirname(__file__))
-program_dir = os.getcwd()
-
-LOG_DIR = program_dir + "\\test_outputs\\"
-
-try:
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        LOG_DIR = ""
-        raise
 
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
@@ -82,6 +70,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
 
 def export_data(filepath, list_to_export):
     if len(list_to_export) == 0:
+        return
+    if not xbridge_config.should_log_Excel_files():
         return
     timestr = time.strftime("%Y%m%d-%H%M%S")
     filepath_with_time = xbridge_logger.LOG_DIR + timestr + "_" + filepath
