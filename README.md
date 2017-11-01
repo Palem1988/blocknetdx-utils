@@ -43,7 +43,7 @@ LOGIN = Your_login
 PASSWORD = Your_password
 
 [OUTPUT]
-LOG_DIR = C:\Users\kbentahmed\Dropbox\__ALTCOINS\Blocknet_unit_tests\test_outputs\
+LOG_DIR = C:\Users\...\Blocknet_unit_tests\test_outputs\
 LOG_EXCEL_FILES = yes
 
 [DEFAULT_NUMBER_OF_RUNS]
