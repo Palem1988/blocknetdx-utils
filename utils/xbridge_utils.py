@@ -90,8 +90,12 @@ def export_data(filepath, list_to_export):
     writer = ExcelWriter(filepath_with_time)
     my_df.to_excel(writer, 'RawData')
     stat_df.to_excel(writer, 'Summary')
-    writer.save()
-    print("created: %s" % filepath_with_time)
+    try:
+        writer.save()
+        print("created: %s" % filepath_with_time)
+    except:
+        print("problem creating: %s" % filepath_with_time)
+
 
 
 def generate_random_number(a, b):
