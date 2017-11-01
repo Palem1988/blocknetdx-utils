@@ -15,26 +15,20 @@ If you don't specify the optional parameters, those in the tests.conf file will 
 
 
 ```
-python build_time_tests.py --unittest=100 --sequence=100
+python build_time_tests.py --unittest=100 --sequence=200
 ```
-
-If you want to run only unit tests, use:
-```
-python build_time_tests.py --unittest=100 --sequence=0
-```
-
-If you want for example run only unittests, just put --unittest=100 --sequence=0
-or set them accordingly in the tests.conf file.
 
 
 3. Check the logs (log and Excel files) to analyze results.
 Do not rely on your console for that. The console will only display what the program is currently doing, not the results.
 
 
-## Remark !
+## Remarks !
 
 - By default, the sequence tests will output a lot of Excel files, with the timing information.
-You can turn that off, by specifying LOG_EXCEL_FILES = no in the tests.conf file.
+You can turn that off, by specifying LOG_EXCEL_FILES = no in the **tests.conf** file.
+- If you want for example run only unittests, just put **--unittest=100 --sequence=0**.
+or set them accordingly in the **tests.conf** file.
 
 
 
