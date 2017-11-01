@@ -42,17 +42,8 @@ from rpc_test_cases import xbridge_rpc_sequence_test
         *****************************************************************************************
 """
 
-
-if xbridge_config.get_conf_sequence_run_number() > 0:
-    NUMBER_OF_WANTED_RUNS = xbridge_config.get_conf_sequence_run_number()
-else:
-    NUMBER_OF_WANTED_RUNS = 1
-
-
-if xbridge_config.get_conf_unit_tests_run_number() > 0:
-    UNIT_TESTS_NB_OF_RUNS = xbridge_config.get_conf_unit_tests_run_number()
-else:
-    UNIT_TESTS_NB_OF_RUNS = 1
+NUMBER_OF_WANTED_RUNS = xbridge_config.get_conf_sequence_run_number()
+UNIT_TESTS_NB_OF_RUNS = xbridge_config.get_conf_unit_tests_run_number()
 
 
 parser = argparse.ArgumentParser(description='API testing')
