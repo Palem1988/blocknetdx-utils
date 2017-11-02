@@ -1,7 +1,8 @@
 ## BlocknetDX Utils Recent Changelog
 
-- (Upcoming) Unit tests for getblockcount, servicenodelist, getbudget
-- (Upcoming) cleaning main script
+- [Upcoming] Unit tests for getblockcount, servicenodelist, getbudget
+- [Upcoming] Improved logging
+- [Upcoming] cleaning main script
 - If for any reason, there's a problem with the tests.conf file, the default values of the number of tests to run is now set to 0.
 - Code fixes in dxGetTransactionInfo
 - Fixed wrong log string in createTx.
