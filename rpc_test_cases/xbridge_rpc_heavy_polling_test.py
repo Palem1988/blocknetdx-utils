@@ -40,7 +40,6 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1
         print("Random sequence polling test - %s (%s secs)" % (str(picked_func), str(elapsed_Time)))
         full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "random_polling_sequence", "API": str(picked_func), "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-        # total_elapsed_seconds += te - ts
         json_str = {"time": elapsed_Time, "API": str(picked_func)}
         time_distribution.append(json_str)
     xbridge_utils.export_data("random_seq_polling_rpc_calls.xlsx", time_distribution)
@@ -56,7 +55,6 @@ def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=
     for i in range(1, nb_of_runs):
         te = 0
         ts = 0
-        # print("#%s" % str(i))
         func_str = ""
         ts = time.time()
         if i % 2 == 0:
@@ -70,7 +68,6 @@ def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=
         print("Defined sequence polling test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "defined_polling_sequence", "API": str(picked_func), "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-        # total_elapsed_seconds += te - ts
         json_str = {"time": elapsed_Time, "API": str(func_str)}
         time_distribution.append(json_str)
     xbridge_utils.export_data("defined_seq_polling_rpc_calls.xlsx", time_distribution)
@@ -84,6 +81,8 @@ def test_get_tx_list_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
+        te = 0
+        ts = 0
         ts = time.time()
         xbridge_rpc.get_transaction_list()
         te = time.time()
@@ -91,7 +90,6 @@ def test_get_tx_list_load(nb_of_runs=1000):
         print("GET_TRANSACTION_LIST only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "get_TX_List_sequence", "API": "get_transaction_list", "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-        # total_elapsed_seconds += te - ts
         json_str = {"time": elapsed_Time, "API": "get_tx_list"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("test_get_tx_list_rpc_load.xlsx", time_distribution)
@@ -105,11 +103,13 @@ def test_get_tx_history_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
+        te = 0
+        ts = 0
         ts = time.time()
         xbridge_rpc.get_transaction_history_list()
         te = time.time()
         elapsed_Time = te - ts
-        # total_elapsed_seconds += te - ts
+        print("get_transaction_history_list only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         json_str = {"time": te - ts, "API": "get_tx_history"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("test_get_tx_history_rpc_load.xlsx", time_distribution)
@@ -123,12 +123,13 @@ def test_get_currency_list_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, nb_of_runs):
-        # print("#%s" % str(i))
+        te = 0
+        ts = 0
         ts = time.time()
         xbridge_rpc.get_currency_list()
         te = time.time()
         elapsed_Time = te - ts
-        # total_elapsed_seconds += te - ts
+        print("get_currency_list only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         json_str = {"time": te - ts, "API": "get_currency_list"}
         time_distribution.append(json_str)
     xbridge_utils.export_data("test_get_currency_list_rpc_load.xlsx", time_distribution)
