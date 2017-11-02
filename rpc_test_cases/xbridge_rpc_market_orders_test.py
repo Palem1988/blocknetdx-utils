@@ -17,6 +17,8 @@ def random_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=3, char_min
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
+        te = 0
+        ts = 0
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         func_list = [xbridge_rpc.create_tx, xbridge_rpc.accept_tx, xbridge_rpc.cancel_tx]
         selected_func = random.choice(func_list)
@@ -32,9 +34,12 @@ def random_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=3, char_min
             xbridge_rpc.cancel_tx(xbridge_utils.ca_random_tx_id)
             func_str = "cancel_tx"
         te = time.time()
-        total_elapsed_seconds += te - ts
-        json_str = {"time": te - ts, "API": func_str}
+        elapsed_Time = te - ts
+        json_str = {"time": elapsed_Time, "API": func_str}
         time_distribution.append(json_str)
+        print("Random sequence of market orders - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
+        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "random_sequence_market_orders", "API": str(func_str), "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("random_market_actions_RPC_sequence.xlsx", time_distribution)
 
 
@@ -47,6 +52,8 @@ def defined_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=3, char_mi
     time_distribution = []
     total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
+        te = 0
+        ts = 0
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         func_str = ""
         ts = time.time()
@@ -60,8 +67,11 @@ def defined_seq_market_actions_rpc_calls(nb_of_runs=1000, data_nature=3, char_mi
             xbridge_rpc.cancel_tx(xbridge_utils.ca_random_tx_id)
             func_str = "cancel_tx"
         te = time.time()
-        total_elapsed_seconds += te - ts
+        elapsed_Time = te - ts
         json_str = {"time": te - ts, "API": func_str}
         time_distribution.append(json_str)
+        print("Defined sequence of market orders - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
+        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "defined_sequence_market_orders", "API": str(func_str), "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("defined_market_actions_RPC_sequence.xlsx", time_distribution)
 
