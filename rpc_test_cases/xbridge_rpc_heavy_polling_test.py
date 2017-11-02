@@ -21,7 +21,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1
     no_param_func_list = [xbridge_rpc.get_transaction_list, xbridge_rpc.get_transaction_history_list,
                           xbridge_rpc.get_currency_list, xbridge_rpc.get_blockcount, xbridge_rpc.get_budget,
                           xbridge_rpc.get_node_list]
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
         te = 0
         ts = 0
         func_list = random.choice([no_param_func_list, xbridge_rpc.get_tx_info])
@@ -52,7 +52,7 @@ def random_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1
 def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
         te = 0
         ts = 0
         func_str = ""
@@ -80,7 +80,7 @@ def defined_seq_polling_rpc_calls(nb_of_runs=1000, data_nature=3, char_min_size=
 def test_get_tx_list_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
         te = 0
         ts = 0
         ts = time.time()
@@ -102,7 +102,7 @@ def test_get_tx_list_load(nb_of_runs=1000):
 def test_get_tx_history_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
         te = 0
         ts = 0
         ts = time.time()
@@ -124,7 +124,7 @@ def test_get_tx_history_load(nb_of_runs=1000):
 def test_get_currency_list_load(nb_of_runs=1000):
     time_distribution = []
     total_elapsed_seconds = 0
-    for i in range(1, nb_of_runs):
+    for i in range(1, 1 + nb_of_runs):
         te = 0
         ts = 0
         ts = time.time()
