@@ -1,3 +1,6 @@
+"""
+BLOCKNET API TESTING TOOLS
+"""
 import unittest
 import time
 import xbridge_logger
@@ -13,7 +16,7 @@ from strgen import StringGenerator
 """
 def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
-    total_elapsed_seconds = 0
+    # total_elapsed_seconds = 0
     for i in range(1, 1 + nb_of_runs):
         elapsed_Time = 0
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
@@ -21,10 +24,12 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
         assert type(xbridge_rpc.cancel_tx(xbridge_utils.ca_random_tx_id)) == dict
         te = time.time()
         elapsed_Time = te - ts
-        total_elapsed_seconds += elapsed_Time
+        # total_elapsed_seconds += elapsed_Time
         print("single API seq - dxCancel - elapsedTime: %s" % (str(elapsed_Time)))
         json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxCancel"}
+        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "dxCancel_RPC_sequence", "API": "dxCancel", "time": elapsed_Time}
         time_distribution.append(json_str)
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("dxCancel_RPC_sequence.xlsx", time_distribution)
 
 
@@ -35,7 +40,10 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
 
 class cancelUnitTest(unittest.TestCase):
     def test_valid_tx_id_1(self):
-        self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
+        try:
+            self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
+        except AssertionError as e:
+            xbridge_logger.logger.info('dxCancel valid unit test group 1 FAILED')
     
     """
             - Basic tests
@@ -125,9 +133,6 @@ def repeat_cancel_tx_unit_tests(runs=1000):
         if not wasSuccessful:
             sys.exit(1)
 
-# unittest.main()
-repeat_cancel_tx_unit_tests(2)
-"""
 
 """
 if __name__ == '__main__':
