@@ -87,7 +87,7 @@ def test_get_tx_list_load(nb_of_runs=1000):
         xbridge_rpc.get_transaction_list()
         te = time.time()
         elapsed_Time = te - ts
-        print("GET_TRANSACTION_LIST only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
+        print("get_transaction_list only sequence test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "get_TX_List_sequence", "API": "get_transaction_list", "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
         json_str = {"time": elapsed_Time, "API": "get_tx_list"}
@@ -109,9 +109,11 @@ def test_get_tx_history_load(nb_of_runs=1000):
         xbridge_rpc.get_transaction_history_list()
         te = time.time()
         elapsed_Time = te - ts
-        print("get_transaction_history_list only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
+        print("get_tx_history_list only sequence test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         json_str = {"time": te - ts, "API": "get_tx_history"}
         time_distribution.append(json_str)
+        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "get_tx_history_list sequence", "API": str(picked_func), "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("test_get_tx_history_rpc_load.xlsx", time_distribution)
 
 
@@ -132,5 +134,7 @@ def test_get_currency_list_load(nb_of_runs=1000):
         print("get_currency_list only test - %s (%s secs)" % (str(func_str), str(elapsed_Time)))
         json_str = {"time": te - ts, "API": "get_currency_list"}
         time_distribution.append(json_str)
+        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "get_currency_list sequence", "API": str(picked_func), "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("test_get_currency_list_rpc_load.xlsx", time_distribution)
 
