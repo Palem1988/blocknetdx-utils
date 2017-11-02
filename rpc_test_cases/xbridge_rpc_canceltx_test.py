@@ -63,8 +63,9 @@ class cancelUnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.cancel_tx("}"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
-            print("dxGetTxInfo Unit Test 1 OK")
+            print("dxCancel Unit Test 1 OK")
         except AssertionError as e:
+            print("****** dxCancel Unit Test 1 FAILED ******")
             xbridge_logger.logger.info('dxCancel unit test group 1 FAILED')
 
     """
