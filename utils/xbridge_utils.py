@@ -74,19 +74,19 @@ def export_Full_Excel_Log():
     if len(TIME_DISTRIBUTION) == 0:
         return
     return
-    timestr = time.strftime("%Y%m%d-%H%M%S")
+    timestr = time.strftime("%Y%m%d_%H%M%S")
     filepath_with_time = xbridge_config.get_conf_log_dir + timestr + "_" + filepath
-    my_df = pd.DataFrame(list_to_export)
+    my_df = pd.DataFrame(TIME_DISTRIBUTION)
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
-    my_df.to_excel(writer, 'RawData')
+    my_df.to_excel(writer, timestr)
     stat_df.to_excel(writer, 'Summary')
     try:
         writer.save()
-        print("created: %s" % filepath_with_time)
+        print("Created Excel Log: %s" % filepath_with_time)
+        print("Recorded %s logs" % str(len(TIME_DISTRIBUTION)))
     except:
-        print("problem creating: %s" % filepath_with_time)
-    pass
+        print("export_data - An error occured when creating: %s" % filepath_with_time)
     
 
         
@@ -95,12 +95,12 @@ def export_data(filepath, list_to_export):
         return
     if not xbridge_config.should_log_Excel_files():
         return
-    timestr = time.strftime("%Y%m%d-%H%M%S")
-    filepath_with_time = xbridge_config.get_conf_log_dir + timestr + "_" + filepath
+    timestr = time.strftime("%Y%m%d_%H%M%S")
+    filepath_with_time = xbridge_config.get_conf_log_dir() + timestr + "_" + filepath
     my_df = pd.DataFrame(list_to_export)
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
-    my_df.to_excel(writer, 'RawData')
+    my_df.to_excel(writer, timestr)
     stat_df.to_excel(writer, 'Summary')
     try:
         writer.save()
