@@ -18,7 +18,11 @@ else:
     exit(1)
 
 def get_core_version():
-    return "3.7.39"
+    try:
+        vers = rpc_connection.getinfo()
+        return vers["version"]
+    except JSONRPCException:
+        return 0
     
 def get_blockcount():
     try:
@@ -140,6 +144,8 @@ print(get_blockcount())
 print(get_budget())
 node_list = get_node_list()
 print(len(node_list))
+
+print(get_core_version())
 
 """
 
