@@ -73,9 +73,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
 def export_Full_Excel_Log():
     if len(TIME_DISTRIBUTION) == 0:
         return
-    return
     timestr = time.strftime("%Y%m%d_%H%M%S")
-    filepath_with_time = xbridge_config.get_conf_log_dir + timestr + "_" + filepath
+    filepath_with_time = xbridge_config.get_conf_log_dir() + timestr + "_SEQUENCE_TESTS.xlsx"
     my_df = pd.DataFrame(TIME_DISTRIBUTION)
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
@@ -83,14 +82,15 @@ def export_Full_Excel_Log():
     stat_df.to_excel(writer, 'Summary')
     try:
         writer.save()
-        print("Created Excel Log: %s" % filepath_with_time)
-        print("Recorded %s logs" % str(len(TIME_DISTRIBUTION)))
+        print("Created Excel Log:       %s" % filepath_with_time)
+        print("Recorded:                %s logs" % str(len(TIME_DISTRIBUTION)))
+        print("Max run time:            %s" % str(my_df["time"].max()))
     except:
         print("export_data - An error occured when creating: %s" % filepath_with_time)
     
-
-        
+# This function has been disabled
 def export_data(filepath, list_to_export):
+    return
     if len(list_to_export) == 0:
         return
     if not xbridge_config.should_log_Excel_files():
