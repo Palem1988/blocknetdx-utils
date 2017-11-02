@@ -50,7 +50,7 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, c
             te = time.time()
         elapsed_Time = te - ts
         print("Random sequence test - %s (%s secs)" % (str(picked_func), str(elapsed_Time)))
-        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "random_sequence", "API": str(picked_func), "time": elapsed_Time}
+        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "random_sequence", "API": str(picked_func), "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
         # if elapsed_Time > 1.5:
         #    print("outlier - %s: %s - data: %s" % (str(elapsed_Time), picked_func, j) )
@@ -102,7 +102,7 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
             te = time.time()
         elapsed_Time = te - ts
         print("Defined order sequence test - %s (%s secs)" % (str(func_to_run), str(elapsed_Time)))
-        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "defined_order_sequence", "API": str(func_to_run), "time": elapsed_Time}
+        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "defined_order_sequence", "API": str(func_to_run), "time": elapsed_Time}
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
         run_count += 1
         json_str = {"time": elapsed_Time, "API": str(func_to_run)}
