@@ -76,6 +76,8 @@ def export_Full_Excel_Log():
     timestr = time.strftime("%Y%m%d_%H%M%S")
     filepath_with_time = xbridge_config.get_conf_log_dir() + timestr + "_SEQUENCE_TESTS.xlsx"
     my_df = pd.DataFrame(TIME_DISTRIBUTION)
+    # reorder the columns
+    my_df = my_df[["version", "sequence", "API", "time"]]
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
     my_df.to_excel(writer, timestr)
