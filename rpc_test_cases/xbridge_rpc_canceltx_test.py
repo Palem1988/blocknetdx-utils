@@ -27,11 +27,10 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
         # total_elapsed_seconds += elapsed_Time
         print("single API seq - dxCancel - elapsedTime: %s" % (str(elapsed_Time)))
         json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxCancel"}
-        full_json_str = {version: xbridge_rpc.get_core_version(), sequence: "dxCancel_RPC_sequence", "API": "dxCancel", "time": elapsed_Time}
+        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxCancel_RPC_sequence", "API": "dxCancel", "time": elapsed_Time}
         time_distribution.append(json_str)
         xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("dxCancel_RPC_sequence.xlsx", time_distribution)
-
 
 
 """                       ***  UNIT TESTS ***
@@ -42,7 +41,9 @@ class cancelUnitTest(unittest.TestCase):
     def test_valid_tx_id_1(self):
         try:
             self.assertIsInstance(xbridge_rpc.cancel_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
+            print("dxCancel Valid Unit Test Group 1 OK")
         except AssertionError as e:
+            print("****** dxCancel valid Unit Test Group 1 FAILED ******")
             xbridge_logger.logger.info('dxCancel valid unit test group 1 FAILED')
     
     """
@@ -63,9 +64,9 @@ class cancelUnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.cancel_tx("}"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
-            print("dxCancel Unit Test 1 OK")
+            print("dxCancel Unit Test Group 1 OK")
         except AssertionError as e:
-            print("****** dxCancel Unit Test 1 FAILED ******")
+            print("****** dxCancel Unit Test Group 1 FAILED ******")
             xbridge_logger.logger.info('dxCancel unit test group 1 FAILED')
 
     """
@@ -85,6 +86,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
+                        print("****** dxCancel Unit SUBTEST 2 FAILED ON PARAMETER: %s ******" % generated_str)
                         xbridge_logger.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
                         run_count += 1
         print("UT Group 2 - total subtests completed with or without errors: %s" % str(run_count))
@@ -106,6 +108,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
+                        print("****** dxCancel Unit SUBTEST 3 FAILED ON PARAMETER: %s ******" % generated_str)
                         xbridge_logger.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
                         run_count += 1
         print("UT Group 3 - total subtests completed with or without errors: %s" % str(run_count))
@@ -127,6 +130,7 @@ class cancelUnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
                         run_count += 1
                     except AssertionError as e:
+                        print("****** dxCancel Unit SUBTEST 4 FAILED ON PARAMETER: %s ******" % generated_str)
                         xbridge_logger.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
                         run_count += 1
         print("UT Group 4 - total subtests completed with or without errors: %s" % str(run_count))
