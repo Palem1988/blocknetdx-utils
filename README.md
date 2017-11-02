@@ -1,9 +1,11 @@
 ## BlocknetDX Utils Recent Changelog
 
-- **[Upcoming]** Unit tests for getblockcount, servicenodelist, getbudget
-- **[Upcoming]** Improved file logging
-- **[Upcoming]** Improved console logging
-- **[Upcoming]** cleaning main script
+- Improved file logging: runtime distributions from sequence tests are now centralized in a single Excel file.
+The option **LOG_EXCEL_FILES** in the **tests.conf** file is therefore now irrelevant.
+- Log files contain the version number of the Core that was used.
+- Unit tests for getblockcount, servicenodelist, getbudget, getversion
+- Improved console logging for sequence tests.
+- Cleaned main script
 - If for any reason, there's a problem with the tests.conf file, the default values of the number of tests to run is now set to 0.
 - Code fixes in dxGetTransactionInfo
 - Fixed wrong log string in createTx.
@@ -35,8 +37,6 @@ Do not rely on your console for that. The console will only display what the pro
 
 ## Remarks !
 
-- By default, the sequence tests will output a lot of Excel files, with the timing information.
-You can turn that off, by specifying **LOG_EXCEL_FILES = no** in the **tests.conf** file.
 - If you want for example run only unittests, just put **--unittest=100 --sequence=0**.
 or set them accordingly in the **tests.conf** file.
 
