@@ -70,13 +70,12 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         ca_random_tx_id = generate_random_valid_txid()
 
 
-def export_data(filepath, list_to_export):
-    if len(list_to_export) == 0:
+def export_Full_Excel_Log():
+    if len(TIME_DISTRIBUTION) == 0:
         return
-    if not xbridge_config.should_log_Excel_files():
-        return
+    return
     timestr = time.strftime("%Y%m%d-%H%M%S")
-    filepath_with_time = xbridge_logger.LOG_DIR + timestr + "_" + filepath
+    filepath_with_time = xbridge_config.get_conf_log_dir + timestr + "_" + filepath
     my_df = pd.DataFrame(list_to_export)
     stat_df = my_df["time"].describe()
     writer = ExcelWriter(filepath_with_time)
@@ -87,6 +86,27 @@ def export_data(filepath, list_to_export):
         print("created: %s" % filepath_with_time)
     except:
         print("problem creating: %s" % filepath_with_time)
+    pass
+    
+
+        
+def export_data(filepath, list_to_export):
+    if len(list_to_export) == 0:
+        return
+    if not xbridge_config.should_log_Excel_files():
+        return
+    timestr = time.strftime("%Y%m%d-%H%M%S")
+    filepath_with_time = xbridge_config.get_conf_log_dir + timestr + "_" + filepath
+    my_df = pd.DataFrame(list_to_export)
+    stat_df = my_df["time"].describe()
+    writer = ExcelWriter(filepath_with_time)
+    my_df.to_excel(writer, 'RawData')
+    stat_df.to_excel(writer, 'Summary')
+    try:
+        writer.save()
+        print("Created Excel Log: %s" % filepath_with_time)
+    except:
+        print("export_data - An error occured when creating: %s" % filepath_with_time)
 
 
 
