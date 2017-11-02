@@ -7,6 +7,8 @@ import os, errno
 import xbridge_logger
 import xbridge_config
 
+TIME_DISTRIBUTION = []
+
 VALID_DATA = 1
 INVALID_DATA = 2
 RANDOM_VALID_INVALID = 3
