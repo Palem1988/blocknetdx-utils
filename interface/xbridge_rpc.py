@@ -17,7 +17,9 @@ else:
     print("credential information missing in the tests.conf file. Program stopped")
     exit(1)
 
-
+def get_core_version():
+    return "3.7.39"
+    
 def get_blockcount():
     try:
         blockcount = rpc_connection.getblockcount()
@@ -134,4 +136,10 @@ invalid_lg_positive_nb= \
 # def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
 # create_tx(valid_src_Address, valid_src_Token, invalid_lg_positive_nb, valid_dest_Address, valid_dest_Token, invalid_lg_positive_nb)
 
+print(get_blockcount())
+print(get_budget())
+node_list = get_node_list()
+print(len(node_list))
+
 """
+
