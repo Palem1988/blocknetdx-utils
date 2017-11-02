@@ -63,6 +63,7 @@ class cancelUnitTest(unittest.TestCase):
             self.assertIsInstance(xbridge_rpc.cancel_tx("}"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("''"), dict)
             self.assertIsInstance(xbridge_rpc.cancel_tx("'"), dict)
+            print("dxGetTxInfo Unit Test 1 OK")
         except AssertionError as e:
             xbridge_logger.logger.info('dxCancel unit test group 1 FAILED')
 
@@ -85,6 +86,7 @@ class cancelUnitTest(unittest.TestCase):
                     except AssertionError as e:
                         xbridge_logger.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
                         run_count += 1
+        print("UT Group 2 - total subtests completed with or without errors: %s" % str(run_count))
 
                     
     """
@@ -105,6 +107,7 @@ class cancelUnitTest(unittest.TestCase):
                     except AssertionError as e:
                         xbridge_logger.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
                         run_count += 1
+        print("UT Group 3 - total subtests completed with or without errors: %s" % str(run_count))
 
                             
     """
@@ -124,6 +127,8 @@ class cancelUnitTest(unittest.TestCase):
                         run_count += 1
                     except AssertionError as e:
                         xbridge_logger.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
+                        run_count += 1
+        print("UT Group 4 - total subtests completed with or without errors: %s" % str(run_count))
 
 
 """
@@ -132,7 +137,7 @@ def repeat_cancel_tx_unit_tests(runs=1000):
         wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
         if not wasSuccessful:
             sys.exit(1)
-
+"""
 
 """
 if __name__ == '__main__':
