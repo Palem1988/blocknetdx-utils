@@ -1,8 +1,19 @@
 import unittest
 import argparse
+
 from utils import xbridge_utils
+from interface import xbridge_rpc
 import xbridge_logger
 import xbridge_config
+
+from rpc_test_cases import xbridge_rpc_accept_tx_test
+from rpc_test_cases import xbridge_rpc_canceltx_test
+from rpc_test_cases import xbridge_rpc_get_tx_info_test
+from rpc_test_cases import xbridge_rpc_createtx_test
+from rpc_test_cases import xbridge_rpc_market_orders_test
+from rpc_test_cases import xbridge_rpc_heavy_polling_test
+from rpc_test_cases import xbridge_rpc_sequence_test
+from rpc_test_cases import xbridge_rpc_misc_test
 
 """
 from test_cases import xbridge_client_get_tx_info_test
@@ -12,39 +23,17 @@ from test_cases import xbridge_client_createtx_test
 from test_cases import xbridge_client_sequence_test
 """
 
-from rpc_test_cases import xbridge_rpc_accept_tx_test
-from rpc_test_cases import xbridge_rpc_canceltx_test
-from rpc_test_cases import xbridge_rpc_get_tx_info_test
-from rpc_test_cases import xbridge_rpc_createtx_test
-from rpc_test_cases import xbridge_rpc_market_orders_test
-from rpc_test_cases import xbridge_rpc_heavy_polling_test
-from rpc_test_cases import xbridge_rpc_sequence_test
-
-
-"""     *****************************************************************************************
-        ******************************  INSTRUCTIONS    ******************************
-        *****************************************************************************************
-
-            - All tests can be run from there.
-
-            - Uncomment the test you want to run.
-            
-            - Adjust the number of runs you want.
-
-            - Except for unit tests, all tests output an Excel file in the current directory with
-            the timing distribution.
-
-"""
-
 """            
         *****************************************************************************************
         ******************************  SPECIFY THE OPTIONS HERE    *****************************
         *****************************************************************************************
 """
 
+NUMBER_OF_WANTED_RUNS = 0
+UNIT_TESTS_NB_OF_RUNS = 0
+
 NUMBER_OF_WANTED_RUNS = xbridge_config.get_conf_sequence_run_number()
 UNIT_TESTS_NB_OF_RUNS = xbridge_config.get_conf_unit_tests_run_number()
-
 
 parser = argparse.ArgumentParser(description='API testing')
 parser.add_argument('-s','--sequence', type=int, help='Number of sequence tests run')
@@ -58,12 +47,6 @@ if args.sequence is not None:
 if args.unittest is not None:
     UNIT_TESTS_NB_OF_RUNS = args.unittest
 
-"""
-NUMBER_OF_WANTED_RUNS = 2
-UNIT_TESTS_NB_OF_RUNS = 3
-"""
-
-
 """            
         *****************************************************************************************
         ******************  SPECIFY HERE THE LIST RPC SEQUENCE TESTS TO RUN    ******************
@@ -71,7 +54,6 @@ UNIT_TESTS_NB_OF_RUNS = 3
 """
 
 # When data_nature is not specified, this will generate both valid and invalid data.
-
 
 xbridge_rpc_sequence_test.random_RPC_calls_sequence(nb_of_runs=NUMBER_OF_WANTED_RUNS, data_nature=xbridge_utils.INVALID_DATA, char_min_size=10000, char_max_size=12000)
 xbridge_rpc_sequence_test.random_RPC_calls_sequence(nb_of_runs=NUMBER_OF_WANTED_RUNS, data_nature=xbridge_utils.VALID_DATA)
@@ -123,6 +105,12 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
 xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=NUMBER_OF_WANTED_RUNS, char_max_size=5000)
 
 
+if NUMBER_OF_WANTED_RUNS > 0:
+    xbridge_logger.logger.info('')
+    print("******** Sequence tests are done ********")
+    xbridge_utils.export_Full_Excel_Log()
+    print("*****************************************")
+
 
 """            
         *****************************************************************************************
@@ -130,25 +118,27 @@ xbridge_rpc_market_orders_test.defined_seq_market_actions_rpc_calls(nb_of_runs=N
         *****************************************************************************************
 """
 
-if UNIT_TESTS_NB_OF_RUNS > 0:
+if UNIT_TESTS_NB_OF_RUNS < 1:
     xbridge_logger.logger.info('')
-    xbridge_logger.logger.info('Starting unit tests...')
+    print("No unit tests to run")
+    exit(0)
 
-# _test is not in the list because the client keeps displaying dialog boxes
+xbridge_logger.logger.info('')
+xbridge_logger.logger.info('Starting unit tests with version %s', str(xbridge_rpc.get_core_version()))
+
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
                              xbridge_rpc_canceltx_test,
                              xbridge_rpc_accept_tx_test,
-                             xbridge_rpc_get_tx_info_test]
+                             xbridge_rpc_get_tx_info_test,
+                             xbridge_rpc_misc_test]
 
-for i in range(1, 1+UNIT_TESTS_NB_OF_RUNS):
+for i in range(1, 1 + UNIT_TESTS_NB_OF_RUNS):
     suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
     test_suite = unittest.TestSuite(suites)
     testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
 
-if UNIT_TESTS_NB_OF_RUNS > 0:
-    xbridge_logger.logger.info('')
-    xbridge_logger.logger.info('Unit tests are done...')
+xbridge_logger.logger.info('')
+xbridge_logger.logger.info('Unit tests are done !')
 
 # xbridge_logger.logger.info('----------------------------------------------------------------------------------------------------------------------------------------------------------')
 # xbridge_logger.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
-
