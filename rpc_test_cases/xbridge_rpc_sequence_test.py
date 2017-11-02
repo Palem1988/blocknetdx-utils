@@ -19,10 +19,9 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, c
     global no_param_func_list
     global txid_func_list
     time_distribution = []
-    # total_elapsed_seconds = 0
     elapsed_Time = 0
     run_count = 0
-    print("API call order will be random. Number of runs: %s" % (str(nb_of_runs)))
+    # print("API call order will be random. Number of runs: %s" % (str(nb_of_runs)))
     while run_count < nb_of_runs:
         te = 0
         ts = 0
@@ -76,7 +75,7 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
     total_elapsed_seconds = 0
     elapsed_Time = 0
     run_count = 0
-    print("API calls will be made in turn...Number of runs: %s" % (str(nb_of_runs)))
+    # print("API calls will be made in turn...Number of runs: %s" % (str(nb_of_runs)))
     while run_count < nb_of_runs:
         ts = 0
         te = 0

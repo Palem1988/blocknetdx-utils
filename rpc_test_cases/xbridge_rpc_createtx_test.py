@@ -14,16 +14,21 @@ import xbridge_logger
 
 def dxCreate_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     time_distribution = []
-    total_elapsed_seconds = 0
+    elapsed_Time = 0
     for i in range(1, 1 + nb_of_runs):
+        ts = 0
+        te = 0
         xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
         ts = time.time()
         xbridge_rpc.create_tx(xbridge_utils.c_src_Address, xbridge_utils.c_src_Token, xbridge_utils.source_nb, xbridge_utils.c_dest_Address, xbridge_utils.c_dest_Token,
                               xbridge_utils.dest_nb)
         te = time.time()
-        total_elapsed_seconds += te - ts
+        elapsed_Time = te - ts
         json_str = {"time": te - ts, "API": "dxCreateTransaction"}
         time_distribution.append(json_str)
+        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxCreate_RPC_sequence",
+                         "API": "dxCreate", "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
     xbridge_utils.export_data("dxCreate_RPC_sequence.xlsx", time_distribution)
 
 
