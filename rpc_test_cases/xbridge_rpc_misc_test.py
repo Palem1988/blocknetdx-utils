@@ -1,11 +1,8 @@
 import unittest
 import xbridge_logger
-import random
 
 from interface import xbridge_rpc
-from interface import xbridge_utils
-
-
+from utils import xbridge_utils
 
 """                       ***  UNIT TESTS ***
 
@@ -35,7 +32,7 @@ account_func_list = [xbridge_rpc.rpc_connection.getnewaddress,
                     xbridge_rpc.rpc_connection.getaccount,
                     xbridge_rpc.rpc_connection.getaccountaddress,
                     xbridge_rpc.rpc_connection.getaddressesbyaccount,
-                    xbridge_rpc.rpc_connection.getbalance
+                    xbridge_rpc.rpc_connection.getbalance,
                     xbridge_rpc.rpc_connection.backupwallet
                     ]
                
@@ -58,7 +55,7 @@ no_param_returns_list_func_list = [
                     
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
-        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
+        xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
         
     def test_get_blockcount(self):
         try:
