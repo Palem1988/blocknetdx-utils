@@ -1,5 +1,7 @@
 ## BlocknetDX Utils Recent Changelog
 
+- [Upcoming] Unit tests for dxSignTx.
+- [Upcoming] Unit tests for dxSendTx.
 - Improved file logging: runtime distributions from sequence tests are now centralized in a single Excel file.
 The option **LOG_EXCEL_FILES** in the **tests.conf** file is therefore now irrelevant.
 - Log files contain the version number of the Core that was used.
