@@ -38,7 +38,7 @@ def dxSend_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_ma
 
 """
 
-class signUnitTest(unittest.TestCase):
+class sendUnitTest(unittest.TestCase):
     def test_valid_tx_id_1(self):
         try:
             self.assertIsInstance(xbridge_rpc.send_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
