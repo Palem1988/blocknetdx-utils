@@ -51,7 +51,6 @@ PASSWORD = Your_password
 
 [OUTPUT]
 LOG_DIR = C:\Users\...\Blocknet_unit_tests\test_outputs\
-LOG_EXCEL_FILES = yes
 
 [DEFAULT_NUMBER_OF_RUNS]
 SEQUENCE_TESTS_NB_OF_RUNS = 1
