@@ -222,6 +222,7 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('nb_with_leading_zeros_2: %s', self.nb_with_leading_zeros_2)
 
     # Combinations of very small and very large numerical parameters, all other parameters being valid
+    # @unittest.skip("does not work")
     def test_invalid_create_tx_v8(self):
         # very small + very small
         with self.subTest("test_invalid_create_tx_v8-1"):
@@ -232,9 +233,9 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-1 FAILED on parameter: %s',
-                                           self.invalid_sm_positive_nb)
-                xbridge_logger.logger.info('')
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-1 FAILED on parameter:')
+                xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
+                xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
         # very small + very large
         with self.subTest("test_invalid_create_tx_v8-2"):
             try:
@@ -244,11 +245,11 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-2 FAILED on parameter: %s and %s',
-                                           self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
-                xbridge_logger.logger.info('')
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-2 FAILED on parameter:')
+                xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
+                xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
         # very large + very small
-        with self.subTest("test_invalid_create_tx_v8"):
+        with self.subTest("test_invalid_create_tx_v8-3"):
             try:
                 self.assertIsInstance(
                     xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
@@ -256,11 +257,11 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-3 FAILED on parameter: %s and %s',
-                                           self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
-                xbridge_logger.logger.info('')
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-3 FAILED on parameter:')
+                xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
+                xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
         # very large + very large
-        with self.subTest("test_invalid_create_tx_v8"):
+        with self.subTest("test_invalid_create_tx_v8-4"):
             try:
                 self.assertIsInstance(
                     xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
@@ -268,9 +269,37 @@ class create_Tx_Test(unittest.TestCase):
                     dict)
             except AssertionError as e:
                 xbridge_logger.logger.info('')
-                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-4 FAILED on parameter: %s and %s',
-                                           self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
-                xbridge_logger.logger.info('')
+                xbridge_logger.logger.info('dxCreate unit test group 8 subtest-4 FAILED on parameter:')
+                xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
+                xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
+                
+    # Copy of 8-1 for investigation purposes only       
+    @unittest.skip("Still untested - Copy of 8-1 for investigation purposes only")
+    def test_invalid_create_tx_v9(self):
+        try:
+            self.assertIsInstance(
+                xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
+                                      self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb),
+                dict)
+        except AssertionError as e:
+            xbridge_logger.logger.info('')
+            xbridge_logger.logger.info('dxCreate unit test group 9 FAILED on parameter: %s',
+                                       self.invalid_sm_positive_nb)
+                
+    # Copy of 8-2 for investigation purposes only
+    @unittest.skip("Still untested - Copy of 8-2")
+    def test_invalid_create_tx_v10(self):
+        try:
+            self.assertIsInstance(
+                xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
+                                      self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb),
+                dict)
+        except AssertionError as e:
+            xbridge_logger.logger.info('')
+            xbridge_logger.logger.info('dxCreate unit test group 10 FAILED on parameter: %s and %s',
+                                       self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
+            xbridge_logger.logger.info('')
+    
 
 
 def repeat_create_tx_unit_tests(nb_of_runs):
