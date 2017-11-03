@@ -1,6 +1,7 @@
 ## BlocknetDX Utils Recent Changelog
 
-- **[Upcoming]** Improvements to createTx
+- **[Upcoming]** Preparing new unit tests.
+- **[Upcoming]** Improvements to createTx.
 - **[Upcoming]** Unit tests for dxSignTx.
 - **[Upcoming]** Unit tests for dxSendTx.
 - Improved file logging: runtime distributions from sequence tests are now centralized in a single Excel file.
