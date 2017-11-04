@@ -182,9 +182,9 @@ class Misc_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getreceivedbyaddress, "{}")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getreceivedbyaddress, xbridge_utils.ca_random_tx_id)
         except AssertionError:
-            xbridge_logger.logger.info('test_getreceivedbyaddress unit test FAILED')
+            xbridge_logger.logger.info('getreceivedbyaddress unit test FAILED')
 
-    def test_getreceivedbyaddress(self):
+    def test_getaccount(self):
         try:
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount, "")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount, " ")
@@ -197,9 +197,23 @@ class Misc_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount, "{}")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount, xbridge_utils.ca_random_tx_id)
         except AssertionError:
-            xbridge_logger.logger.info('test_getreceivedbyaddress unit test FAILED')
+            xbridge_logger.logger.info('getaccount unit test FAILED')
 
+        def test_getaccountaddress(self):
+            try:
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, " ")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "----")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "{")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "}")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "[")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "]")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "[]")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccountaddress, "{}")
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount,
+                                  xbridge_utils.ca_random_tx_id)
+            except AssertionError:
+                xbridge_logger.logger.info('getaccountaddress unit test FAILED')
 
-# xbridge_rpc.rpc_connection.getaccountaddress,
 
 unittest.main()
