@@ -31,6 +31,13 @@ def get_blockcount():
     except JSONRPCException:
         return 0
 
+def decode_script(hex):
+    try:
+        blockcount = rpc_connection.decodescript(hex)
+        return blockcount
+    except JSONRPCException:
+        return 0
+        
 def get_budget():
     try:
         snode_budget = rpc_connection.mnbudget('show')
@@ -128,17 +135,6 @@ print(rst)
 """
 
 """
-valid_src_Address = "edC5dCD9BEC36A2Baa2C5b15Bfc88b93f1cF2A3D838836c67aDaEb6"
-valid_dest_Address = "C195DbfCcDb1F05f50d6E7919f19dE6E7ed"
-valid_src_Token = "ZCSJH"
-valid_dest_Token = "BSOUR"
-invalid_sm_positive_nb = 1e-109
-invalid_lg_positive_nb= \
-    999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-
-
-# def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
-# create_tx(valid_src_Address, valid_src_Token, invalid_lg_positive_nb, valid_dest_Address, valid_dest_Token, invalid_lg_positive_nb)
 
 print(get_blockcount())
 print(get_budget())
@@ -149,3 +145,58 @@ print(get_core_version())
 
 """
 
+
+"""
+valid_src_Address = "edC5dCD9BEC36A2Baa2C5b15Bfc88b93f1cF2A3D838836c67aDaEb6"
+valid_dest_Address = "C195DbfCcDb1F05f50d6E7919f19dE6E7ed"
+valid_src_Token = "ZCSJH"
+valid_dest_Token = "BSOUR"
+
+invalid_sm_positive_nb = 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001
+invalid_lg_positive_nb = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+
+
+# def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
+print(create_tx(valid_src_Address, valid_src_Token, invalid_lg_positive_nb, valid_dest_Address, valid_dest_Token, invalid_lg_positive_nb))
+print(create_tx(valid_src_Address, valid_src_Token, 2, valid_dest_Address, valid_dest_Token, 1000))
+print(create_tx(valid_src_Address, valid_src_Token, "2,2", valid_dest_Address, valid_dest_Token, 1000))
+print(create_tx(valid_src_Address, valid_src_Token, "2,2", valid_dest_Address, valid_dest_Token, invalid_lg_positive_nb))
+
+
+print(rpc_connection.settxfee(0))
+# return list
+print(rpc_connection.getaddressesbyaccount("SyscoinTest"))
+print(rpc_connection.getaddressesbyaccount(""))
+
+returns dict
+print(rpc_connection.getnettotals())
+print(rpc_connection.getnetworkinfo())
+
+print(rpc_connection.ping())
+print(rpc_connection.getpeerinfo())
+
+# print(rpc_connection.getnewaddress())
+# print(rpc_connection.getaccount("dsdsd"))
+# print(rpc_connection.getaccountaddress("dsds"))
+print(rpc_connection.getaddressesbyaccount("cwxcxwc"))
+
+
+print(rpc_connection.decodescript(""))
+
+# print(rpc_connection.decodescript("sdsqdqsdsq"))
+# print(rpc_connection.decoderawtransaction(""))
+# print(rpc_connection.decoderawtransaction("sdsqdqsdsq"))
+# print(rpc_connection.settxfee(-3))
+# from logs
+
+
+print(rpc_connection.getbalance())
+print(rpc_connection.getbalance("sdsdsd"))
+print(rpc_connection.getblockhash(100))
+
+print(type(rpc_connection.getreceivedbyaccount("dsds")))
+
+
+"""
+
+print(send_tx(""))
