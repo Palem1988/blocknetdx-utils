@@ -162,7 +162,6 @@ print(create_tx(valid_src_Address, valid_src_Token, 2, valid_dest_Address, valid
 print(create_tx(valid_src_Address, valid_src_Token, "2,2", valid_dest_Address, valid_dest_Token, 1000))
 print(create_tx(valid_src_Address, valid_src_Token, "2,2", valid_dest_Address, valid_dest_Token, invalid_lg_positive_nb))
 
-
 print(rpc_connection.settxfee(0))
 # return list
 print(rpc_connection.getaddressesbyaccount("SyscoinTest"))
@@ -180,7 +179,6 @@ print(rpc_connection.getpeerinfo())
 # print(rpc_connection.getaccountaddress("dsds"))
 print(rpc_connection.getaddressesbyaccount("cwxcxwc"))
 
-
 print(rpc_connection.decodescript(""))
 
 # print(rpc_connection.decodescript("sdsqdqsdsq"))
@@ -196,7 +194,7 @@ print(rpc_connection.getblockhash(100))
 
 print(type(rpc_connection.getreceivedbyaccount("dsds")))
 
+print(send_tx(""))
 
 """
 
-print(send_tx(""))
