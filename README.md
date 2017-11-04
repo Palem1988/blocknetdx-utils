@@ -1,5 +1,7 @@
 ## BlocknetDX Utils Recent Changelog
 
+- **[Upcoming]** New unit tests.
+- **[Upcoming]** New functions added to sequence tests.
 - New unit tests for a lot of previously not covered functions.
 - Improvements to createTx.
 - Unit tests for dxSignTx and dxSendTx.
