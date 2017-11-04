@@ -133,7 +133,9 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                              xbridge_rpc_canceltx_test,
                              xbridge_rpc_accept_tx_test,
                              xbridge_rpc_get_tx_info_test,
-                             xbridge_rpc_misc_test
+                             xbridge_rpc_misc_test,
+                            xbridge_rpc_signtx_test,
+                            xbridge_rpc_sendtx_test
                              ]
 
 # xbridge_rpc_signtx_test, xbridge_rpc_sendtx_test
