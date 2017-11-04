@@ -15,6 +15,9 @@ from rpc_test_cases import xbridge_rpc_heavy_polling_test
 from rpc_test_cases import xbridge_rpc_sequence_test
 from rpc_test_cases import xbridge_rpc_misc_test
 
+from rpc_test_cases import xbridge_rpc_signtx_test
+from rpc_test_cases import xbridge_rpc_sendtx_test
+
 """
 from test_cases import xbridge_client_get_tx_info_test
 from test_cases import xbridge_client_accept_tx_test
@@ -130,7 +133,10 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                              xbridge_rpc_canceltx_test,
                              xbridge_rpc_accept_tx_test,
                              xbridge_rpc_get_tx_info_test,
-                             xbridge_rpc_misc_test]
+                             xbridge_rpc_misc_test
+                             ]
+
+# xbridge_rpc_signtx_test, xbridge_rpc_sendtx_test
 
 for i in range(1, 1 + UNIT_TESTS_NB_OF_RUNS):
     suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
