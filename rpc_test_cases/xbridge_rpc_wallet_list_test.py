@@ -43,7 +43,7 @@ class wallet_List_UnitTest(unittest.TestCase):
             pass
             # self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.ca_random_tx_id), dict)
         except AssertionError:
-            xbridge_logger.logger.info('listsinceblock unit test FAILED')
+            xbridge_logger.logger.info('listreceivedbyaddress unit test FAILED')
 
     @unittest.skip("TODO")
     def test_listreceivedbyaccount(self):
