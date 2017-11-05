@@ -68,7 +68,7 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
     global valid_random_positive_int
     global invalid_random_positive_int
     valid_random_positive_int = generate_random_int(1, 1000)
-    invalid_random_positive_int = generate_random_int(1, 1000)
+    invalid_random_positive_int = generate_random_int(999999999999999999999, 9999999999999999999999999999999999999999999999999999)
     if data_nature == RANDOM_VALID_INVALID:
         selected_data = random.choice([VALID_DATA, INVALID_DATA])
         generate_new_set_of_data(selected_data)
