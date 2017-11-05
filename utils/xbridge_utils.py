@@ -33,6 +33,9 @@ a_src_Address = ""
 a_dest_Address = ""
 # set for any function that takes a txid as parameter
 ca_random_tx_id = ""
+# General purpose
+valid_account_str = ""
+invalid_account_str = ""
 
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
@@ -55,6 +58,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         a_dest_Address = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
+        # general purpose
+        invalid_account_str = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
     if data_nature == VALID_DATA:
         # Set for create_tx
         c_src_Address = generate_random_valid_address()
@@ -68,6 +73,7 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         a_dest_Address = generate_random_valid_address()
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_random_valid_txid()
+        valid_account_str = generate_random_valid_account_str()
 
 
 def export_Full_Excel_Log():
@@ -137,7 +143,12 @@ def generate_random_valid_token():
     template_str = '[A-Z]{' + str(nb_of_cars) + '}'
     return StringGenerator(template_str).render()    
 
-    
+
+def generate_random_valid_account_str():
+    template_str = '[\h]{5:50}'
+    return StringGenerator(template_str).render()
+
+
 def generate_random_number_with_leading_zeros():
     template_str = '[0]{1:5000}&[\d]{1:5000}'
     return StringGenerator(template_str).render()    
