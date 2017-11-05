@@ -20,6 +20,15 @@ three_classes_list = ['[\\a\d\W]', '[\a\d\h]', '[\a\d\s]', '[\\a\d\p]', '[\\a\d\
 four_classes_list = ['[\p\d\w\s]', '[\p\d\\a\h]', '[\p\d\\a\s]']
 five_classes_list = ['[\p\d\W\w\h\\a]']
 
+# Frequently used constants
+fixed_negative_int = -10
+fixed_positive_int = 10
+positive_float = 10.2
+negative_float = -10.2
+fixed_small_positive_float = 0.00000000000000000000000000000000000000000000000000000001
+fixed_large_positive_int = 9999999999999999999999999999999999999999999999999999999999999999
+
+
 # Set for create_tx
 c_src_Address = ""
 c_dest_Address = ""
