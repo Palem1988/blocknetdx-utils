@@ -5,17 +5,6 @@
 - New unit tests for a lot of previously not covered functions.
 - Improvements to createTx.
 - Unit tests for dxSignTx and dxSendTx.
-- Improved file logging: runtime distributions from sequence tests are now centralized in a single Excel file.
-The option **LOG_EXCEL_FILES** in the **tests.conf** file is therefore now irrelevant.
-- Log files contain the version number of the Core that was used.
-- Unit tests for getblockcount, servicenodelist, getbudget, getversion
-- Improved console logging for sequence tests.
-- Cleaned main script
-- If for any reason, there's a problem with the tests.conf file, the default values of the number of tests to run is now set to 0.
-- Code fixes in dxGetTransactionInfo
-- Fixed wrong log string in createTx.
-- Added support for a configuration file for easier deployment.
-
 
 # Running the tests
 
