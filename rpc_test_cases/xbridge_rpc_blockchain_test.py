@@ -7,10 +7,7 @@ from interface import xbridge_rpc
 from utils import xbridge_utils
 
 """                       ***  UNIT TESTS ***
-
 """
-
-
 
 class Blockchain_UnitTest(unittest.TestCase):
     def setUp(self):
