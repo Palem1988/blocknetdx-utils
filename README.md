@@ -3,6 +3,7 @@
 - **[Upcoming]** Improved logging
 - **[Upcoming]** Expanding coverage of unit tests.
 - **[Upcoming]** Adding new functions to sequence tests.
+- **[Upcoming]** Completing xbridge_rpc_wallet_list_test
 - Code fix in xbridge_utils.
 - New unit tests.
 - New functions added to sequence tests.
