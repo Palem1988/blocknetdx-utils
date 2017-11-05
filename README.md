@@ -3,6 +3,7 @@
 - **[Upcoming]** Improved logging
 - **[Upcoming]** Expanding coverage of unit tests.
 - **[Upcoming]** Adding new functions to sequence tests.
+- Code fix in xbridge_utils.
 - New unit tests.
 - New functions added to sequence tests.
 - To maintain code clarity, some unit tests have been splitted accross new files.
