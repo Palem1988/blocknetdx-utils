@@ -12,7 +12,21 @@ from interface import xbridge_rpc
 """
 
 # Lists of function that will be run in an ordered or random way
-no_param_func_list = [xbridge_rpc.get_transaction_list, xbridge_rpc.get_transaction_history_list, xbridge_rpc.get_currency_list, xbridge_rpc.get_blockcount, xbridge_rpc.get_budget, xbridge_rpc.get_node_list]
+no_param_func_list = [xbridge_rpc.get_transaction_list,
+                      xbridge_rpc.get_transaction_history_list,
+                      xbridge_rpc.get_currency_list,
+                      xbridge_rpc.get_blockcount,
+                      xbridge_rpc.get_budget,
+                      xbridge_rpc.get_node_list,
+                      xbridge_rpc.rpc_connection.getnettotals,
+                      xbridge_rpc.rpc_connection.getnetworkinfo,
+                      xbridge_rpc.rpc_connection.getstakingstatus,
+                      xbridge_rpc.rpc_connection.getwalletinfo,
+                      xbridge_rpc.rpc_connection.ping,
+                      xbridge_rpc.rpc_connection.keypoolrefill
+                      ]
+
+
 txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info, xbridge_rpc.decode_raw_tx, xbridge_rpc.send_tx, xbridge_rpc.sign_tx]
 
 def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):

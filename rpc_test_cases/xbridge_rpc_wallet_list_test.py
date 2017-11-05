@@ -53,6 +53,4 @@ class wallet_List_UnitTest(unittest.TestCase):
         except AssertionError:
             xbridge_logger.logger.info('listsinceblock unit test FAILED')
 
-
-unittest.main()
-
+# unittest.main()

@@ -57,7 +57,7 @@ class decodeUnitTest(unittest.TestCase):
     """
             - Basic tests
     """
-    def test_invalid_cancel_1(self):
+    def test_invalid_decode_1(self):
         try:
             self.assertIsInstance(xbridge_rpc.decode_raw_tx(" "), dict)
             self.assertIsInstance(xbridge_rpc.decode_raw_tx(""), dict)
@@ -82,7 +82,7 @@ class decodeUnitTest(unittest.TestCase):
           - We then combine those character classes.
           - Size of the input parameter is fixed.
     """
-    def test_invalid_cancel_2(self):
+    def test_invalid_decode_2(self):
         run_count = 0
         string_length=64
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -103,7 +103,7 @@ class decodeUnitTest(unittest.TestCase):
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
-    def test_invalid_cancel_3(self):
+    def test_invalid_decode_3(self):
         string_lower_bound=9000
         string_upper_bound=11000
         run_count = 0
@@ -125,7 +125,7 @@ class decodeUnitTest(unittest.TestCase):
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
-    def test_invalid_cancel_4(self):
+    def test_invalid_decode_4(self):
         run_count = 0
         string_lower_bound=1
         string_upper_bound=4000
