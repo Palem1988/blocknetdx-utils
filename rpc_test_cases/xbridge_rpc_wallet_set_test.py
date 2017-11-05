@@ -69,4 +69,4 @@ class wallet_Set_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('invalid_account_str: %s \n' % self.invalid_account_str)
             xbridge_logger.logger.info('valid_account_str: %s \n' % self.valid_account_str)
 
-unittest.main()
+# unittest.main()
