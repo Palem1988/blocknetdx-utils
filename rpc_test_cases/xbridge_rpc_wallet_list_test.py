@@ -9,7 +9,6 @@ from utils import xbridge_utils
 """                       ***  UNIT TESTS ***
 """
 
-
 class wallet_List_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
@@ -38,5 +37,22 @@ class wallet_List_UnitTest(unittest.TestCase):
         except AssertionError:
             xbridge_logger.logger.info('listsinceblock unit test FAILED')
 
+    @unittest.skip("TODO")
+    def test_listreceivedbyaddress(self):
+        try:
+            pass
+            # self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.ca_random_tx_id), dict)
+        except AssertionError:
+            xbridge_logger.logger.info('listsinceblock unit test FAILED')
+
+    @unittest.skip("TODO")
+    def test_listreceivedbyaccount(self):
+        try:
+            pass
+            # self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.ca_random_tx_id), dict)
+        except AssertionError:
+            xbridge_logger.logger.info('listsinceblock unit test FAILED')
+
 
 unittest.main()
+
