@@ -23,10 +23,7 @@ from rpc_test_cases import xbridge_rpc_blocknetdx_test
 from rpc_test_cases import xbridge_rpc_network_test
 from rpc_test_cases import xbridge_rpc_wallet_list_test
 from rpc_test_cases import xbridge_rpc_wallet_set_test
-
-
-
-
+from rpc_test_cases import xbridge_rpc_mining_test
 
 """
 from test_cases import xbridge_client_get_tx_info_test
@@ -150,7 +147,8 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                              xbridge_rpc_blocknetdx_test,
                              xbridge_rpc_network_test,
                             xbridge_rpc_wallet_list_test,
-                             xbridge_rpc_wallet_set_test
+                             xbridge_rpc_wallet_set_test,
+                            xbridge_rpc_mining_test
                              ]
 
 
