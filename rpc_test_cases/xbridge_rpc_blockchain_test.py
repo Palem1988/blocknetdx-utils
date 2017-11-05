@@ -27,15 +27,6 @@ class Blockchain_UnitTest(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('getdifficulty unit test FAILED')
 
-    def test_get_budget(self):
-        try:
-            budget = xbridge_rpc.get_budget()
-            hash_value = "1e23e3b04773450f84584ce222e318682b50d2a65d2a082a4821b378145263fe"
-            self.assertIsInstance(budget , dict)
-            self.assertEqual(budget["dev-fund"]["Hash"], hash_value)
-        except AssertionError as e:
-            xbridge_logger.logger.info('get_budget unit test FAILED')
-
     def test_getblockhash(self):
         try:
             self.assertIsInstance(xbridge_rpc.rpc_connection.getblockhash(0), str)
