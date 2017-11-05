@@ -45,18 +45,31 @@ class wallet_List_UnitTest(unittest.TestCase):
         except AssertionError:
             xbridge_logger.logger.info('listreceivedbyaddress unit test FAILED')
 
-    # print(rpc_connection.listreceivedbyaccount(5.2, True))
-    # print(rpc_connection.listreceivedbyaccount(5))
-    # @unittest.skip("TODO")
+    # Same structure with listreceivedbyaddress
     def test_listreceivedbyaccount(self):
         try:
-            # valid
+            # valid with only one param
             self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_positive_int), list)
             self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_negative_int), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.valid_random_positive_int), list)
+            # valid with two params
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_positive_int, True), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_negative_int, False), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.valid_random_positive_int, True), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.valid_random_positive_int, False), list)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_small_positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int)
+            # with second parameter => TODO
+            """
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_small_positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int)
+            """
         except AssertionError:
             xbridge_logger.logger.info('listreceivedbyaccount unit test FAILED')
 
