@@ -1,0 +1,7 @@
+
+Starting unit tests with version 3074100
+
+get_connection_count unit test FAILED
+get_node_list unit test FAILED
+
+Unit tests are done !
