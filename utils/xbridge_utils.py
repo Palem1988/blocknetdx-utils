@@ -111,11 +111,14 @@ def export_data(filepath, list_to_export):
         print("export_data - An error occured when creating: %s" % filepath_with_time)
 
 
-
 def generate_random_number(a, b):
     a = int(a * 100)
     b = int(b * 100)
     return float(random.randint(a, b)/100)
+
+
+def generate_random_int(a, b):
+    return int(random.randint(a, b))
 
 
 def generate_random_valid_address():
