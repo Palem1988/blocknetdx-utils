@@ -27,7 +27,8 @@ positive_float = 10.2
 negative_float = -10.2
 fixed_small_positive_float = 0.00000000000000000000000000000000000000000000000000000001
 fixed_large_positive_int = 9999999999999999999999999999999999999999999999999999999999999999
-
+valid_random_positive_int = 0
+invalid_random_positive_int = 0
 
 # Set for create_tx
 c_src_Address = ""
@@ -48,6 +49,26 @@ invalid_account_str = ""
 
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
+    # Set for create_tx
+    global c_src_Address
+    global c_dest_Address
+    global c_src_Token
+    global c_dest_Token
+    global source_nb
+    global dest_nb
+    # set for accept_tx
+    global a_random_tx_id
+    global a_src_Address
+    global a_dest_Address
+    # set for any function that takes a txid as parameter
+    global ca_random_tx_id
+    # General purpose
+    global valid_account_str
+    global invalid_account_str
+    global valid_random_positive_int
+    global invalid_random_positive_int
+    valid_random_positive_int = generate_random_int(1, 1000)
+    invalid_random_positive_int = generate_random_int(1, 1000)
     if data_nature == RANDOM_VALID_INVALID:
         selected_data = random.choice([VALID_DATA, INVALID_DATA])
         generate_new_set_of_data(selected_data)
@@ -188,3 +209,14 @@ def generate_numeric_input(nb_of_digits):
     # return StringGenerator('[\w\d\W]{8}').render()
     template_str = '[\d]{' + str(nb_of_digits) + '}'
     return StringGenerator(template_str).render()
+
+
+"""
+generate_new_set_of_data()
+print(ca_random_tx_id)
+print(a_src_Address)
+
+generate_new_set_of_data()
+print(ca_random_tx_id)
+print(a_src_Address)
+"""
