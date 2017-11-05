@@ -12,7 +12,12 @@ from interface import xbridge_rpc
 """
 
 # Lists of function that will be run in an ordered or random way
-no_param_func_list = [xbridge_rpc.get_transaction_list,
+no_param_func_list = [xbridge_rpc.rpc_connection.getpeerinfo,
+                      xbridge_rpc.rpc_connection.listlockunspent,
+                      xbridge_rpc.rpc_connection.listaddressgroupings,
+                      xbridge_rpc.rpc_connection.listaccounts,
+                      xbridge_rpc.get_core_version,
+                      xbridge_rpc.get_transaction_list,
                       xbridge_rpc.get_transaction_history_list,
                       xbridge_rpc.get_currency_list,
                       xbridge_rpc.get_blockcount,
@@ -27,7 +32,12 @@ no_param_func_list = [xbridge_rpc.get_transaction_list,
                       ]
 
 
-txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info, xbridge_rpc.decode_raw_tx, xbridge_rpc.send_tx, xbridge_rpc.sign_tx]
+txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info,
+                  xbridge_rpc.decode_raw_tx,
+                  xbridge_rpc.send_tx,
+                  xbridge_rpc.sign_tx,
+                  xbridge_rpc.rpc_connection.listsinceblock
+                  ]
 
 def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
@@ -124,4 +134,4 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
 
 
 # random_RPC_calls_sequence(nb_of_runs=1000)
-# defined_order_RPC_calls_sequence(nb_of_runs=1000)
+# defined_order_RPC_calls_sequence(nb_of_runs=50)
