@@ -45,12 +45,19 @@ class wallet_List_UnitTest(unittest.TestCase):
         except AssertionError:
             xbridge_logger.logger.info('listreceivedbyaddress unit test FAILED')
 
-    @unittest.skip("TODO")
+    # print(rpc_connection.listreceivedbyaccount(5.2, True))
+    # print(rpc_connection.listreceivedbyaccount(5))
+    # @unittest.skip("TODO")
     def test_listreceivedbyaccount(self):
         try:
-            pass
-            # self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.ca_random_tx_id), dict)
+            # valid
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_positive_int), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_negative_int), list)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_small_positive_float)
         except AssertionError:
-            xbridge_logger.logger.info('listsinceblock unit test FAILED')
+            xbridge_logger.logger.info('listreceivedbyaccount unit test FAILED')
 
 # unittest.main()
