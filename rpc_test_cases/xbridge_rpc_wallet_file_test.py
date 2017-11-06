@@ -54,4 +54,4 @@ class wallet_File_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('backupwallet unit test FAILED')
             xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
-unittest.main()
+# unittest.main()
