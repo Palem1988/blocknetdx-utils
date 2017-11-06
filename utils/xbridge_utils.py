@@ -7,6 +7,8 @@ import os, errno
 import xbridge_logger
 import xbridge_config
 
+from interface import xbridge_rpc
+
 TIME_DISTRIBUTION = []
 ERROR_LOG = []
 
@@ -94,6 +96,7 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         invalid_account_str = generate_input_from_random_classes_combinations(char_min_size, char_max_size)
     if data_nature == VALID_DATA:
         # Set for create_tx
+        # c_src_Address = xbridge_rpc.rpc_connection.getnewaddress()
         c_src_Address = generate_random_valid_address()
         c_dest_Address = generate_random_valid_address()
         c_src_Token = generate_random_valid_token()
@@ -101,8 +104,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         source_nb = generate_random_number(1, 1000)
         dest_nb = generate_random_number(1, 1000)
         a_random_tx_id = generate_random_valid_txid()
-        a_src_Address = generate_random_valid_address()
-        a_dest_Address = generate_random_valid_address()
+        a_src_Address = xbridge_rpc.rpc_connection.getnewaddress()
+        a_dest_Address = xbridge_rpc.rpc_connection.getnewaddress()
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_random_valid_txid()
         valid_account_str = generate_random_valid_account_str()
