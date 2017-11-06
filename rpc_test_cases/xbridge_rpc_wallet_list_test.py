@@ -15,31 +15,50 @@ class wallet_List_UnitTest(unittest.TestCase):
 
     def test_listaccounts(self):
         try:
+            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listaccounts(), dict)
+            logstr = {"group": "test_listaccounts", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
+            logstr = {"group": "test_listaccounts", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listaccounts unit test FAILED')
 
     def test_listaddressgroupings(self):
         try:
+            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listaddressgroupings(), list)
+            logstr = {"group": "test_listaddressgroupings", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
+            logstr = {"group": "test_listaddressgroupings", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listaddressgroupings unit test FAILED')
 
     def test_listlockunspent(self):
         try:
+            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listlockunspent(), list)
+            logstr = {"group": "test_listlockunspent", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
             xbridge_logger.logger.info('listlockunspent unit test FAILED')
 
     def test_listsinceblock(self):
         try:
+            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listsinceblock(xbridge_utils.ca_random_tx_id), dict)
+            logstr = {"group": "test_listsinceblock", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
+            logstr = {"group": "test_listsinceblock", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listsinceblock unit test FAILED')
 
     @unittest.skip("TODO")
     def test_listreceivedbyaddress(self):
         try:
+            log_json = ""
             pass
             # self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.ca_random_tx_id), dict)
         except AssertionError:
@@ -101,6 +120,10 @@ class wallet_List_UnitTest(unittest.TestCase):
                 logstr = {"group": "test_listreceivedbyaccount", "success": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('listreceivedbyaccount invalid sub unit test group FAILED: \n')
-                xbridge_logger.logger.info('Parameter used: %s \n' % xbridge_utils.ca_random_tx_id)
+                xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+                xbridge_logger.logger.info('positive_float: %s \n' % xbridge_utils.positive_float)
+                xbridge_logger.logger.info('fixed_large_positive_int: %s \n' % xbridge_utils.fixed_large_positive_int)
+                xbridge_logger.logger.info('fixed_small_positive_float: %s \n' % xbridge_utils.fixed_small_positive_float)
+                xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
 
 # unittest.main()
