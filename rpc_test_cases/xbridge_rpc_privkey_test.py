@@ -30,10 +30,10 @@ class private_Key_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "[]")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "{}")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, xbridge_utils.ca_random_tx_id)
-            logstr = {"group": "test_importprivkey", "success": 1, "error": 0}
+            log_json = {"group": "test_importprivkey", "success": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            logstr = {"group": "test_importprivkey", "success": 0, "error": 1}
+            log_json = {"group": "test_importprivkey", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_importprivkey unit test FAILED')
             xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
@@ -55,14 +55,13 @@ class private_Key_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "[]")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "{}")
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, xbridge_utils.ca_random_tx_id)
-            logstr = {"group": "test_dumpprivkey", "success": 1, "error": 0}
+            log_json = {"group": "test_dumpprivkey", "success": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            logstr = {"group": "test_dumpprivkey", "success": 0, "error": 1}
+            log_json = {"group": "test_dumpprivkey", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_dumpprivkey unit test FAILED')
             xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
             xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
-
 
 # unittest.main()
