@@ -117,6 +117,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_get_received_by_account", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('get_received_by_account unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_getreceivedbyaddress(self):
         try:
@@ -137,6 +138,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_getreceivedbyaddress", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getreceivedbyaddress unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_getaccount(self):
         try:
@@ -157,6 +159,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_getaccount", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getaccount unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_getaccountaddress(self):
         try:
@@ -177,6 +180,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_getaccountaddress", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getaccountaddress unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_getaddressesbyaccount(self):
         try:
@@ -198,6 +202,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_getaddressesbyaccount", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getaddressesbyaccount unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_getaddressesbyaccount(self):
         try:
@@ -209,6 +214,7 @@ class Misc_UnitTest(unittest.TestCase):
             logstr = {"group": "test_getaddressesbyaccount", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getaddressesbyaccount unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
     def test_gettransaction(self):
         try:
@@ -230,7 +236,6 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('gettransaction unit test FAILED')
 
-    # TypeError: <class 'decimal.Decimal'> is not JSON serializable
     def test_getbalance(self):
         try:
             log_json = ""
@@ -254,5 +259,124 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('getbalance unit test FAILED')
 
+    @unittest.skip("disabled - not tested")
+    def test_signmessage(self):
+        try:
+            log_json = ""
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("", ""), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(" "), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("----"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("}"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("["), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("]"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("}"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("[]"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{}"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{}"), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.ca_random_tx_id), dict)
+            logstr = {"group": "test_signmessage", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_signmessage", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_signmessage unit test FAILED')
+            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+    
+    
+    # importprivkey "blocknetdxprivkey" ( "label" rescan )
+    @unittest.skip("disabled - not tested")
+    def test_importprivkey(self):
+        try:
+            log_json = ""
+            valid_blocknetdx_address = xbridge_rpc.rpc_connection.getnewaddress()
+            self.assertIsInstance(xbridge_rpc.rpc_connection.dumpprivkey(valid_blocknetdx_address), dict)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, " ")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "----")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "{")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "[")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "[]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, "{}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importprivkey, xbridge_utils.ca_random_tx_id)
+            logstr = {"group": "test_importprivkey", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_importprivkey", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_importprivkey unit test FAILED')
+            xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
+            xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+    
+    
+    # dumpprivkey "blocknetdxaddress"
+    def test_dumpprivkey(self):
+        try:
+            log_json = ""
+            valid_blocknetdx_address = xbridge_rpc.rpc_connection.getnewaddress()
+            self.assertIsInstance(xbridge_rpc.rpc_connection.dumpprivkey(valid_blocknetdx_address), dict)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, " ")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "----")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "{")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "[")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "[]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, "{}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpprivkey, xbridge_utils.ca_random_tx_id)
+            logstr = {"group": "test_dumpprivkey", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_dumpprivkey", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_dumpprivkey unit test FAILED')
+            xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
+            xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+
+    def test_importwallet(self):
+        try:
+            log_json = ""
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, " ")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "----")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "{")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "[")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "[]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, "{}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.importwallet, xbridge_utils.ca_random_tx_id)
+            logstr = {"group": "test_importwallet", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_importwallet", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_importwallet unit test FAILED')
+            xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)    
+    
+    def test_backupwallet(self):
+        try:
+            log_json = ""
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, " ")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "----")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "{")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "[")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "[]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, "{}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.backupwallet, xbridge_utils.ca_random_tx_id)
+            logstr = {"group": "test_dumpwallet", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_dumpwallet", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_dumpwallet unit test FAILED')
+            xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
 
 # unittest.main()
