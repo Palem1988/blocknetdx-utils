@@ -8,6 +8,8 @@ import xbridge_logger
 import xbridge_config
 
 TIME_DISTRIBUTION = []
+ERROR_LOG = []
+
 
 VALID_DATA = 1
 INVALID_DATA = 2
@@ -107,6 +109,7 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
 
 
 def export_Full_Excel_Log():
+    global TIME_DISTRIBUTION
     if len(TIME_DISTRIBUTION) == 0:
         return
     timestr = time.strftime("%Y%m%d_%H%M%S")
@@ -147,6 +150,15 @@ def export_data(filepath, list_to_export):
         print("export_data - An error occured when creating: %s" % filepath_with_time)
 
 
+def read_Error_Log():
+    global ERROR_LOG
+    if len(ERROR_LOG) == 0:
+        return ""
+    my_df = pd.DataFrame(ERROR_LOG)
+    # reorder the columns
+    my_df = my_df[["group", "success", "error"]]
+    
+           
 def generate_random_number(a, b):
     a = int(a * 100)
     b = int(b * 100)
