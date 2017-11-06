@@ -178,5 +178,4 @@ class wallet_List_UnitTest(unittest.TestCase):
                 xbridge_logger.logger.info('fixed_small_positive_float: %s \n' % xbridge_utils.fixed_small_positive_float)
                 xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
 
-
-unittest.main()
+# unittest.main()
