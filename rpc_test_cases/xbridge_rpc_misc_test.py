@@ -17,13 +17,7 @@ no_param_returns_dict_func_list = [
                         xbridge_rpc.rpc_connection.getwalletinfo
                     ]
 
-# account/single string as param
-account_func_list = [
-                    xbridge_rpc.rpc_connection.importaddress,
-                    xbridge_rpc.rpc_connection.dumpprivkey,
-                    xbridge_rpc.rpc_connection.dumpwallet,
-                    xbridge_rpc.rpc_connection.backupwallet
-                    ]
+account_func_list = []
 
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
