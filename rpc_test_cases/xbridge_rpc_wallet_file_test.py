@@ -32,7 +32,28 @@ class wallet_File_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_importwallet unit test FAILED')
             xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)    
-    
+
+    def test_dumpwallet(self):
+        try:
+            log_json = ""
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, " ")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "----")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "{")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "[")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "[]")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, "{}")
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.dumpwallet, xbridge_utils.ca_random_tx_id)
+            logstr = {"group": "test_dumpwallet", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError:
+            logstr = {"group": "test_dumpwallet", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_dumpwallet unit test FAILED')
+            xbridge_logger.logger.info('invalid_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+
     def test_backupwallet(self):
         try:
             log_json = ""
