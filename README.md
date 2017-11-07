@@ -1,8 +1,8 @@
 ## BlocknetDX Utils Recent Changelog
 
-- **[Upcoming]** Expanding coverage of unit tests.
-- **[Upcoming]** Improved logging (summary of failure counts).
-- **[Upcoming]** Adding new functions to sequence tests.
+- **[Upcoming - High Priority]** Expanding coverage of unit tests.
+- **[Upcoming - Medium Priority]** Improved logging (summary of failure counts).
+- **[Upcoming - Lower Priority]** Adding new functions to sequence tests.
 - Completing xbridge_rpc_wallet_list_test
 - Code fix in xbridge_utils.
 - New unit tests.
