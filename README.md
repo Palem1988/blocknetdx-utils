@@ -19,6 +19,7 @@
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - When the code of the RPC calls are settled, apply the same structure and coding style for the client.
+- Documentation.
 
 # Running the tests
 
