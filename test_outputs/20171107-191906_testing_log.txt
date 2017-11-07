@@ -1,0 +1,6 @@
+
+Starting unit tests with version 3074200
+
+get_connection_count unit test FAILED
+
+Unit tests are done !
