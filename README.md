@@ -1,14 +1,24 @@
 ## BlocknetDX Utils Recent Changelog
 
-- **[Upcoming]** Improved logging
 - **[Upcoming]** Expanding coverage of unit tests.
+- **[Upcoming]** Improved logging (summary of failure counts).
 - **[Upcoming]** Adding new functions to sequence tests.
-- **[Upcoming]** Completing xbridge_rpc_wallet_list_test
+- Completing xbridge_rpc_wallet_list_test
 - Code fix in xbridge_utils.
 - New unit tests.
 - New functions added to sequence tests.
 - To maintain code clarity, some unit tests have been splitted accross new files.
 
+# Current known issues
+
+- dxCreateTx test group 8 failed assertions without known reason for now.
+
+# TODO
+
+- Add unit tests with valid data present in the dex once it's loaded.
+- Add test case where Token and Address are not consistent.
+- Running tests and analyzing results.
+- When the code of the RPC calls are settled, apply the same structure and coding style for the client.
 
 # Running the tests
 
@@ -55,30 +65,9 @@ SEQUENCE_TESTS_NB_OF_RUNS = 1
 UNIT_TESTS_NB_OF_RUNS = 1
 ```
 
-
 # Optional command-Line options for build-time automation
 
-All arguments are optional.
-- Use *-s* or *--sequence* argument to specify the number of sequence tests to run.
-- Use *-u* or *--unittest* argument to specify the number of unit tests to run.
-
-You can avoid using these parameters if you set the **tests.conf** file properly.
-
-# Current known issues
-
-- dxCreateTx test group 8 failed assertions without known reason for now.
-
-# Current focus
-
-- Completing defined sequence tests.
-- Improved logging.
-
-# TODO
-
-- Add unit tests with valid data present in the dex once it's loaded.
-- Add test case where Token and Address are not consistent.
-- Running tests and analyzing results.
-- Add more APIs once they are available.
+All arguments are optional.- Use *-s* or *--sequence* argument to specify the number of sequence tests to run.- Use *-u* or *--unittest* argument to specify the number of unit tests to run.You can avoid using these parameters if you set the **tests.conf** file properly.
 
 # Requirements
 
