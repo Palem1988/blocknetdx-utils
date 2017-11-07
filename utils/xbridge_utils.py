@@ -12,16 +12,16 @@ from interface import xbridge_rpc
 TIME_DISTRIBUTION = []
 ERROR_LOG = []
 
-
 VALID_DATA = 1
 INVALID_DATA = 2
 RANDOM_VALID_INVALID = 3
 
-basic_garbage_list = ["", " ", "/", "\\", "//////////", "+", "-", "=", 
+basic_garbage_list = ["", " ", "/", "\\", "//////////", "+", "-", "=", "*",
                         "{", "}", "{", "}", "(", ")", "[", "]", "{}", "()", "[]", "[[]]", "{{}}", "[{}]", "{[]}", ")(", "}{",
                         "<", ">", "<>",, "<<", ">>", "<<>", "><",
-                        "*", ".", ";", "?", "-", ":", "!", "§", "%", "ù", "µ", "¨", "é", "@",
-                        "-----------", "~&#'@ç$£!"
+                        "*", ".", ";", "?", "-", ":", "!", "§", "%", "ù", "µ", "¨", "é", "@", "|", "#", "à", "ç", "°", "^",
+                        "-----------", "%%%%%%%", "::::::::::", "^^^^^^^^", "ùùùùùùùù", 
+                        "~&#'@ç$£!%^.;?-"
                      ]
 
 one_classes_list = ["[\\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
@@ -159,7 +159,6 @@ def export_data(filepath, list_to_export):
     except:
         print("export_data - An error occured when creating: %s" % filepath_with_time)
 
-
 def read_Error_Log():
     global ERROR_LOG
     if len(ERROR_LOG) == 0:
@@ -167,44 +166,36 @@ def read_Error_Log():
     my_df = pd.DataFrame(ERROR_LOG)
     # reorder the columns
     my_df = my_df[["group", "success", "error"]]
-    
-           
+               
 def generate_random_number(a, b):
     a = int(a * 100)
     b = int(b * 100)
     return float(random.randint(a, b)/100)
 
-
 def generate_random_int(a, b):
     return int(random.randint(a, b))
-
 
 def generate_random_valid_address():
     template_str = '[\h]{30:70}'
     return StringGenerator(template_str).render()
 
-    
 def generate_random_valid_txid():
     nb_of_cars = 64
     template_str = '[a-zA-Z0-9]{' + str(nb_of_cars) + '}'
     return StringGenerator(template_str).render()
-    
     
 def generate_random_valid_token():
     nb_of_cars = 5
     template_str = '[A-Z]{' + str(nb_of_cars) + '}'
     return StringGenerator(template_str).render()    
 
-
 def generate_random_valid_account_str():
     template_str = '[\h]{5:50}'
     return StringGenerator(template_str).render()
 
-
 def generate_random_number_with_leading_zeros():
     template_str = '[0]{1:5000}&[\d]{1:5000}'
     return StringGenerator(template_str).render()    
-
 
 def generate_input_from_random_classes_combinations(lower_bound, upper_bound):
     classes_list = ["\w", "\d", "\s", "\W", "\p", "\o", "\a"]
@@ -216,7 +207,6 @@ def generate_input_from_random_classes_combinations(lower_bound, upper_bound):
     combined_picks = pick_1 + pick_2 + pick_3 + pick_4
     template_str = '[' + str(combined_picks) + ']{' + str(lower_bound) + ':' + str(upper_bound) + '}'
     return StringGenerator(template_str).render()
-
     
 # Generate variable-size malformed data with whitespace + punctuation + digits
 def generate_garbage_input(nb_of_cars):
@@ -224,21 +214,9 @@ def generate_garbage_input(nb_of_cars):
     # return StringGenerator('[\w\d\W]{8}').render()
     template_str = '[\w\d\W]{' + str(nb_of_cars) + '}'
     return StringGenerator(template_str).render()
-
     
 def generate_numeric_input(nb_of_digits):
     nb_of_digits = int(nb_of_digits)
     # return StringGenerator('[\w\d\W]{8}').render()
     template_str = '[\d]{' + str(nb_of_digits) + '}'
     return StringGenerator(template_str).render()
-
-
-"""
-generate_new_set_of_data()
-print(ca_random_tx_id)
-print(a_src_Address)
-
-generate_new_set_of_data()
-print(ca_random_tx_id)
-print(a_src_Address)
-"""
