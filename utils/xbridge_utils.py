@@ -17,6 +17,8 @@ VALID_DATA = 1
 INVALID_DATA = 2
 RANDOM_VALID_INVALID = 3
 
+basic_garbage_list = ["", " ", "/", "\\", "{", "}", "{", "}", "(", ")", "[", "]", "{}", "()", "[]", "*", "~&#'@ç$£!"]
+
 one_classes_list = ["[\\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
 two_classes_list = ["[\p\d]", "[\p\\a]", "[\p\h]", "[\s\d]", "[\s\\a]", "[\s\h]", "[\s\p]", "[\W\d]", "[\W\\a]", "[\W\h]",
                     "[\W\p]"]
