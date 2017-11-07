@@ -13,22 +13,21 @@ class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
-    @unittest.skip("disabled - not tested")
+    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_signmessage(self):
-        try:
-            log_json = ""
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("", ""), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(" "), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("----"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("}"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("["), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("]"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("}"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("[]"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{}"), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("{}"), dict)
+        log_json = ""
+        for basic_garbage_str in xbridge_utils.basic_garbage_list:
+            try:
+                with self.subTest(basic_garbage_str=basic_garbage_str):
+                    self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage("", ""), dict)
+                    log_json = {"group": "test_signmessage", "success": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+            except AssertionError:
+                log_json = {"group": "test_signmessage", "success": 0, "error": 1}
+                xbridge_utils.ERROR_LOG.append(log_json)
+                xbridge_logger.logger.info('test_signmessage unit test FAILED')
+                xbridge_logger.logger.info('parameter: %s \n' % xbridge_utils.ca_random_tx_id)
+        with self.subTest("random garbage"):
             self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.ca_random_tx_id), dict)
             log_json = {"group": "test_signmessage", "success": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
