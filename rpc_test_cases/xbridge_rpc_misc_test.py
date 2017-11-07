@@ -11,16 +11,17 @@ from utils import xbridge_utils
 
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
-        xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
+        xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.RANDOM_VALID_INVALID, char_min_size=1, char_max_size=10000)
 
+    # signmessage "blocknetdxaddress" "message"
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_signmessage(self):
         log_json = ""
+        valid_blocknet_address = rpc_connection.getnewaddress()
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             try:
                 with self.subTest(basic_garbage_str=basic_garbage_str):
                     self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(basic_garbage_str, basic_garbage_str), dict)
-                    valid_blocknet_address = rpc_connection.getnewaddress()
                     self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(valid_blocknet_address, basic_garbage_str), dict)
                     log_json = {"group": "test_signmessage", "success": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -31,7 +32,8 @@ class Misc_UnitTest(unittest.TestCase):
                 xbridge_logger.logger.info('valid_blocknet_address: %s \n' % valid_blocknet_address)
                 xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
         with self.subTest("random garbage"):
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.ca_random_tx_id), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(valid_blocknet_address, xbridge_utils.ca_random_tx_id), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.a_src_Address, xbridge_utils.ca_random_tx_id), dict)
             log_json = {"group": "test_signmessage", "success": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
@@ -41,6 +43,7 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
             
     # VALID COMBINATIONS
+    # autocombinerewards <true/false> threshold
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_valid(self):
         try:
@@ -65,6 +68,7 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
 
     # INVALID COMBINATIONS : GARBAGE + OUT-OF-BOUNDS DATA + DATA WE EXPECT THE FUNCTION TO REJECT
+    # autocombinerewards <true/false> threshold
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_invalid(self):
         try:
