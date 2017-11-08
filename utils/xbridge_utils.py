@@ -19,8 +19,8 @@ RANDOM_VALID_INVALID = 3
 basic_garbage_list = ["", " ", "/", "\\", "//////////", "+", "-", "=", "*",
                         "{", "}", "{", "}", "(", ")", "[", "]", "{}", "()", "[]", "[[]]", "{{}}", "[{}]", "{[]}", ")(", "}{",
                         "<", ">", "<>", "<<", ">>", "<<>", "><",
-                        "*", ".", ";", "?", "-", ":", "!", "�", "%", "�", "�", "�", "�", "@", "|", "#", "^",
-                        "-----------", "%%%%%%%", "::::::::::", "^^^^^^^^",
+                        ".", ";", "?", "-", ":", "!", "�", "%", "�", "�", "�", "�", "@", "|", "#", "^", "_",
+                        "-----------", "%%%%%%%", "::::::::::", "^^^^^^^^", "<<<<<<<<<<<<<", ">>>>>>>>>>>>>",
                         "~&#'@$!%^.;?-"
                      ]
 
@@ -167,13 +167,19 @@ def export_data(filepath, list_to_export):
     except:
         print("export_data - An error occured when creating: %s" % filepath_with_time)
 
-def read_Error_Log():
+def prepare_results_Summary():
     global ERROR_LOG
     if len(ERROR_LOG) == 0:
         return ""
     my_df = pd.DataFrame(ERROR_LOG)
     # reorder the columns
-    my_df = my_df[["group", "success", "error"]]
+    my_df = my_df[["group", "success", "failure", "error"]]
+    # aggregation
+    aggregated_df = my_df.groupby(by = ['group'])["success", "failure", "error"].sum()
+    # output
+    # for index, row in my_df.iterrows():
+    #    print row['success'], row['failure'], row["error"]
+    return aggregated_df
                
 def generate_random_number(a, b):
     a = int(a * 100)
