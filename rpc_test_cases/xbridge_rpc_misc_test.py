@@ -119,6 +119,6 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('valid_random_positive_float: %s \n' % xbridge_utils.valid_random_positive_float)
             xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
             xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
-            
-            
-unittest.main()
+
+                      
+# unittest.main()
