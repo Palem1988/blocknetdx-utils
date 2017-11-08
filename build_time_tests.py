@@ -25,6 +25,8 @@ from rpc_test_cases import xbridge_rpc_wallet_list_test
 from rpc_test_cases import xbridge_rpc_wallet_set_test
 from rpc_test_cases import xbridge_rpc_mining_test
 
+from rpc_test_cases import xbridge_rpc_send_test
+
 """
 from test_cases import xbridge_client_get_tx_info_test
 from test_cases import xbridge_client_accept_tx_test
@@ -137,18 +139,19 @@ xbridge_logger.logger.info('')
 xbridge_logger.logger.info('Starting unit tests with version %s', str(xbridge_rpc.get_core_version()))
 
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
-                             xbridge_rpc_canceltx_test,
-                             xbridge_rpc_accept_tx_test,
-                             xbridge_rpc_get_tx_info_test,
-                             xbridge_rpc_misc_test,
+                            xbridge_rpc_canceltx_test,
+                            xbridge_rpc_accept_tx_test,
+                            xbridge_rpc_get_tx_info_test,
+                            xbridge_rpc_misc_test,
                             xbridge_rpc_signtx_test,
                             xbridge_rpc_sendtx_test,
                             xbridge_rpc_blockchain_test,
-                             xbridge_rpc_blocknetdx_test,
-                             xbridge_rpc_network_test,
+                            xbridge_rpc_blocknetdx_test,
+                            xbridge_rpc_network_test,
                             xbridge_rpc_wallet_list_test,
-                             xbridge_rpc_wallet_set_test,
-                            xbridge_rpc_mining_test
+                            xbridge_rpc_wallet_set_test,
+                            xbridge_rpc_mining_test,
+                            xbridge_rpc_send_test
                              ]
 
 
