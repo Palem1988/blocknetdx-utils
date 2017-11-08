@@ -149,6 +149,7 @@ def repeat_cancel_tx_unit_tests(runs=1000):
 """
 if __name__ == '__main__':
     unittest.main()
-"""
 
 unittest.main()
+"""
+
