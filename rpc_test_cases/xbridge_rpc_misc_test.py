@@ -15,23 +15,28 @@ class Misc_UnitTest(unittest.TestCase):
 
     # signmessage "blocknetdxaddress" "message"
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # Please enter the wallet passphrase with walletpassphrase first.
     def test_signmessage(self):
         log_json = ""
         #valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
         valid_blocknet_address = xbridge_utils.generate_random_valid_address()
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
-            try:
-                with self.subTest(basic_garbage_str=basic_garbage_str):
+           with self.subTest(basic_garbage_str=basic_garbage_str):
+                try:
                     self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(basic_garbage_str, basic_garbage_str), dict)
                     self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(valid_blocknet_address, basic_garbage_str), dict)
                     log_json = {"group": "test_signmessage", "success": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-            except AssertionError:
-                log_json = {"group": "test_signmessage", "success": 0, "error": 1}
-                xbridge_utils.ERROR_LOG.append(log_json)
-                xbridge_logger.logger.info('test_signmessage unit test FAILED')
-                xbridge_logger.logger.info('valid_blocknet_address: %s \n' % valid_blocknet_address)
-                xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                except AssertionError:
+                    log_json = {"group": "test_signmessage", "success": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_signmessage unit test FAILED')
+                    xbridge_logger.logger.info('valid_blocknet_address: %s \n' % valid_blocknet_address)
+                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                except JSONRPCException:
+                    log_json = {"group": "test_signmessage", "success": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_signmessage unit test ERROR')
         with self.subTest("random garbage"):
             try:
                 self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(valid_blocknet_address, xbridge_utils.ca_random_tx_id), dict)
@@ -43,6 +48,10 @@ class Misc_UnitTest(unittest.TestCase):
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('test_signmessage unit test FAILED')
                 xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+            except JSONRPCException:
+                log_json = {"group": "test_signmessage", "success": 0, "error": 1}
+                xbridge_utils.ERROR_LOG.append(log_json)
+                xbridge_logger.logger.info('test_signmessage unit test ERROR')
             
     # VALID COMBINATIONS
     # autocombinerewards <true/false> threshold
