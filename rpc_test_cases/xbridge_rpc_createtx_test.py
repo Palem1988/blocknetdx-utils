@@ -221,28 +221,6 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
             """
 
-    # Combinations of numerical parameters containining leading Zeros, all other parameters being valid
-    @unittest.skip("Disabled test")
-    def test_invalid_create_tx_v7(self):
-        try:
-            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.valid_positive_nb_2), dict)
-            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.valid_positive_nb_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_1), dict)
-            self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.nb_with_leading_zeros_1, self.valid_dest_Address, self.valid_dest_Token, self.nb_with_leading_zeros_2), dict)
-            log_json = {"group": "test_invalid_create_tx_v7", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_invalid_create_tx_v7", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_create_tx_v7 unit test FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
-            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
-            xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
-            xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
-            xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
-            xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
-            xbridge_logger.logger.info('nb_with_leading_zeros_1: %s', self.nb_with_leading_zeros_1)
-            xbridge_logger.logger.info('nb_with_leading_zeros_2: %s', self.nb_with_leading_zeros_2)
-
     # Combinations of very small and very large numerical parameters, all other parameters being valid
     @unittest.skip("Temporarily disabled tests")
     def test_invalid_create_tx_v8(self):

@@ -66,7 +66,7 @@ class accept_Tx_Test(unittest.TestCase):
             # print("****** dxAccept Unit Test Group 1 FAILED ******")
             log_json = {"group": "test_invalid_accept_tx_1", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('-------- dxAccept unit test group 1 FAILED --------: %s \n' % str(ass_err))
+            xbridge_logger.logger.info('dxAccept unit test group 1 FAILED : %s \n' % str(ass_err))
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -97,7 +97,7 @@ class accept_Tx_Test(unittest.TestCase):
             # print("****** dxAccept Unit Test Group 2 FAILED ******")
             log_json = {"group": "test_invalid_accept_tx_2", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('-------- dxAccept unit test group 2 FAILED --------: %s \n' % str(ass_err))
+            xbridge_logger.logger.info('dxAccept unit test group 2 FAILED: %s \n' % str(ass_err))
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)

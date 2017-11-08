@@ -35,7 +35,6 @@ def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
 
 
 """                       ***  UNIT TESTS ***
-
 """
 
 class cancelUnitTest(unittest.TestCase):
@@ -56,7 +55,7 @@ class cancelUnitTest(unittest.TestCase):
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.cancel_tx(basic_garbage_str), dict)
+                    self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
                     log_json = {"group": "test_invalid_cancel_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -151,3 +150,5 @@ def repeat_cancel_tx_unit_tests(runs=1000):
 if __name__ == '__main__':
     unittest.main()
 """
+
+unittest.main()
