@@ -6,7 +6,7 @@ from decimal import *
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
-"""                       ***  UNIT TESTS FOR ALL WALLET RELATED FUNCTIONS STARTING WITH GET ***
+"""                       ***  UNIT TESTS ***
 """
 
 class Misc_UnitTest(unittest.TestCase):
@@ -17,7 +17,7 @@ class Misc_UnitTest(unittest.TestCase):
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_signmessage(self):
         log_json = ""
-        valid_blocknet_address = rpc_connection.getnewaddress()
+        valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             try:
                 with self.subTest(basic_garbage_str=basic_garbage_str):
@@ -32,15 +32,16 @@ class Misc_UnitTest(unittest.TestCase):
                 xbridge_logger.logger.info('valid_blocknet_address: %s \n' % valid_blocknet_address)
                 xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
         with self.subTest("random garbage"):
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(valid_blocknet_address, xbridge_utils.ca_random_tx_id), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.a_src_Address, xbridge_utils.ca_random_tx_id), dict)
-            log_json = {"group": "test_signmessage", "success": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError:
-            log_json = {"group": "test_signmessage", "success": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_signmessage unit test FAILED')
-            xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+            try:
+                self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(valid_blocknet_address, xbridge_utils.ca_random_tx_id), dict)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.test_signmessage(xbridge_utils.a_src_Address, xbridge_utils.ca_random_tx_id), dict)
+                log_json = {"group": "test_signmessage", "success": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
+            except AssertionError:
+                log_json = {"group": "test_signmessage", "success": 0, "error": 1}
+                xbridge_utils.ERROR_LOG.append(log_json)
+                xbridge_logger.logger.info('test_signmessage unit test FAILED')
+                xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
             
     # VALID COMBINATIONS
     # autocombinerewards <true/false> threshold
@@ -69,6 +70,7 @@ class Misc_UnitTest(unittest.TestCase):
 
     # INVALID COMBINATIONS : GARBAGE + OUT-OF-BOUNDS DATA + DATA WE EXPECT THE FUNCTION TO REJECT
     # autocombinerewards <true/false> threshold
+    # TODO : Add floats
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_invalid(self):
         try:
@@ -90,6 +92,10 @@ class Misc_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, xbridge_utils.ca_random_tx_id, -xbridge_utils.invalid_random_positive_int)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, xbridge_utils.ca_random_tx_id, xbridge_utils.valid_random_positive_int)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, xbridge_utils.ca_random_tx_id, xbridge_utils.fixed_positive_int)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, xbridge_utils.ca_random_tx_id, xbridge_utils.invalid_random_positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, xbridge_utils.ca_random_tx_id, -xbridge_utils.invalid_random_positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, xbridge_utils.ca_random_tx_id, xbridge_utils.valid_random_positive_float)
+            self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, xbridge_utils.ca_random_tx_id, xbridge_utils.fixed_positive_float)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, xbridge_utils.ca_random_tx_id, xbridge_utils.ca_random_tx_id)
             log_json = {"group": "autocombinerewards", "success": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
@@ -99,6 +105,10 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('autocombinerewards invalid unit test FAILED')
             xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
             xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
+            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
+            xbridge_logger.logger.info('valid_random_positive_float: %s \n' % xbridge_utils.valid_random_positive_float)
+            xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
+            xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
             
             
 # unittest.main()
