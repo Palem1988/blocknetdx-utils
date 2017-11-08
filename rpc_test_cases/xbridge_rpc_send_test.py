@@ -30,7 +30,6 @@ set_of_invalid_parameters = ["", " ",
 # WE COMPLETE THE LIST
 set_of_invalid_parameters.extend(basic_garbage_list)
         
-
 class send_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
@@ -99,15 +98,15 @@ class send_UnitTest(unittest.TestCase):
                         toblocknetdxaddress = random.choice(set_of_parameters)
                         amount = random.choice(set_of_parameters)
                         self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.sendfrom, fromAccount, toblocknetdxaddress, amount)
-                        log_json = {"group": "sendfrom", "success": 1, "failure": 0, "error": 0}
+                        log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        log_json = {"group": "sendfrom", "success": 0, "failure": 1, "error": 0}
+                        log_json = {"group": send_address_func, "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('sendfrom invalid unit test FAILED: %s' % ass_err)
+                        xbridge_logger.logger.info('%s invalid unit subtest FAILED: %s' % (str(send_address_func), ass_err))
                     except JSONRPCException as json_excpt:
-                        xbridge_logger.logger.info('sendfrom unit test ERROR: %s' % str(json_excpt))
-                        log_json = {"group": "get_node_list", "success": 0,  "failure": 0, "error": 1}
+                        xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt))
+                        log_json = {"group": send_address_func, "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
             with self.subTest("invalid sendtoaddress"):
                 try:
