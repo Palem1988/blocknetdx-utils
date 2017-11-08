@@ -159,9 +159,13 @@ for i in range(1, 1 + UNIT_TESTS_NB_OF_RUNS):
     suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
     test_suite = unittest.TestSuite(suites)
     testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
+    
+summary_df = xbridge_utils.prepare_results_Summary()
 
-xbridge_logger.logger.info('')
-xbridge_logger.logger.info('Unit tests are done !')
+xbridge_logger.logger.info('********************* SUMMARY *********************\n')
+xbridge_logger.logger.info("%s" % str(summary_df))
+
+xbridge_logger.logger.info('\n Unit tests are done !')
 
 # xbridge_logger.logger.info('----------------------------------------------------------------------------------------------------------------------------------------------------------')
 # xbridge_logger.logger.info('wasSuccessful: %s - testRuns: %s - Failures: %s - Errors: %s' % (str(testResult.wasSuccessful), str(testResult.testsRun), str(testResult.failures), str(testResult.errors)))
