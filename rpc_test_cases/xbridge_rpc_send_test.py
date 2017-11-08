@@ -13,7 +13,7 @@ valid_multisend_cmds = ["print"]
 
 # THIS SET HAS TO STAY AT THE MODULE LEVEL
 set_of_invalid_parameters = ["", " ",
-                    0, -9999999999999999999999999999999999999, 9999999999999999999999999999999999999,
+                    0, -xbridge_utils.fixed_large_positive_int, xbridge_utils.fixed_large_positive_int, xbridge_utils.fixed_small_positive_float, 
                     True, False,
                     xbridge_utils.ca_random_tx_id,
                     xbridge_utils.fixed_positive_int,
@@ -94,9 +94,9 @@ class send_UnitTest(unittest.TestCase):
                 log_json = ""
                 with self.subTest("sendfrom combinations"):
                     try:      
-                        fromAccount = random.choice(set_of_parameters)
-                        toblocknetdxaddress = random.choice(set_of_parameters)
-                        amount = random.choice(set_of_parameters)
+                        fromAccount = random.choice(set_of_invalid_parameters)
+                        toblocknetdxaddress = random.choice(set_of_invalid_parameters)
+                        amount = random.choice(set_of_invalid_parameters)
                         self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.sendfrom, fromAccount, toblocknetdxaddress, amount)
                         log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
@@ -186,10 +186,22 @@ class send_UnitTest(unittest.TestCase):
             log_json = ""
             with self.subTest("sendfrom combinations"):
                 try:      
-                    fromAccount = random.choice(set_of_parameters)
-                    toblocknetdxaddress = random.choice(set_of_parameters)
-                    amount = random.choice(set_of_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.sendfrom, fromAccount, toblocknetdxaddress, amount)
+                    fromAccount = random.choice(set_of_invalid_parameters)
+                    toblocknetdxaddress = random.choice(set_of_invalid_parameters)
+                    amount = random.choice(set_of_invalid_parameters)
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_minconf = ""
+                    else:
+                        optional_minconf = random.choice([set_of_invalid_parameters])
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_comment = ""
+                    else:
+                        optional_comment = random.choice([set_of_invalid_parameters])
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_comment_to = ""
+                    else:
+                        optional_comment_to = random.choice([set_of_invalid_parameters])
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.sendfrom, fromAccount, toblocknetdxaddress, amount, optional_minconf, optional_comment, optional_comment_to)
                     log_json = {"group": "sendfrom", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -198,7 +210,7 @@ class send_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('sendfrom invalid unit test FAILED: %s' % ass_err)
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('sendfrom unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "get_node_list", "success": 0,  "failure": 0, "error": 1}
+                    log_json = {"group": "sendfrom", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
         try:
             # OK
@@ -222,6 +234,10 @@ class send_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "sendfrom", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('sendfrom invalid unit test FAILED: %s' % ass_err)            
+            xbridge_logger.logger.info('sendfrom invalid unit test FAILED: %s' % ass_err)     
+        except JSONRPCException as json_excpt:
+            xbridge_logger.logger.info('sendfrom invalid unit test ERROR: %s' % str(json_excpt))
+            log_json = {"group": "sendfrom", "success": 0,  "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)                
             
 # unittest.main()

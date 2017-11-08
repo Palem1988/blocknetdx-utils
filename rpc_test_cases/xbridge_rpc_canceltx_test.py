@@ -11,7 +11,6 @@ from utils import xbridge_utils
 
 from strgen import StringGenerator
 
-
 """
     - Combine optional parameters in a way that generate the test cases you want.
 """

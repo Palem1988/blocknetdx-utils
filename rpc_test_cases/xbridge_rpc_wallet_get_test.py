@@ -2,6 +2,7 @@ import unittest
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from decimal import *
+import random
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
@@ -230,27 +231,35 @@ class wallet_get_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('gettransaction unit test FAILED')
 
+    # getbalance ( "account" minconf includeWatchonly )
     def test_getbalance(self):
-        try:
+        global set_of_invalid_parameters
+        for i in range(1, 51):
             log_json = ""
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance(""), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance(" "), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("----"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("{"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("}"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("["), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("]"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("{"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("}"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("[]"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("{}"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance("{}"), Decimal)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance(xbridge_utils.ca_random_tx_id), Decimal)
-            log_json = {"group": "test_getbalance", "success": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError:
-            log_json = {"group": "test_getbalance", "success": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getbalance unit test FAILED')
-
+            with self.subTest("move combinations"):
+                try:      
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_account = ""
+                    else:
+                        optional_minconf = random.choice([set_of_invalid_parameters])
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_minconf = ""
+                    else:
+                        optional_minconf = random.choice([set_of_invalid_parameters])
+                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_includeWatchonly = ""
+                    else:
+                        optional_includeWatchonly = random.choice([set_of_invalid_parameters])
+                    self.assertIsInstance(xbridge_rpc.rpc_connection.getbalance(optional_account, optional_minconf, optional_includeWatchonly), Decimal)
+                    log_json = {"group": "test_getbalance", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_getbalance", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_getbalance invalid unit test FAILED: %s' % ass_err)
+                except JSONRPCException as json_excpt:
+                    xbridge_logger.logger.info('test_getbalance unit test ERROR: %s' % str(json_excpt))
+                    log_json = {"group": "test_getbalance", "success": 0,  "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+        
 # unittest.main()
