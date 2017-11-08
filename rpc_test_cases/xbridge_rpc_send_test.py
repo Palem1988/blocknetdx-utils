@@ -28,7 +28,7 @@ set_of_invalid_parameters = ["", " ",
                     ]
 
 # WE COMPLETE THE LIST
-set_of_invalid_parameters.extend(basic_garbage_list)
+set_of_invalid_parameters.extend(xbridge_utils.basic_garbage_list)
         
 class send_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -105,7 +105,7 @@ class send_UnitTest(unittest.TestCase):
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('%s invalid unit subtest FAILED: %s' % (str(send_address_func), ass_err))
                     except JSONRPCException as json_excpt:
-                        xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt))
+                        xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt)))
                         log_json = {"group": send_address_func, "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
             with self.subTest("invalid sendtoaddress"):
@@ -177,7 +177,7 @@ class send_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
             
     # sendfrom "fromaccount" "toblocknetdxaddress" amount ( minconf "comment" "comment-to" )
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_sendfrom_invalid(self):
         log_json = ""
         global set_of_invalid_parameters

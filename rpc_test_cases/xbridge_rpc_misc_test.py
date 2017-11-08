@@ -34,7 +34,7 @@ class Misc_UnitTest(unittest.TestCase):
 
     # signmessage "blocknetdxaddress" "message"
     # Please enter the wallet passphrase with walletpassphrase first.
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_signmessage(self):
         log_json = ""
         global set_of_invalid_parameters
@@ -94,7 +94,6 @@ class Misc_UnitTest(unittest.TestCase):
     # SUBTESTS WITH PARAMETER ORDER AND TYPE RANDOMNIZATION
     # INVALID COMBINATIONS : GARBAGE + OUT-OF-BOUNDS DATA + DATA WE EXPECT THE FUNCTION TO REJECT
     # autocombinerewards <true/false> threshold
-    # TODO : Add floats
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_invalid(self):
         global set_of_invalid_parameters
@@ -118,7 +117,7 @@ class Misc_UnitTest(unittest.TestCase):
 
     # SUBTESTS WITH PARAMETER ORDER AND TYPE RANDOMNIZATION
     # move "fromaccount" "toaccount" amount ( minconf "comment" )
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_move_invalid(self):
         log_json = ""
         global set_of_invalid_parameters
@@ -180,5 +179,5 @@ class Misc_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('lockunspent unit test ERROR: %s' % str(json_excpt))
                     log_json = {"group": "lockunspent", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-            
+
 # unittest.main()
