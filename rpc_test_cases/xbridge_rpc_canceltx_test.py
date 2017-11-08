@@ -69,9 +69,6 @@ class cancelUnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_cancel_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_cancel_1 unit test ERROR: %s' % str(json_excpt))
-        
-        except AssertionError as e:
-                xbridge_logger.logger.info('dxCancel unit test group 1 FAILED')
 
     """
           - We test various random inputs from individual character classes.
