@@ -34,8 +34,8 @@ five_classes_list = ['[\p\d\W\w\h\\a]']
 # Frequently used constants
 fixed_negative_int = -10
 fixed_positive_int = 10
-positive_float = 10.2
-negative_float = -10.2
+fixed_positive_float = 10.2
+fixed_negative_float = -10.2
 fixed_small_positive_float = 0.00000000000000000000000000000000000000000000000000000001
 fixed_large_positive_int = 9999999999999999999999999999999999999999999999999999999999999999
 valid_random_positive_int = 0
@@ -117,8 +117,10 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         source_nb = generate_random_number(1, 1000)
         dest_nb = generate_random_number(1, 1000)
         a_random_tx_id = generate_random_valid_txid()
-        a_src_Address = xbridge_rpc.rpc_connection.getnewaddress()
-        a_dest_Address = xbridge_rpc.rpc_connection.getnewaddress()
+        # a_src_Address = xbridge_rpc.rpc_connection.getnewaddress()
+        a_src_Address = generate_random_valid_address()
+        # a_dest_Address = xbridge_rpc.rpc_connection.getnewaddress()
+        a_dest_Address = generate_random_valid_address()
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_random_valid_txid()
         valid_account_str = generate_random_valid_account_str()
