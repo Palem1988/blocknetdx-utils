@@ -52,6 +52,7 @@ class accept_Tx_Test(unittest.TestCase):
     # Combinations of valid and invalid parameters
     def test_invalid_accept_tx_1(self):
         try:
+           log_json = ""
            self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.valid_dest_Address))
            self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.valid_dest_Address))
            self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_dest_Address))
@@ -59,9 +60,13 @@ class accept_Tx_Test(unittest.TestCase):
            self.assertIsNone(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address))
            self.assertIsNone(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_dest_Address))
            # print("dxAccept Unit Test Group 1 OK")
+           log_json = {"group": "test_invalid_accept_tx_1", "success": 1, "error": 0}
+           xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as e:
             # print("****** dxAccept Unit Test Group 1 FAILED ******")
-            xbridge_logger.logger.info('-------- dxAccept unit test group 1 FAILED --------')
+            log_json = {"group": "test_invalid_accept_tx_1", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 1 FAILED --------\n')
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -72,6 +77,7 @@ class accept_Tx_Test(unittest.TestCase):
     # Combinations of empty parameters
     def test_invalid_accept_tx_2(self):
         try:
+            log_json = ""
             # Test many combinations of 0 to 10 000 white spaces
             whitespace_str_1 = StringGenerator('[\s]{1:10000}').render()
             whitespace_str_2 = StringGenerator('[\s]{1:10000}').render()
@@ -85,9 +91,13 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsNone(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, ""))
             self.assertIsNone(xbridge_rpc.accept_tx("", "", ""))
             # print("dxAccept Unit Test Group 2 OK")
+            log_json = {"group": "test_invalid_accept_tx_2", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as e:
             # print("****** dxAccept Unit Test Group 2 FAILED ******")
-            xbridge_logger.logger.info('-------- dxAccept unit test group 2 FAILED --------')
+            log_json = {"group": "test_invalid_accept_tx_2", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 2 FAILED --------\n')
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -102,15 +112,20 @@ class accept_Tx_Test(unittest.TestCase):
     # Input parameter(s) is from combination of random character classes
     def test_invalid_accept_tx_3(self):
         try:
+            log_json = ""
             self.assertIsNone(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.valid_src_Address, self.valid_dest_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.input_str_from_random_classes_1, self.valid_dest_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1))
             self.assertIsNone(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1))
             self.assertIsNone(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3))
             # print("dxAccept Unit Test Group 3 OK")
+            log_json = {"group": "test_invalid_accept_tx_3", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as e:
             # print("****** dxAccept Unit Test Group 3 FAILED ******")
-            xbridge_logger.logger.info('-------- dxAccept unit test group 3 FAILED --------')
+            log_json = {"group": "test_invalid_accept_tx_3", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 3 FAILED --------\n')
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('input_str_from_random_classes_1: %s', self.input_str_from_random_classes_1)
             xbridge_logger.logger.info('input_str_from_random_classes_2: %s', self.input_str_from_random_classes_2)
@@ -124,6 +139,7 @@ class accept_Tx_Test(unittest.TestCase):
     # Combinations of very long addresses and transaction ids
     def invalid_accept_tx_4(self):
         try:
+            log_json = ""
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.long_src_Address, self.valid_dest_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.long_txid, self.long_src_Address, self.valid_dest_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.long_dest_Address))
@@ -131,9 +147,13 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.long_src_Address, self.long_dest_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.long_txid, self.long_src_Address, self.long_dest_Address))
             # print("dxAccept Unit Test Group 4 OK")
+            log_json = {"group": "invalid_accept_tx_4", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as e:
             # print("****** dxAccept Unit Test Group 4 FAILED ******")
-            xbridge_logger.logger.info('-------- dxAccept unit test group 4 FAILED --------')
+            log_json = {"group": "invalid_accept_tx_4", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 4 FAILED --------\n')
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('long_txid: %s', self.long_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
@@ -146,6 +166,7 @@ class accept_Tx_Test(unittest.TestCase):
     # Combinations of same source and dest Addresses
     def test_invalid_accept_tx_5(self):
         try:
+            log_json = ""
             self.assertIsNone(xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_src_Address))
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.valid_src_Address))
             self.assertIsNone(xbridge_rpc.accept_tx("", self.valid_src_Address, self.valid_src_Address))
@@ -153,9 +174,13 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertIsNone(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_src_Address))
             self.assertIsNone(xbridge_rpc.accept_tx("", self.invalid_src_Address, self.invalid_src_Address))
             # print("dxAccept Unit Test Group 5 OK")
+            log_json = {"group": "test_invalid_accept_tx_5", "success": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as e:
             # print("****** dxAccept Unit Test Group 5 FAILED ******")
-            xbridge_logger.logger.info('-------- dxAccept unit test group 5 FAILED --------')
+            log_json = {"group": "test_invalid_accept_tx_5", "success": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('-------- dxAccept unit test group 5 FAILED --------\n')
             xbridge_logger.logger.info('valid_txid: %s', self.valid_txid)
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
