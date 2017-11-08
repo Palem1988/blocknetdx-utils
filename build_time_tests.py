@@ -162,7 +162,7 @@ for i in range(1, 1 + UNIT_TESTS_NB_OF_RUNS):
     
 summary_df = xbridge_utils.prepare_results_Summary()
 
-xbridge_logger.logger.info('********************* SUMMARY *********************\n')
+xbridge_logger.logger.info('\n ********************* SUMMARY *********************\n')
 xbridge_logger.logger.info("%s" % str(summary_df))
 
 xbridge_logger.logger.info('\n Unit tests are done !')
