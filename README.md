@@ -12,6 +12,8 @@
 # Current known issues
 
 - dxCreateTx test group 8 failed assertions without known reason for now.
+- When calling getnewaddress, the following error will appear frequently: ** bitcoinrpc.authproxy.JSONRPCException: -12: Error: Keypool ran out, please call keypoolrefill first **.
+
 
 # TODO
 
