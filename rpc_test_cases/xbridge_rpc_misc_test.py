@@ -2,6 +2,7 @@ import unittest
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from decimal import *
+import random
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
@@ -25,7 +26,7 @@ set_of_invalid_parameters = ["", " ",
                     ]
 
 # WE COMPLETE THE LIST
-set_of_invalid_parameters.extend(basic_garbage_list)
+set_of_invalid_parameters.extend(xbridge_utils.basic_garbage_list)
 
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
