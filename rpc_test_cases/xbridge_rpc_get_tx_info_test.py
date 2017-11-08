@@ -38,10 +38,17 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         self.random_length_str_with_random_char_class = xbridge_utils.generate_input_from_random_classes_combinations(1, 10000)
 
     """
-                - Specific tests with txid = 240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc
+                - Specific tests with txid = c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a
     """
     def test_valid_tx_id_1(self):
-        self.assertIsInstance(xbridge_rpc.get_tx_info("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), list)
+        rst = xbridge_rpc.get_tx_info("c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a")
+        self.assertIsInstance(rst, list)
+        self.assertIsInstance(rst[0], dict)
+        self.assertEqual(rst[0]["from"], "LTC")
+        self.assertEqual(rst[0]["to"], "SYS")
+        self.assertEqual(rst[0]["fromAmount"], "0.1333")
+        self.assertEqual(rst[0]["state"], "Open")
+
         # print("dxGetTxInfo Valid Unit Test OK")
 
     """
@@ -146,3 +153,4 @@ def repeat_tx_info_unit_tests(nb_of_runs):
         if not wasSuccessful:
             sys.exit(1)
 
+# unittest.main()
