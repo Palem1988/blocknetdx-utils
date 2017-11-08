@@ -1,0 +1,35 @@
+
+Starting unit tests with version 3074200
+
+-------- dxAccept unit test group 5 FAILED --------
+
+valid_txid: bwtodScsGmWrHzcqLbg2fTPLDONUBCeTraoe4ATnl5L4pOoTf5x7rrIvPerholrs
+invalid_txid: 4qZ|tCLE@l!]vJ=86.Dmy-[@3@QMrKHiy(5ry(g/j;652avZL&k?]q"V<rAFJb16?lyj=V`5oo9_AfD8,3mnEO]tWrf?)\9!oU~65.Z20HF-0B47R6%5DQ]X#;_f+8]FCt68sFim-T[#N9nP}ju7d')Hi_tkd\ma.Ve._1Z!ACEmZ
+%8L%w,
+(0n^7,<6'ZcxA;f=i}X=C$5O682J?tIw+8J+YCG1|Ew4-DN506T55[4wW171m>)1
+<f|~r
+ywomRfeB0F7xaw=wu%I")+2/7d0O?K>6H bYJHAQ+c$_2c1b%,g`)7+zP?
+LyPWioj
+Q]~_k Eh7_TX"D:0}3l,KB8e,8PSd;6YVe#5s-5Z9ZwL#,V3O]@64b6[1cs~WS$cF\&/=1U[j\3N__rt.~V)sFz4:F/g8G?!
+P$uF2T+J-B,{rM]6]2cA(ylW\>&$b'4Y|P/7Mdd\As(8MGLS%a?)KN9P!K	g~yE}1}|8DaFw87o	4\]V0?~3zBl/HX50VI1%ye!#o)c{ By,9_[r3?=R%8YDehl00Y+XN?/ojB`lz(9l3TD2Y|VaX_I1x5pGAs!.d
+G@5e;2!Y]800Is"<?3~%U3,0Q$f17',yKbP4l]]37tDqxM={14Qs?m
+Yxf$I4:yE;74fMs}Ndw8d?D$0L?[B<m6|!_`'NL={VK\_B9F9AwiByrN_\*,V!C;qR!7@"Z:]Xc 3) v9Xg_=E]6PC"$9j;~q0krlJ
+$o{{,)k5J77|y>KrVZ;&+68D*!wpT0t5{-b:a\oo53d"V6+O
+2@~8(5X9T#Y>G11{0DRN4<87FW7eQ)}K";B83vxcT/ms32E9_?x6PG5"2uOW2*T+p8z_6P=X3vrr&;>	_7/e)<ER=-~8aQW2"taB#0Zh"r93&+97#ST_Z\.}82wv<fKs$WB4p
+d\^XkTu_/BDffz~a(7wJI1nymfF}?bU%$pvv.i^'VR)E924*cxB7)=IV|h*a+&~5E3.1bn3B23nqL55r!xTZr&urgv&'E:"7li41I(z?c`ZRR_^)qn$]T(K ,5W
+tbU@j_e+CcB"`%Ryw'5ld#4.2{)&2LCd++0/55Srb
+valid_src_Address: ebf1046B78A68E803A3DEc1e6fDDed01B9
+invalid_src_Address: Uw*3,0X
+,k^r$VIBA6cO[
+`2{)_S/g-2+%v:O9Ae05A/HFZ,a6t2iyZdD;jh(QO:~SYPzbNVSe>A{b;nH}fYvIJ(piU{6~5mOy5d	`SGV]h(ivzh^;XCCQO`z>gLJ5{CTlfGk9,S	7f%A+RF!o)Zi<Zd6%SD6DVHPg955]y_|{d>xKphfN2R,+0[C1"#K$|NtvEym)_	F)-`LB&YQb17gph5(/_LB3(EXvM
+PdU8XOXVAL<h<l~)OhWJ3 62/VUC)1|b=,T,jm_35hMJW	pz	iC(	\AL2a"T!@{!#<Q684{FM/[*eA.]'Q'Gs=wQ@N4J<o:eG.#H3QI6z44dPYgR5D+[?q[{%\:8A0*lx&uoLl3ED5q	CAg0^Y
+oF7-94cLWHq	#dhG+C*("/@oe puh-\/Cm&[YoA}cJfi=lx|Kk6b&BI3~'
+D-*b3sptFrq58Rr
+w>kcIlJ27[YHf:_Q5g,^{44&H3iD2XUC59*,=Ir4Edho;<JjY{&#	"T4'qvc_d2L56\|%pK[}6p1uQ@3	>'R=E]1g(#"	#0j>. Q64#4jwi?Dsa8j=Y=0"o
+'5,T+]1NR+|dF0$ &afzrLIug8%/'Ug*Cz4Gwg(n [7hJS9qiF!M
+YY	+z[9^NL7u,4kC~}L#.j9HIFb6_Af^1K-lh_?1Nc58dP-Nwt+o5y1`_mV*n#4~"IiW^Is	4R5nfO3	9yX56+fcT}(Tc^8-i35l`<-3Jp.9.~O<%5>m<D4
+4[;eOeK!_#YhSN1%`{t(8!w	j,34_K4U2a.Ay]BLr_[97R:J)`Z<6
+get_connection_count unit test FAILED
+getpeerinfo unit test FAILED
+
+Unit tests are done !
