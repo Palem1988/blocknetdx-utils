@@ -40,6 +40,8 @@ fixed_small_positive_float = 0.0000000000000000000000000000000000000000000000000
 fixed_large_positive_int = 9999999999999999999999999999999999999999999999999999999999999999
 valid_random_positive_int = 0
 invalid_random_positive_int = 0
+valid_random_positive_float = 0
+invalid_random_positive_float = 0
 
 # Set for create_tx
 c_src_Address = ""
@@ -78,8 +80,12 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
     global invalid_account_str
     global valid_random_positive_int
     global invalid_random_positive_int
+    global valid_random_positive_float
+    global invalid_random_positive_float
     valid_random_positive_int = generate_random_int(1, 1000)
     invalid_random_positive_int = generate_random_int(999999999999999999999, 9999999999999999999999999999999999999999999999999999)
+    valid_random_positive_float = generate_random_number(1, 1000)
+    invalid_random_positive_float = generate_random_number(999999999999999999999, 9999999999999999999999999999999999999999999999999999)
     if data_nature == RANDOM_VALID_INVALID:
         selected_data = random.choice([VALID_DATA, INVALID_DATA])
         generate_new_set_of_data(selected_data)
