@@ -16,7 +16,7 @@ class send_UnitTest(unittest.TestCase):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
     # multisend <command>
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_multisend(self):
         log_json = ""
         # VALID
@@ -34,7 +34,7 @@ class send_UnitTest(unittest.TestCase):
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.multisend(basic_garbage_str, basic_garbage_str))
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.multisend, basic_garbage_str, basic_garbage_str)
                     log_json = {"group": "test_signmessage", "success": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError:
@@ -45,7 +45,7 @@ class send_UnitTest(unittest.TestCase):
         # INVALID RANDOM GARBAGE
         with self.subTest("random garbage"):
             try:
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.multisend(basic_garbage_str, basic_garbage_str))
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.multisend, basic_garbage_str, basic_garbage_str)
                 log_json = {"group": "test_multisend", "success": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError:
@@ -57,9 +57,9 @@ class send_UnitTest(unittest.TestCase):
             
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     # sendtoaddressix "blocknetdxaddress" amount ( "comment" "comment-to" )
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_senttoaddress_invalid(self):
-        send_address_list = [xbridge_utils.sendtoaddress, xbridge_utils.sendtoaddressix]
+        send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
         for send_address_func in send_address_list:
             log_json = ""
             with self.subTest("invalid sendtoaddress"):
@@ -104,18 +104,20 @@ class send_UnitTest(unittest.TestCase):
             
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     # sendtoaddressix "blocknetdxaddress" amount ( "comment" "comment-to" )
+    # JSONRPCException: -5: Invalid BlocknetDX address
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_senttoaddress_valid(self):
-        send_address_list = [xbridge_utils.sendtoaddress, xbridge_utils.sendtoaddressix]
-        valid_blocknet_address = xbridge_utils.rpc_connection.getnewaddress()
+        send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
+        # valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
+        valid_blocknet_address = xbridge_utils.generate_random_valid_address()
         for send_address_func in send_address_list:
             log_json = ""
             with self.subTest("valid sendtoaddress"):
                 try:        
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, xbridge_utils.xbridge_utils.valid_random_positive_int), dict)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, xbridge_utils.xbridge_utils.valid_random_positive_float), dict)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, xbridge_utils.xbridge_utils.fixed_positive_int), dict)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, xbridge_utils.xbridge_utils.fixed_positive_float), dict)
+                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.valid_random_positive_int), dict)
+                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.valid_random_positive_float), dict)
+                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.fixed_positive_int), dict)
+                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.fixed_positive_float), dict)
                     # NEGATIVE NUMBERS
                     # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, -xbridge_utils.xbridge_utils.valid_random_positive_float), dict)
                     # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, -xbridge_utils.xbridge_utils.fixed_positive_int), dict)

@@ -145,8 +145,8 @@ class wallet_List_UnitTest(unittest.TestCase):
         with self.subTest("INVALID COMBINATIONS"):
             try:        
                 # INVALID COMBINATIONS - 1 PARAMETER
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.positive_float)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.negative_float)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_positive_float)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_negative_float)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_large_positive_int)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_small_positive_float)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.invalid_random_positive_int)

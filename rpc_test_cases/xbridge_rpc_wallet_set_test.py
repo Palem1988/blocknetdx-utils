@@ -23,7 +23,8 @@ class wallet_Set_UnitTest(unittest.TestCase):
         self.fixed_small_positive_number = 0.00000000000000000000000000000000000000000000000000000001
         self.valid_random_positive_number = xbridge_utils.generate_random_number(0, 1000)
         self.valid_random_positive_int = xbridge_utils.generate_random_int(0, 1000)
-        self.valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
+        # self.valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
+        self.valid_blocknet_address = xbridge_utils.generate_random_valid_address()
         self.invalid_blocknet_address = xbridge_utils.c_src_Address
         self.invalid_account_str = xbridge_utils.invalid_account_str
         self.valid_account_str = xbridge_utils.valid_account_str
@@ -40,6 +41,7 @@ class wallet_Set_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('****** test_setfee unit test FAILED ******')
 
     # Only int are accepted
+    # Error: Unlock wallet to use this feature
     def test_set_stake_split_threshold(self):
         try:
             self.assertIsInstance(xbridge_rpc.rpc_connection.setstakesplitthreshold(0), dict)
