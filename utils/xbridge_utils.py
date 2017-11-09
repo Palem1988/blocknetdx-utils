@@ -79,8 +79,6 @@ set_of_invalid_parameters = ["", " ",
 # WE COMPLETE THE LIST
 set_of_invalid_parameters.extend(basic_garbage_list)
 
-
-
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     # Set for create_tx
     global c_src_Address
@@ -212,6 +210,10 @@ def generate_random_number(a, b):
 
 def generate_random_int(a, b):
     return int(random.randint(a, b))
+
+def generate_valid_blocknet_address():
+    xbridge_rpc.rpc_connection.keypoolrefill(1000)
+    return xbridge_rpc.rpc_connection.getnewaddress()
 
 def generate_random_valid_address():
     template_str = '[\h]{30:70}'
