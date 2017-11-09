@@ -61,6 +61,26 @@ valid_account_str = ""
 invalid_account_str = ""
 
 
+set_of_invalid_parameters = ["", " ",
+                    0, -fixed_large_positive_int, fixed_large_positive_int, fixed_small_positive_float,
+                    True, False, "yes", "no",
+                    ca_random_tx_id,
+                    fixed_positive_int,
+                    invalid_random_positive_int,
+                    invalid_random_positive_float,
+                    -invalid_random_positive_int,
+                    -invalid_random_positive_float,
+                    valid_random_positive_float,
+                    fixed_positive_float,
+                    -valid_random_positive_float,
+                    -fixed_positive_float
+                    ]
+
+# WE COMPLETE THE LIST
+set_of_invalid_parameters.extend(basic_garbage_list)
+
+
+
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     # Set for create_tx
     global c_src_Address
