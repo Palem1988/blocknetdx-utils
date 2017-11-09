@@ -22,7 +22,7 @@ set_of_invalid_parameters = ["", " ",
                     xbridge_utils.valid_random_positive_float,
                     xbridge_utils.fixed_positive_float,
                     -xbridge_utils.valid_random_positive_float,
-                    -xbridge_utils.fixed_positive_float,
+                    -xbridge_utils.fixed_positive_float
                     ]
 
 # WE COMPLETE THE LIST
@@ -149,7 +149,7 @@ class Misc_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
                     
     # lockunspent unlock [{"txid":"txid","vout":n},...]
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_lockunspent_invalid(self):
         log_json = ""
         global set_of_invalid_parameters
@@ -157,18 +157,9 @@ class Misc_UnitTest(unittest.TestCase):
             log_json = ""
             with self.subTest("lockunspent combinations"):
                 try:      
-                    fromAccount = random.choice(set_of_invalid_parameters)
-                    toaccount = random.choice(set_of_invalid_parameters)
-                    amount = random.choice(set_of_invalid_parameters)
-                    if random.choice(["", set_of_invalid_parameters]) == "":
-                        optional_minconf = ""
-                    else:
-                        optional_minconf = random.choice([set_of_invalid_parameters])
-                    if random.choice(["", set_of_invalid_parameters]) == "":
-                        optional_comment = ""
-                    else:
-                        optional_comment = random.choice([set_of_invalid_parameters])
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.lockunspent, fromAccount, toaccount, amount, optional_comment)
+                    unlock_param = random.choice(set_of_invalid_parameters)
+                    transactions = random.choice(set_of_invalid_parameters)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.lockunspent, unlock_param, transactions)
                     log_json = {"group": "lockunspent", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:

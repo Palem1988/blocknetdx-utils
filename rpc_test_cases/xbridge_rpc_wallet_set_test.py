@@ -54,9 +54,17 @@ class wallet_Set_UnitTest(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.fixed_small_positive_number)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.positive_float)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, xbridge_utils.ca_random_tx_id)
-        except AssertionError:
-            xbridge_logger.logger.info('****** set_stake_split_threshold unit test FAILED ******\n')
+            log_json = {"group": "test_set_stake_split_threshold", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_set_stake_split_threshold", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('set_stake_split_threshold unit test FAILED: %s \n' % ass_err)
             xbridge_logger.logger.info('random_tx_id: \n %s \n' % xbridge_utils.ca_random_tx_id)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.logger.info('test_set_stake_split_threshold invalid unit test ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_set_stake_split_threshold", "success": 0,  "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
 
     def test_set_account(self):
         try:
@@ -64,8 +72,12 @@ class wallet_Set_UnitTest(unittest.TestCase):
             self.assertIsNone(xbridge_rpc.rpc_connection.setaccount(self.valid_blocknet_address, self.valid_account_str))
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setaccount, self.invalid_blocknet_address, self.invalid_account_str)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setaccount, self.invalid_blocknet_address, self.valid_account_str)
-        except AssertionError:
-            xbridge_logger.logger.info('****** setaccount unit test FAILED ****** \n')
+            log_json = {"group": "test_set_account", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_set_account", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('setaccount unit test FAILED: %s \n' % ass_err)
             xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % self.invalid_blocknet_address)
             xbridge_logger.logger.info('valid_blocknet_address: %s \n' % self.valid_blocknet_address)
             xbridge_logger.logger.info('invalid_account_str: %s \n' % self.invalid_account_str)

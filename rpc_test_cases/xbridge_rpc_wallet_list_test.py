@@ -17,10 +17,10 @@ class wallet_List_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listaccounts(), dict)
-            log_json = {"group": "test_listaccounts", "success": 1, "error": 0}
+            log_json = {"group": "test_listaccounts", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            log_json = {"group": "test_listaccounts", "success": 0, "error": 1}
+            log_json = {"group": "test_listaccounts", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listaccounts unit test FAILED')
 
@@ -28,10 +28,10 @@ class wallet_List_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listaddressgroupings(), list)
-            log_json = {"group": "test_listaddressgroupings", "success": 1, "error": 0}
+            log_json = {"group": "test_listaddressgroupings", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            log_json = {"group": "test_listaddressgroupings", "success": 0, "error": 1}
+            log_json = {"group": "test_listaddressgroupings", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listaddressgroupings unit test FAILED')
 
@@ -39,10 +39,10 @@ class wallet_List_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listlockunspent(), list)
-            log_json = {"group": "test_listlockunspent", "success": 1, "error": 0}
+            log_json = {"group": "test_listlockunspent", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            log_json = {"group": "test_listlockunspent", "success": 0, "error": 1}
+            log_json = {"group": "test_listlockunspent", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listlockunspent unit test FAILED\n')
             
@@ -50,10 +50,10 @@ class wallet_List_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listsinceblock(xbridge_utils.ca_random_tx_id), dict)
-            log_json = {"group": "test_listsinceblock", "success": 1, "error": 0}
+            log_json = {"group": "test_listsinceblock", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            log_json = {"group": "test_listsinceblock", "success": 0, "error": 1}
+            log_json = {"group": "test_listsinceblock", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listsinceblock unit test FAILED\n')
             xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
@@ -72,10 +72,10 @@ class wallet_List_UnitTest(unittest.TestCase):
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.fixed_negative_int, False), list)
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.valid_random_positive_int, True), list)
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(xbridge_utils.valid_random_positive_int, False), list)
-                log_json = {"group": "test_listreceivedbyaccount", "success": 1, "error": 0}
+                log_json = {"group": "test_listreceivedbyaccount", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError:
-                log_json = {"group": "test_listreceivedbyaccount", "success": 0, "error": 1}
+                log_json = {"group": "test_listreceivedbyaccount", "success": 0, "failure": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('listreceivedbyaccount valid sub unit test group FAILED: \n')
                 xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
@@ -85,18 +85,18 @@ class wallet_List_UnitTest(unittest.TestCase):
         with self.subTest("INVALID COMBINATIONS"):
             try:        
                 # INVALID COMBINATIONS - 1 PARAMETER
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_positive_float)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_negative_float)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_small_positive_float)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int)
                 # INVALID COMBINATIONS - 2 PARAMETERS
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float, True)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float, False)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.positive_float, xbridge_utils.ca_random_tx_id)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float, True)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float, False)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.negative_float, xbridge_utils.ca_random_tx_id)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_positive_float, True)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_positive_float, False)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_positive_float, xbridge_utils.ca_random_tx_id)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_negative_float, True)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_negative_float, False)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_negative_float, xbridge_utils.ca_random_tx_id)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int, True)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int, False)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.fixed_large_positive_int, xbridge_utils.ca_random_tx_id)
@@ -106,14 +106,14 @@ class wallet_List_UnitTest(unittest.TestCase):
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int, True)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int, False)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaccount, xbridge_utils.invalid_random_positive_int, xbridge_utils.ca_random_tx_id)
-                log_json = {"group": "test_listreceivedbyaccount", "success": 1, "error": 0}
+                log_json = {"group": "test_listreceivedbyaccount", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError:
-                log_json = {"group": "test_listreceivedbyaccount", "success": 0, "error": 1}
+                log_json = {"group": "test_listreceivedbyaccount", "success": 0, "failure": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('listreceivedbyaccount invalid sub unit test group FAILED: \n')
                 xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
-                xbridge_logger.logger.info('positive_float: %s \n' % xbridge_utils.positive_float)
+                xbridge_logger.logger.info('positive_float: %s \n' % xbridge_utils.fixed_positive_float)
                 xbridge_logger.logger.info('fixed_large_positive_int: %s \n' % xbridge_utils.fixed_large_positive_int)
                 xbridge_logger.logger.info('fixed_small_positive_float: %s \n' % xbridge_utils.fixed_small_positive_float)
                 xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
@@ -132,10 +132,10 @@ class wallet_List_UnitTest(unittest.TestCase):
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.fixed_negative_int, False), list)
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.valid_random_positive_int, True), list)
                 self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaddress(xbridge_utils.valid_random_positive_int, False), list)
-                log_json = {"group": "listreceivedbyaddress", "success": 1, "error": 0}
+                log_json = {"group": "test_listreceivedbyaddress", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError:
-                log_json = {"group": "listreceivedbyaddress", "success": 0, "error": 1}
+                log_json = {"group": "test_listreceivedbyaddress", "success": 0, "failure": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('listreceivedbyaddress valid sub unit test group FAILED: \n')
                 xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
@@ -151,12 +151,12 @@ class wallet_List_UnitTest(unittest.TestCase):
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_small_positive_float)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.invalid_random_positive_int)
                 # INVALID COMBINATIONS - 2 PARAMETERS
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.positive_float, True)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.positive_float, False)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.positive_float, xbridge_utils.ca_random_tx_id)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.negative_float, True)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.negative_float, False)
-                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.negative_float, xbridge_utils.ca_random_tx_id)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_positive_float, True)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_positive_float, False)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_positive_float, xbridge_utils.ca_random_tx_id)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_negative_float, True)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_negative_float, False)
+                self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_negative_float, xbridge_utils.ca_random_tx_id)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_large_positive_int, True)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_large_positive_int, False)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.fixed_large_positive_int, xbridge_utils.ca_random_tx_id)
@@ -166,14 +166,14 @@ class wallet_List_UnitTest(unittest.TestCase):
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.invalid_random_positive_int, True)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.invalid_random_positive_int, False)
                 self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listreceivedbyaddress, xbridge_utils.invalid_random_positive_int, xbridge_utils.ca_random_tx_id)
-                log_json = {"group": "test_listreceivedbyaccount", "success": 1, "error": 0}
+                log_json = {"group": "test_listreceivedbyaddress", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError:
-                log_json = {"group": "test_listreceivedbyaccount", "success": 0, "error": 1}
+                log_json = {"group": "test_listreceivedbyaddress", "success": 0, "failure": 1, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('listreceivedbyaddress invalid sub unit test group FAILED: \n')
                 xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
-                xbridge_logger.logger.info('positive_float: %s \n' % xbridge_utils.positive_float)
+                xbridge_logger.logger.info('positive_float: %s \n' % xbridge_utils.fixed_positive_float)
                 xbridge_logger.logger.info('fixed_large_positive_int: %s \n' % xbridge_utils.fixed_large_positive_int)
                 xbridge_logger.logger.info('fixed_small_positive_float: %s \n' % xbridge_utils.fixed_small_positive_float)
                 xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)

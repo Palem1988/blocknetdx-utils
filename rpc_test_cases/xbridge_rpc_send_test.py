@@ -6,6 +6,9 @@ import random
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
+from strgen import StringGenerator
+
+
 """                       ***  UNIT TESTS ***
 """
 
@@ -101,12 +104,12 @@ class send_UnitTest(unittest.TestCase):
                         log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        log_json = {"group": send_address_func, "success": 0, "failure": 1, "error": 0}
+                        log_json = {"group": "sendtoaddress", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('%s invalid unit subtest FAILED: %s' % (str(send_address_func), ass_err))
                     except JSONRPCException as json_excpt:
                         xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt)))
-                        log_json = {"group": send_address_func, "success": 0,  "failure": 0, "error": 1}
+                        log_json = {"group": "sendtoaddress", "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
             with self.subTest("invalid sendtoaddress"):
                 try:
@@ -121,10 +124,10 @@ class send_UnitTest(unittest.TestCase):
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, True, 0)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, False, xbridge_utils.ca_random_tx_id)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, True, xbridge_utils.ca_random_tx_id)
-                    log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
+                    log_json = {"group": "sendtoaddress", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": send_address_func, "success": 0, "failure": 1, "error": 0}
+                    log_json = {"group": "sendtoaddress", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('%s invalid unit test FAILED: %s' % (send_address_func, ass_err))
                     """
@@ -138,10 +141,9 @@ class send_UnitTest(unittest.TestCase):
                     """
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt)))
-                    log_json = {"group": "test_multisend", "success": 0,  "failure": 0, "error": 1}
+                    log_json = {"group": "sendtoaddress", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-            
-            
+
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     # sendtoaddressix "blocknetdxaddress" amount ( "comment" "comment-to" )
     # JSONRPCException: -5: Invalid BlocknetDX address
@@ -149,7 +151,10 @@ class send_UnitTest(unittest.TestCase):
     def test_senttoaddress_valid(self):
         send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
         # valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
-        valid_blocknet_address = xbridge_utils.generate_random_valid_address()
+        nb_of_cars = 35
+        template_str = '[a-zA-Z0-9]{' + str(nb_of_cars) + '}'
+        valid_blocknet_address = StringGenerator(template_str).render()
+        print(valid_blocknet_address)
         for send_address_func in send_address_list:
             log_json = ""
             with self.subTest("valid sendtoaddress"):
@@ -240,4 +245,4 @@ class send_UnitTest(unittest.TestCase):
             log_json = {"group": "sendfrom", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)                
             
-# unittest.main()
+unittest.main()
