@@ -10,24 +10,6 @@ from utils import xbridge_utils
 """                       ***  UNIT TESTS ***
 """
 
-set_of_invalid_parameters = ["", " ",
-                    0, -xbridge_utils.fixed_large_positive_int, xbridge_utils.fixed_large_positive_int, xbridge_utils.fixed_small_positive_float, 
-                    True, False,
-                    xbridge_utils.ca_random_tx_id,
-                    xbridge_utils.fixed_positive_int,
-                    xbridge_utils.invalid_random_positive_int,
-                    xbridge_utils.invalid_random_positive_float,
-                    -xbridge_utils.invalid_random_positive_int,
-                    -xbridge_utils.invalid_random_positive_float,
-                    xbridge_utils.valid_random_positive_float,
-                    xbridge_utils.fixed_positive_float,
-                    -xbridge_utils.valid_random_positive_float,
-                    -xbridge_utils.fixed_positive_float
-                    ]
-
-# WE COMPLETE THE LIST
-set_of_invalid_parameters.extend(xbridge_utils.basic_garbage_list)
-
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
