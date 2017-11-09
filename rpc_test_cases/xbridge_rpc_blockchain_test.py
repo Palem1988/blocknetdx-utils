@@ -12,7 +12,7 @@ from utils import xbridge_utils
 
 class Blockchain_UnitTest(unittest.TestCase):
     def setUp(self):
-        xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
+        xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
         
     def test_get_blockcount(self):
         try:
@@ -56,8 +56,7 @@ class Blockchain_UnitTest(unittest.TestCase):
             with self.subTest("combinations"):
                 try:
                     verbose = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(verbose), dict)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
                     log_json = {"group": "test_getrawmempool", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -84,9 +83,8 @@ class Blockchain_UnitTest(unittest.TestCase):
                         optional_includemempool = ""
                     else:
                         optional_includemempool = random.choice([xbridge_utils.set_of_invalid_parameters])
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.gettxout(txid, n, optional_includemempool),
-                                          dict)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, txid, n, optional_includemempool)
+                    # self.assertIsInstance(xbridge_rpc.rpc_connection.gettxout(txid, n, optional_includemempool), dict)
                     log_json = {"group": "test_gettxout", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -113,7 +111,6 @@ class Blockchain_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_gettxoutsetinfo unit test ERROR: %s' % json_excpt)
 
-    # BLOCKCHAIN
     # getmempoolinfo
     def test_getmempoolinfo(self):
         try:
@@ -129,11 +126,10 @@ class Blockchain_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_getmempoolinfo unit test ERROR: %s' % json_excpt)
 
-    # BLOCKCHAIN
     # getbestblockhash
     def test_getbestblockhash(self):
         try:
-            self.assertIsInstance(xbridge_rpc.rpc_connection.getbestblockhash(), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.getbestblockhash(), str)
             log_json = {"group": "test_getbestblockhash", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
@@ -160,7 +156,6 @@ class Blockchain_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_getchaintips unit test ERROR: %s' % json_excpt)
 
-    # BLOCKCHAIN
     # verifychain ( checklevel numblocks )
     # @unittest.skip("DISABLED - UNTESTED")
     def test_verifychain(self):
@@ -176,9 +171,7 @@ class Blockchain_UnitTest(unittest.TestCase):
                         optional_numblocks = ""
                     else:
                         optional_numblocks = random.choice([xbridge_utils.set_of_invalid_parameters])
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.verifychain, optional_checklevel, optional_numblocks)
-                    self.assertIsInstance(
-                        xbridge_rpc.rpc_connection.verifychain(optional_checklevel, optional_numblocks), dict)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.verifychain, optional_checklevel, optional_numblocks)
                     log_json = {"group": "test_verifychain", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -191,4 +184,4 @@ class Blockchain_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
 
 
-unittest.main()
+# unittest.main()
