@@ -18,19 +18,15 @@ class Misc_UnitTest(unittest.TestCase):
     # Please enter the wallet passphrase with walletpassphrase first.
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_signmessage(self):
-        log_json = ""
-        global set_of_invalid_parameters
-        #valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
+        # valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
+        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         for i in range(1, 51):
-            valid_blocknet_address = xbridge_utils.generate_random_valid_address()
+            log_json = ""
             with self.subTest("random garbage"):
                 try:
-                    tmp_list = []
-                    tmp_list = set_of_invalid_parameters
-                    tmp_list.extend(valid_blocknet_address)
-                    blocknetdxaddress = random.choice(tmp_list)
-                    message = random.choice(tmp_list)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(blocknetdxaddress, message), dict)
+                    invalid_blocknet_address = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    message = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(random.choice([valid_blocknet_address, invalid_blocknet_address]), message), dict)
                     log_json = {"group": "test_signmessage", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -78,13 +74,12 @@ class Misc_UnitTest(unittest.TestCase):
     # autocombinerewards <true/false> threshold
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_invalid(self):
-        global set_of_invalid_parameters
         for i in range(1, 51):
             log_json = ""
             with self.subTest("autocombinerewards combinations"):
                 try:      
-                    true_false = random.choice(set_of_invalid_parameters)
-                    threshold = random.choice(set_of_invalid_parameters)
+                    true_false = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    threshold = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, true_false, threshold)
                     log_json = {"group": "autocombinerewards", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -102,22 +97,21 @@ class Misc_UnitTest(unittest.TestCase):
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_move_invalid(self):
         log_json = ""
-        global set_of_invalid_parameters
         for i in range(1, 51):
             log_json = ""
             with self.subTest("move combinations"):
                 try:      
-                    fromAccount = random.choice(set_of_invalid_parameters)
-                    toaccount = random.choice(set_of_invalid_parameters)
-                    amount = random.choice(set_of_invalid_parameters)
-                    if random.choice(["", set_of_invalid_parameters]) == "":
+                    fromAccount = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    toaccount = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    amount = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
                         optional_minconf = ""
                     else:
-                        optional_minconf = random.choice([set_of_invalid_parameters])
-                    if random.choice(["", set_of_invalid_parameters]) == "":
+                        optional_minconf = random.choice([xbridge_utils.set_of_invalid_parameters])
+                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
                         optional_comment = ""
                     else:
-                        optional_comment = random.choice([set_of_invalid_parameters])
+                        optional_comment = random.choice([xbridge_utils.set_of_invalid_parameters])
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.move, fromAccount, toaccount, amount, optional_comment)
                     log_json = {"group": "move", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -134,13 +128,12 @@ class Misc_UnitTest(unittest.TestCase):
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_lockunspent_invalid(self):
         log_json = ""
-        global set_of_invalid_parameters
         for i in range(1, 51):
             log_json = ""
             with self.subTest("lockunspent combinations"):
                 try:      
-                    unlock_param = random.choice(set_of_invalid_parameters)
-                    transactions = random.choice(set_of_invalid_parameters)
+                    unlock_param = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    transactions = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.lockunspent, unlock_param, transactions)
                     log_json = {"group": "lockunspent", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
