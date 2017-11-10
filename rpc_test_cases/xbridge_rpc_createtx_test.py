@@ -249,7 +249,8 @@ class create_Tx_Test(unittest.TestCase):
             """
 
     # Combinations of very small and very large numerical parameters, all other parameters being valid
-    @unittest.skip("Temporarily disabled tests")
+    # bitcoinrpc.authproxy.JSONRPCException: -32700: Parse error
+    # @unittest.skip("Temporarily disabled tests")
     def test_invalid_create_tx_v8(self):
         # very small + very small
         with self.subTest("test_invalid_create_tx_v8-1"):
@@ -262,14 +263,12 @@ class create_Tx_Test(unittest.TestCase):
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-1 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
-                xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
         # very small + very large
         with self.subTest("test_invalid_create_tx_v8-2"):
             try:
-                self.assertIsInstance(
-                    xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
-                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb),
-                    dict)
+                self.assertRaises(JSONRPCException,
+                    xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
+                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb)
             except AssertionError as ass_err:
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-2 FAILED on parameter:')
@@ -278,10 +277,9 @@ class create_Tx_Test(unittest.TestCase):
         # very large + very small
         with self.subTest("test_invalid_create_tx_v8-3"):
             try:
-                self.assertIsInstance(
-                    xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
-                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb),
-                    dict)
+                self.assertRaises(JSONRPCException,
+                    xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
+                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb)
             except AssertionError as ass_err:
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-3 FAILED on parameter:')
@@ -290,22 +288,13 @@ class create_Tx_Test(unittest.TestCase):
         # very large + very large
         with self.subTest("test_invalid_create_tx_v8-4"):
             try:
-                self.assertIsInstance(
-                    xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
-                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb),
-                    dict)
+                self.assertRaises(JSONRPCException,
+                    xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
+                                          self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb)
             except AssertionError as ass_err:
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-4 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
                 
-"""
-def repeat_create_tx_unit_tests(nb_of_runs):
-    for i in (1, 1 + nb_of_runs):
-        wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
-        if not wasSuccessful:
-            sys.exit(1)
-"""
-            
 # unittest.main()

@@ -147,14 +147,13 @@ class send_UnitTest(unittest.TestCase):
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     # sendtoaddressix "blocknetdxaddress" amount ( "comment" "comment-to" )
     # JSONRPCException: -5: Invalid BlocknetDX address
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    # bitcoinrpc.authproxy.JSONRPCException: -13: Error: Please enter the wallet passphrase with walletpassphrase first.
+    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_senttoaddress_valid(self):
         send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
         # valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
-        nb_of_cars = 35
-        template_str = '[a-zA-Z0-9]{' + str(nb_of_cars) + '}'
-        valid_blocknet_address = StringGenerator(template_str).render()
-        print(valid_blocknet_address)
+        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
+        # print(valid_blocknet_address)
         for send_address_func in send_address_list:
             log_json = ""
             with self.subTest("valid sendtoaddress"):
@@ -245,4 +244,4 @@ class send_UnitTest(unittest.TestCase):
             log_json = {"group": "sendfrom", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)                
             
-unittest.main()
+# unittest.main()
