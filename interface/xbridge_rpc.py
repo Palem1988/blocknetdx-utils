@@ -80,12 +80,15 @@ def get_transaction_history_list():
     except JSONRPCException:
         return None
 
-def test_mnbudgetvoteraw():
+# mnbudgetvoteraw <servicenode-tx-hash> <servicenode-tx-index> <proposal-hash> <yes|no> <time> <vote-sig>
+def mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig):
     try:
-        return rpc_connection.dxGetTransactionsHistoryList()
+        return rpc_connection.mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig)
     except UnicodeDecodeError as unicode_err:
+        # raise JSONRPCException
         raise xbridge_custom_exceptions.ValidBlockNetException("UnicodeDecodeError") from unicode_err
     except JSONRPCException as json_err:
+        # raise JSONRPCException
         raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
 
 """
@@ -223,5 +226,6 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # addr = rpc_connection.getnewaddress()
 # print(rpc_connection.bip38decrypt(addr))
 
+# print(rpc_connection.getrawmempool(-1))
 
 
