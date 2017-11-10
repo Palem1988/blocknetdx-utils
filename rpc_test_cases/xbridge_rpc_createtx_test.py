@@ -1,5 +1,8 @@
 import time
 import unittest
+import random
+
+from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from utils import xbridge_utils
 from interface import xbridge_rpc
@@ -35,6 +38,7 @@ def dxCreate_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_
 class create_Tx_Test(unittest.TestCase):
     # Generate new data before each run
     def setUp(self):
+       xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
        # Valid data
        self.valid_txid = xbridge_utils.generate_random_valid_txid()
        self.valid_src_Token = xbridge_utils.generate_random_valid_token()
@@ -54,6 +58,30 @@ class create_Tx_Test(unittest.TestCase):
        self.nb_with_leading_zeros_1 = xbridge_utils.generate_random_number_with_leading_zeros()
        self.nb_with_leading_zeros_2 = xbridge_utils.generate_random_number_with_leading_zeros()
 
+    def test_invalid_create_tx_v0(self):
+        for i in range(1, 51):
+            log_json = ""
+            with self.subTest("random garbage"):
+                try:
+                    txid = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    src_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    dest_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    src_Token = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    dest_Token = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    fromAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    toAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount), dict)
+                    log_json = {"group": "test_invalid_create_tx_v0", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test FAILED: %s' % ass_err)
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test ERROR: %s' % json_excpt)
+              
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
         try:
@@ -84,7 +112,6 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
             """
-            
 
     # Combinations with empty addresses
     def test_invalid_create_tx_v2(self):
@@ -273,34 +300,6 @@ class create_Tx_Test(unittest.TestCase):
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
                 
-    # Copy of 8-1 for investigation purposes only       
-    @unittest.skip("Still untested - Copy of 8-1 for investigation purposes only")
-    def test_invalid_create_tx_v9(self):
-        try:
-            self.assertIsInstance(
-                xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
-                                      self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb),
-                dict)
-        except AssertionError as ass_err:
-            xbridge_logger.logger.info('')
-            xbridge_logger.logger.info('dxCreate unit test group 9 FAILED on parameter: %s',
-                                       self.invalid_sm_positive_nb)
-                
-    # Copy of 8-2 for investigation purposes only
-    @unittest.skip("Still untested - Copy of 8-2")
-    def test_invalid_create_tx_v10(self):
-        try:
-            self.assertIsInstance(
-                xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
-                                      self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb),
-                dict)
-        except AssertionError as ass_err:
-            xbridge_logger.logger.info('')
-            xbridge_logger.logger.info('dxCreate unit test group 10 FAILED on parameter: %s and %s',
-                                       self.invalid_sm_positive_nb, self.invalid_lg_positive_nb)
-            xbridge_logger.logger.info('')
-    
-
 """
 def repeat_create_tx_unit_tests(nb_of_runs):
     for i in (1, 1 + nb_of_runs):
