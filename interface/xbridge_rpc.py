@@ -2,6 +2,8 @@
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import xbridge_config
 
+from utils import xbridge_custom_exceptions
+
 """
 port = '8888'
 rpc_connection = AuthServiceProxy("http://%s:%s@127.0.0.1:41414" % ('Testuser', 'MySuperPassword'))
@@ -25,85 +27,46 @@ def get_core_version():
         return 0
     
 def get_blockcount():
-    try:
-        blockcount = rpc_connection.getblockcount()
-        return blockcount
-    except JSONRPCException:
-        return 0
-
+    blockcount = rpc_connection.getblockcount()
+    return blockcount
+    
 def decode_script(hex):
-    try:
-        blockcount = rpc_connection.decodescript(hex)
-        return blockcount
-    except JSONRPCException:
-        return 0
+    blockcount = rpc_connection.decodescript(hex)
+    return blockcount
         
 def get_budget():
-    try:
-        snode_budget = rpc_connection.mnbudget('show')
-        return snode_budget
-    except JSONRPCException:
-        return None
-
+    snode_budget = rpc_connection.mnbudget('show')
+    return snode_budget
+    
 def get_node_list():
-    try:
-        return rpc_connection.servicenodelist()
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.servicenodelist()
+    
 def get_tx(txid):
-    try:
-        return rpc_connection.getrawtransaction(txid)
-    except JSONRPCException:
-        return None
+    return rpc_connection.getrawtransaction(txid)
     
 def send_tx(txid):
-    try:
-        return rpc_connection.sendrawtransaction(txid)
-    except JSONRPCException:
-        return None
+    return rpc_connection.sendrawtransaction(txid)
     
 def sign_tx(txid):
-    try:
-        return rpc_connection.signrawtransaction(txid)
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.signrawtransaction(txid)
+    
 def decode_raw_tx(txid):
-    try:
-        return rpc_connection.decoderawtransaction(txid)
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.decoderawtransaction(txid)
+    
 def cancel_tx(txid):
-    try:
-        return rpc_connection.dxCancelTransaction(txid)
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.dxCancelTransaction(txid)
+    
 def get_tx_info(txid):
-    try:
-        return rpc_connection.dxGetTransactionInfo(txid)
-    except JSONRPCException:
-        return None
+    return rpc_connection.dxGetTransactionInfo(txid)
 
 def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
-    try:
-        return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+    
 def accept_tx(txid, src, dest):
-    try:
-        return rpc_connection.dxAcceptTransaction(txid, src, dest)
-    except JSONRPCException:
-        return None
-
+    return rpc_connection.dxAcceptTransaction(txid, src, dest)
+    
 def get_currency_list():
-    try:
-        return rpc_connection.dxGetCurrencyList()
-    except JSONRPCException:
-        return None
+    return rpc_connection.dxGetCurrencyList()
 
 def get_transaction_list():
     try:
@@ -117,6 +80,13 @@ def get_transaction_history_list():
     except JSONRPCException:
         return None
 
+def test_mnbudgetvoteraw():
+    try:
+        return rpc_connection.dxGetTransactionsHistoryList()
+    except UnicodeDecodeError as unicode_err:
+        raise xbridge_custom_exceptions.ValidBlockNetException("UnicodeDecodeError") from unicode_err
+    except JSONRPCException as json_err:
+        raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
 
 """
 rst = get_tx_info("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc")
@@ -196,5 +166,62 @@ print(type(rpc_connection.getreceivedbyaccount("dsds")))
 
 print(send_tx(""))
 
+print(rpc_connection.submitblock(" "))
+print(type(rpc_connection.submitblock("dsds")))
+
+print(rpc_connection.getdifficulty())
+print(type(rpc_connection.getdifficulty()))
+
+returns None
+print(rpc_connection.keypoolrefill())
 """
+
+# print(rpc_connection.setaccount(rpc_connection.getnewaddress(), "dsqdsqdsqdsqdsqdsqd"))
+# print(rpc_connection.listreceivedbyaccount(rpc_connection.getnewaddress()))
+# print(rpc_connection.listreceivedbyaccount(99, ""))
+
+# print(rpc_connection.listreceivedbyaddress("dsds"))
+
+# ConnectionAbortedError: [WinError 10053] Une connexion établie a été abandonnée par un logiciel de votre ordinateur hôte
+# print(rpc_connection.encryptwallet("dsds"))
+
+# Invalid BlocknetDX address
+# print(rpc_connection.dumpprivkey("dsds"))
+
+# print(rpc_connection.dumpprivkey("dsds"))
+
+# JSONRPCException: -8: Cannot open wallet dump file
+# print(rpc_connection.dumpwallet("dsds"))
+
+# Auto Combine Rewards Threshold Set
+# print(rpc_connection.autocombinerewards(False, -99999999999999))
+# print(rpc_connection.autocombinerewards(False))
+# Error
+# print(rpc_connection.autocombinerewards(True))
+
+# List
+# print(rpc_connection.multisend("print"))
+# Error with list of commands
+# print(rpc_connection.multisend(""))
+
+# print(get_tx_info("c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a"))
+
+# print(rpc_connection.lockunspent())
+
+"""
+bitcoinrpc.authproxy.JSONRPCException: -1: spork <name> [<value>]
+<name> is the corresponding spork name, or 'show' to show all current spork settings, active to show which sporks are active<value> is a epoch datetime to enable or disable spork
+Requires wallet passphrase to be set with walletpassphrase call.
+"""
+# print(rpc_connection.spork())
+
+# bitcoinrpc.authproxy.JSONRPCException: -1: get_value< string > called on integer Value
+# print(rpc_connection.mnsync(3))
+
+# print(rpc_connection.encryptwallet("mypwd"))
+
+# addr = rpc_connection.getnewaddress()
+# print(rpc_connection.bip38decrypt(addr))
+
+
 
