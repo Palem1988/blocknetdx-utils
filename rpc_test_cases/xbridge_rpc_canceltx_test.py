@@ -52,7 +52,7 @@ class cancelUnitTest(unittest.TestCase):
             - Basic tests
     """
     def test_invalid_cancel_1(self):
-        for basic_garbage_str in xbridge_utils.basic_garbage_list:
+        for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
