@@ -1,0 +1,5 @@
+
+
+class ValidBlockNetException(Exception):
+    pass
+

@@ -3,8 +3,6 @@ import random
 from strgen import StringGenerator
 import pandas as pd
 from pandas import ExcelWriter
-import os, errno
-import xbridge_logger
 import xbridge_config
 
 from interface import xbridge_rpc
