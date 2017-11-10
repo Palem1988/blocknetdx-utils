@@ -80,6 +80,7 @@ def get_transaction_history_list():
     except JSONRPCException:
         return None
 
+# Exception chaining here
 # mnbudgetvoteraw <servicenode-tx-hash> <servicenode-tx-index> <proposal-hash> <yes|no> <time> <vote-sig>
 def mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig):
     try:
@@ -90,6 +91,19 @@ def mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig):
     except JSONRPCException as json_err:
         # raise JSONRPCException
         raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
+
+# Exception chaining here
+def spork(name_param, value_param):
+    try:
+        rst = rpc_connection.spork(name_param, value_param)
+        if rst == "Invalid spork name":
+            raise xbridge_custom_exceptions.ValidBlockNetException("Invalid spork name")
+        else:
+            return rst
+    except JSONRPCException as json_err:
+        raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
+
+
 
 """
 rst = get_tx_info("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc")
@@ -227,5 +241,7 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(rpc_connection.bip38decrypt(addr))
 
 # print(rpc_connection.getrawmempool(-1))
+
+# print(rpc_connection.spork("*", "*"))
 
 
