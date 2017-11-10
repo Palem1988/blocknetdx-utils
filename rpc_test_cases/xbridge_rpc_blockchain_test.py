@@ -56,7 +56,12 @@ class Blockchain_UnitTest(unittest.TestCase):
             with self.subTest("combinations"):
                 try:
                     verbose = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
+                    if verbose is True:
+                        self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(verbose), dict)
+                    elif verbose in (False, ""):
+                        self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(verbose), list)
+                    elif verbose not in (True, False, "", None) or isinstance(verbose, int):
+                        self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
                     log_json = {"group": "test_getrawmempool", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -182,6 +187,5 @@ class Blockchain_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('test_verifychain unit test ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_verifychain", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-
 
 # unittest.main()
