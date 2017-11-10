@@ -215,7 +215,8 @@ class wallet_List_UnitTest(unittest.TestCase):
                         optional_includeWatchonly = ""
                     else:
                         optional_includeWatchonly = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.listsinceblock(optional_blockhash, optional_target_confirmations, optional_includeWatchonly), dict)
+                    # self.assertIsInstance(xbridge_rpc.rpc_connection.listsinceblock(optional_blockhash, optional_target_confirmations, optional_includeWatchonly), dict)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listsinceblock, optional_blockhash, optional_target_confirmations, optional_includeWatchonly)
                     log_json = {"group": "test_listsinceblock", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -256,17 +257,20 @@ class wallet_List_UnitTest(unittest.TestCase):
                         optional_includeWatchonly = ""
                     else:
                         optional_includeWatchonly = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.listaccounts(optional_minconf, optional_includeWatchonly), dict)
+                    # self.assertIsInstance(xbridge_rpc.rpc_connection.listaccounts(optional_minconf, optional_includeWatchonly), dict)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listaccounts, optional_minconf, optional_includeWatchonly)
                     log_json = {"group": "test_listaccounts", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_listaccounts", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_listaccounts invalid unit test FAILED: %s' % ass_err)
+                """
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_listaccounts unit test ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_listaccounts", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
+                """
         """
         try:
             log_json = ""
@@ -278,6 +282,5 @@ class wallet_List_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('listaccounts unit test FAILED')
         """
-
 
 # unittest.main()
