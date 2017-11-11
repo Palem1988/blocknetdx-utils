@@ -7,6 +7,8 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from utils import xbridge_utils
 from interface import xbridge_rpc
 import xbridge_logger
+from utils import xbridge_custom_exceptions
+
 
 """
     - Combine optional parameters in a way that generate the test cases you want.
@@ -70,18 +72,15 @@ class create_Tx_Test(unittest.TestCase):
                     dest_Token = random.choice(xbridge_utils.set_of_invalid_parameters)
                     fromAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
                     toAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount), dict)
+                    # self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount), dict)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.create_tx, src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount)
                     log_json = {"group": "test_invalid_create_tx_v0", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test FAILED: %s' % ass_err)
-                except JSONRPCException as json_excpt:
-                    log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test ERROR: %s' % json_excpt)
-              
+
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
         try:

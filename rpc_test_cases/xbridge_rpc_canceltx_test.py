@@ -55,7 +55,10 @@ class cancelUnitTest(unittest.TestCase):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
-                    self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
+                    if isinstance(basic_garbage_str, str):
+                        self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
+                    else:
+                        self.assertRaises(JSONRPCException, xbridge_rpc.cancel_tx, basic_garbage_str)
                     log_json = {"group": "test_invalid_cancel_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -136,15 +139,6 @@ class cancelUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_cancel_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
         # print("UT Group 4 - total subtests completed with or without errors: %s" % str(run_count))
-
-
-"""
-def repeat_cancel_tx_unit_tests(runs=1000):
-    for j in (1, runs):
-        wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
-        if not wasSuccessful:
-            sys.exit(1)
-"""
 
 """
 if __name__ == '__main__':
