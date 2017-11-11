@@ -60,7 +60,11 @@ def get_tx_info(txid):
     return rpc_connection.dxGetTransactionInfo(txid)
 
 def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
-    return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+    try:
+        return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
+    except JSONRPCException as json_err:
+        # raise JSONRPCException
+        raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
     
 def accept_tx(txid, src, dest):
     return rpc_connection.dxAcceptTransaction(txid, src, dest)
@@ -244,4 +248,4 @@ Requires wallet passphrase to be set with walletpassphrase call.
 
 # print(rpc_connection.spork("*", "*"))
 
-
+print(get_tx_info("////////"))
