@@ -74,20 +74,20 @@ All arguments are optional.- Use *-s* or *--sequence* argument to specify the nu
 
 # Requirements
 
-- This code won't run on Python < 3.4 because of the use of subtests.
+- This code won't run on Python < 3.4 because of the use of subtests and exception chaining.
 
 # Sequence Tests Usage Examples
 
 - Optional parameters are available for sequence test functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
 
-For example, the following calls do the same thing: 
+For example, the following calls do the same thing:
 ```python
 random_RPC_sequence()
 random_RPC_sequence(nb_of_runs=1000)
 random_RPC_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
 ```
 
-- To generate only valid data, set **data_nature=VALID_DATA**. 
+- To generate only valid data, set **data_nature=VALID_DATA**.
 - To generate only garbage data, set **data_nature=INVALID_DATA**.
 
 If **data_nature=INVALID_DATA**, *char_min_size* and *char_min_size* define how long the string will be supplied by the random generator.
@@ -133,8 +133,8 @@ So the longer the tests are run, the better.
   - size of parameters sent to the API.
   - content type (hexadecimal, numeric, alpha-numeric, garbage data, or a mix of them).
   - valid / invalid nature of parameter.
- 
-  
+
+
 # Testing groups
 
 - Unit tests for each API.
