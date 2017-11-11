@@ -83,7 +83,8 @@ class Misc_UnitTest(unittest.TestCase):
             log_json = ""
             with self.subTest("autocombinerewards combinations"):
                 try:      
-                    true_false = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    modified_set = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, bool)]
+                    true_false = random.choice(modified_set)
                     threshold = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, true_false, threshold)
                     log_json = {"group": "autocombinerewards", "success": 1, "failure": 0, "error": 0}
@@ -155,9 +156,10 @@ class Misc_UnitTest(unittest.TestCase):
 
 # unittest.main()
 
-
+"""
 suite = unittest.TestSuite()
 # suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
 suite.addTest(Misc_UnitTest("test_signmessage_invalid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
+"""

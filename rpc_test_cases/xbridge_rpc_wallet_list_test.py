@@ -252,7 +252,7 @@ class wallet_List_UnitTest(unittest.TestCase):
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
                         optional_minconf = ""
                     else:
-                        optional_blockhash = random.choice([xbridge_utils.set_of_invalid_parameters])
+                        optional_minconf = random.choice([xbridge_utils.set_of_invalid_parameters])
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
                         optional_includeWatchonly = ""
                     else:
@@ -265,6 +265,8 @@ class wallet_List_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_listaccounts", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_listaccounts invalid unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('optional_minconf: %s' % optional_minconf)
+                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % optional_includeWatchonly)
                 """
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_listaccounts unit test ERROR: %s' % str(json_excpt))
@@ -284,3 +286,12 @@ class wallet_List_UnitTest(unittest.TestCase):
         """
 
 # unittest.main()
+
+"""
+suite = unittest.TestSuite()
+# suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
+suite.addTest(wallet_List_UnitTest("test_listaccounts"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""
+

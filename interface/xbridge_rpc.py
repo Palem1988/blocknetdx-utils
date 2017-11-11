@@ -3,7 +3,6 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import xbridge_config
 
 from utils import xbridge_custom_exceptions
-import re
 
 """
 port = '8888'

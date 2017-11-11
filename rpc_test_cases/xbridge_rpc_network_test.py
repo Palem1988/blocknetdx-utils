@@ -16,7 +16,7 @@ class Network_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.getconnectioncount(), int)
-            self.assertGreater(xbridge_rpc.rpc_connection.getconnectioncount(), 10)
+            self.assertGreater(xbridge_rpc.rpc_connection.getconnectioncount(), 1)
             log_json = {"group": "get_connectioncount", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:

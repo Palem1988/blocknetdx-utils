@@ -258,7 +258,11 @@ class create_Tx_Test(unittest.TestCase):
                     xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
                                           self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb),
                     dict)
+                log_json = {"group": "test_invalid_create_tx_v8-1", "success": 1, "failure": 0, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
+                log_json = {"group": "test_invalid_create_tx_v8-1", "success": 0, "failure": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-1 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
@@ -268,7 +272,11 @@ class create_Tx_Test(unittest.TestCase):
                 self.assertRaises(JSONRPCException,
                     xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_sm_positive_nb,
                                           self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb)
+                log_json = {"group": "test_invalid_create_tx_v8-2", "success": 1, "failure": 0, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
+                log_json = {"group": "test_invalid_create_tx_v8-2", "success": 0, "failure": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-2 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_sm_positive_nb: %s" % self.invalid_sm_positive_nb)
@@ -279,7 +287,11 @@ class create_Tx_Test(unittest.TestCase):
                 self.assertRaises(JSONRPCException,
                     xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
                                           self.valid_dest_Address, self.valid_dest_Token, self.invalid_sm_positive_nb)
+                log_json = {"group": "test_invalid_create_tx_v8-3", "success": 1, "failure": 0, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
+                log_json = {"group": "test_invalid_create_tx_v8-3", "success": 0, "failure": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-3 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
@@ -290,7 +302,11 @@ class create_Tx_Test(unittest.TestCase):
                 self.assertRaises(JSONRPCException,
                     xbridge_rpc.create_tx, self.valid_src_Address, self.valid_src_Token, self.invalid_lg_positive_nb,
                                           self.valid_dest_Address, self.valid_dest_Token, self.invalid_lg_positive_nb)
+                log_json = {"group": "test_invalid_create_tx_v8-4", "success": 1, "failure": 0, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
+                log_json = {"group": "test_invalid_create_tx_v8-4", "success": 0, "failure": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
                 xbridge_logger.logger.info('')
                 xbridge_logger.logger.info('dxCreate unit test group 8 subtest-4 FAILED on parameter:')
                 xbridge_logger.logger.info("invalid_lg_positive_nb: %s" % self.invalid_lg_positive_nb)
