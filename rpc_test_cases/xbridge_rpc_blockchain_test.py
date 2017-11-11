@@ -48,35 +48,43 @@ class Blockchain_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('getblockhash unit test FAILED')
 
     # getrawmempool ( verbose )
-    # @unittest.skip("DISABLED - UNTESTED")
-    def test_getrawmempool(self):
-        global set_of_invalid_parameters
+    def test_getrawmempool_valid(self):
+        log_json = ""
+        try:
+            self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(True), dict)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(False), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(), list)
+            log_json = {"group": "test_getrawmempool_valid", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_getrawmempool_valid", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_getrawmempool_valid unit test FAILED: %s' % ass_err)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.logger.info('test_getrawmempool_valid unit test ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_getrawmempool_valid", "success": 0, "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+
+    # getrawmempool ( verbose )
+    # CAUTION ! we remove boolean values from the set since they are valid for this function
+    def test_getrawmempool_invalid(self):
         for i in range(1, 51):
             log_json = ""
             with self.subTest("combinations"):
                 try:
-                    verbose = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    if verbose is True:
-                        self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(verbose), dict)
-                    elif verbose in (False, ""):
-                        self.assertIsInstance(xbridge_rpc.rpc_connection.getrawmempool(verbose), list)
-                    elif verbose not in (True, False, "", None) or isinstance(verbose, int):
-                        self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
+                    # CAUTION ! we remove boolean values from the set since they are valid for this function
+                    set_without_bools = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, bool)]
+                    verbose = random.choice(set_without_bools)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getrawmempool, verbose)
                     log_json = {"group": "test_getrawmempool", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_getrawmempool", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getrawmempool invalid unit test FAILED: %s' % ass_err)
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_getrawmempool unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_getrawmempool", "success": 0, "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
 
     # gettxout "txid" n ( includemempool )
-    # @unittest.skip("DISABLED - UNTESTED")
     def test_gettxout(self):
-        global set_of_invalid_parameters
         for i in range(1, 51):
             log_json = ""
             with self.subTest("combinations"):
@@ -189,3 +197,11 @@ class Blockchain_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
 
 # unittest.main()
+
+"""
+suite = unittest.TestSuite()
+suite.addTest(Blockchain_UnitTest("test_getrawmempool_invalid"))
+suite.addTest(Blockchain_UnitTest("test_getrawmempool_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""
