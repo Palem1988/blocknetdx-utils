@@ -3,6 +3,7 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import xbridge_config
 
 from utils import xbridge_custom_exceptions
+import re
 
 """
 port = '8888'
@@ -46,7 +47,21 @@ def get_tx(txid):
     
 def send_tx(txid):
     return rpc_connection.sendrawtransaction(txid)
-    
+
+# Exception chaining
+def sign_message(address, msg):
+    try:
+        rpc_connection.signmessage(address, msg)
+    except JSONRPCException as json_excpt:
+        valid_msgs = ["-3: Invalid address", "-32700: Parse error"]
+        # print(str(json_excpt))
+        if str(json_excpt) in valid_msgs:
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "-1: get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 def sign_tx(txid):
     return rpc_connection.signrawtransaction(txid)
     
@@ -248,4 +263,3 @@ Requires wallet passphrase to be set with walletpassphrase call.
 
 # print(rpc_connection.spork("*", "*"))
 
-print(get_tx_info("////////"))

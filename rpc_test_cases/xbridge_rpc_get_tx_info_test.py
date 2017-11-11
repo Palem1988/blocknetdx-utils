@@ -89,9 +89,12 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     def test_invalid_get_tx_info_2(self):
         try:
             self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
-            # print("dxGetTxInfo Unit Test 2 OK")
-        except AssertionError as e:
-            # print("****** dxGetTxInfo Unit Test 2 FAILED ******")
+            log_json = {"group": "test_invalid_get_tx_info_2", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_invalid_get_tx_info_2", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
             xbridge_logger.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
                 
     """
@@ -100,7 +103,6 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
           - Size of the input parameter is fixed.
     """
     def test_invalid_get_tx_info_3(self):
-        run_count = 0
         string_length=64
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
             for sub_item in itm:
@@ -109,18 +111,18 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
-                        run_count += 1
-                    except AssertionError as e:
-                        # print("****** dxGetTxInfo Unit Test 3 FAILED ON PARAMETER %s ******" % generated_str)
+                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 1, "failure": 0, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                    except AssertionError as ass_err:
+                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 0, "failure": 1, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
                         xbridge_logger.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
-                        run_count += 1
-        # print("UT Group 3 - total subtests completed with or without errors: %s" % str(run_count))
 
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
     """
     def test_invalid_get_tx_info_4(self):
-        run_count = 0
         string_lower_bound=9000
         string_upper_bound=11000
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -130,18 +132,19 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
-                        run_count += 1
-                    except AssertionError as e:
+                        log_json = {"group": "test_invalid_get_tx_info_4", "success": 1, "failure": 0, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                    except AssertionError as ass_err:
+                        log_json = {"group": "test_invalid_get_tx_info_4", "success": 0, "failure": 1, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
                         xbridge_logger.logger.info('dxGetTxInfo unit test group 4 FAILED on parameter: %s', generated_str)
-                        run_count += 1
-        # print("UT Group 4 - total subtests completed with or without errors: %s" % str(run_count))
 
 
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
     def test_invalid_get_tx_info_5(self):
-        run_count = 0
         string_lower_bound=1
         string_upper_bound=4000
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -151,11 +154,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
-                        run_count += 1
-                    except AssertionError as e:
+                        log_json = {"group": "test_invalid_get_tx_info_5", "success": 1, "failure": 0, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                    except AssertionError as ass_err:
+                        log_json = {"group": "test_invalid_get_tx_info_5", "success": 0, "failure": 1, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
                         xbridge_logger.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
-                        run_count += 1
-        # print("UT Group 5 - total subtests completed with or without errors: %s" % str(run_count))
 
 
 """

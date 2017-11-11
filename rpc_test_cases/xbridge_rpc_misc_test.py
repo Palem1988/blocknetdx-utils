@@ -1,9 +1,9 @@
 import unittest
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-from decimal import *
 import random
 
+from utils import xbridge_custom_exceptions
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
@@ -16,29 +16,34 @@ class Misc_UnitTest(unittest.TestCase):
 
     # signmessage "blocknetdxaddress" "message"
     # Please enter the wallet passphrase with walletpassphrase first.
-    @unittest.skip("DISABLED - STILL TOO MANY ERRORS")
-    def test_signmessage(self):
-        # valid_blocknet_address = xbridge_rpc.rpc_connection.getnewaddress()
-        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
+    # @unittest.skip("DISABLED - STILL TOO MANY ERRORS")
+    # The address is always invalid here
+    # TODO: valid test
+    def test_signmessage_invalid(self):
+        # valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         for i in range(1, 51):
             log_json = ""
-            with self.subTest("random garbage"):
+            with self.subTest("We test -3: Invalid address error message"):
                 try:
                     invalid_blocknet_address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     message = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(random.choice([valid_blocknet_address, invalid_blocknet_address]), message), dict)
-                    log_json = {"group": "test_signmessage", "success": 1, "failure": 0, "error": 0}
+                    # self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(invalid_blocknet_address, message), dict)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.sign_message, invalid_blocknet_address, message)
+                    log_json = {"group": "test_signmessage_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_signmessage", "success": 0, "failure": 1, "error": 0}
+                    log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_signmessage unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
+                    xbridge_logger.logger.info('test_signmessage_invalid unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
+                    xbridge_logger.logger.info('message: %s \n' % message)
                 except JSONRPCException as json_excpt:
-                    log_json = {"group": "test_signmessage", "success": 0, "failure": 0, "error": 1}
+                    log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_signmessage unit test ERROR: %s' % json_excpt)
-            
+                    xbridge_logger.logger.info('test_signmessage_invalid unit test ERROR: %s' % json_excpt)
+                    xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
+                    xbridge_logger.logger.info('message: %s \n' % message)
+
     # VALID COMBINATIONS
     # autocombinerewards <true/false> threshold
     def test_autocombinerewards_valid(self):
@@ -150,9 +155,9 @@ class Misc_UnitTest(unittest.TestCase):
 
 # unittest.main()
 
-"""
+
 suite = unittest.TestSuite()
-suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
+# suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
+suite.addTest(Misc_UnitTest("test_signmessage_invalid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
-"""
