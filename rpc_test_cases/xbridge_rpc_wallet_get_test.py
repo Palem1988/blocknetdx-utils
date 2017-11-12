@@ -30,21 +30,22 @@ class wallet_get_UnitTest(unittest.TestCase):
                     log_json = ""
                     result = func_name()
                     self.assertIsInstance(result, dict)
-                except AssertionError as e:
-                    log_json = {"group": str(func_name), "success": 0, "error": 1}
+                    log_json = {"group": str(func_name), "success": 1, "failure": 0, "error": 0}
+                except AssertionError as ass_err:
+                    log_json = {"group": str(func_name), "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('%s unit test FAILED' % str(func_name))
+                    xbridge_logger.logger.info('%s unit test FAILED: %s' % (str(func_name), str(func_name)))
 
     def test_getunconfirmedbalance(self):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.getunconfirmedbalance(), Decimal)
-            log_json = {"group": "test_getunconfirmedbalance", "success": 1, "error": 0}
+            log_json = {"group": "test_getunconfirmedbalance", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as e:
-            log_json = {"group": "test_getunconfirmedbalance", "success": 0, "error": 1}
+        except AssertionError as ass_err:
+            log_json = {"group": "test_getunconfirmedbalance", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getunconfirmedbalance unit test FAILED')
+            xbridge_logger.logger.info('getunconfirmedbalance unit test FAILED: %s' % ass_err)
 
     def test_getrawchangeaddress(self):
         try:
@@ -52,12 +53,12 @@ class wallet_get_UnitTest(unittest.TestCase):
             new_address = xbridge_rpc.rpc_connection.getrawchangeaddress()
             self.assertIsInstance(new_address, str)
             self.assertEqual(len(new_address), 34)
-            log_json = {"group": "test_getrawchangeaddress", "success": 1, "error": 0}
+            log_json = {"group": "test_getrawchangeaddress", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as e:
-            log_json = {"group": "test_getrawchangeaddress", "success": 0, "error": 1}
+        except AssertionError as ass_err:
+            log_json = {"group": "test_getrawchangeaddress", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getrawchangeaddress unit test FAILED')
+            xbridge_logger.logger.info('getrawchangeaddress unit test FAILED: %s' % ass_err)
 
     def test_get_stake_threshold(self):
         try:
@@ -65,12 +66,12 @@ class wallet_get_UnitTest(unittest.TestCase):
             rst = xbridge_rpc.rpc_connection.getstakesplitthreshold()
             self.assertIsInstance(rst, dict)
             self.assertIsInstance(rst["split stake threshold set to "], int)
-            log_json = {"group": "test_get_stake_threshold", "success": 1, "error": 0}
+            log_json = {"group": "test_get_stake_threshold", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError:
-            log_json = {"group": "test_get_stake_threshold", "success": 0, "error": 1}
+        except AssertionError as ass_err:
+            log_json = {"group": "test_get_stake_threshold", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('get_stake_threshold unit test FAILED')
+            xbridge_logger.logger.info('get_stake_threshold unit test FAILED: %s' % ass_err)
 
     def test_getnewaddress(self):
         try:
@@ -79,12 +80,12 @@ class wallet_get_UnitTest(unittest.TestCase):
             new_address = xbridge_rpc.rpc_connection.getnewaddress()
             self.assertIsInstance(new_address, str)
             self.assertEqual(len(new_address), 34)
-            log_json = {"group": "test_getnewaddress", "success": 1, "error": 0}
+            log_json = {"group": "test_getnewaddress", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError:
-            log_json = {"group": "test_getnewaddress", "success": 0, "error": 1}
+            log_json = {"group": "test_getnewaddress", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getnewaddress unit test FAILED')
+            xbridge_logger.logger.info('test_getnewaddress FAILED')
 
     def test_get_received_by_account(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:

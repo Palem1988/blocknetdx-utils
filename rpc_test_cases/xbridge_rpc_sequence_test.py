@@ -1,14 +1,16 @@
 import time
 import random
 from utils import xbridge_utils
+import unittest
+from utils import xbridge_ref
+
 from interface import xbridge_rpc
 
+from rpc_test_cases import xbridge_rpc_misc_test
 
 """                       
         - RANDOM SEQUENCE 
         - INPUT PARAMETERS MAY BE OF ANY SIZE
-        - VARIOUS RPC CALLS
-        - THE LIST OF RPC CALLS CAN BE EASILY ADJUSTED IF NECESSARY
 """
 
 # Lists of function that will be run in an ordered or random way
@@ -31,7 +33,6 @@ no_param_func_list = [xbridge_rpc.rpc_connection.getpeerinfo,
                       xbridge_rpc.rpc_connection.keypoolrefill
                       ]
 
-
 txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info,
                   xbridge_rpc.decode_raw_tx,
                   xbridge_rpc.send_tx,
@@ -39,7 +40,78 @@ txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info,
                   xbridge_rpc.rpc_connection.listsinceblock
                   ]
 
-def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
+# https://stackoverflow.com/questions/9004455/how-can-i-extract-a-list-of-testcases-from-a-testsuite
+print("Loading available unit test cases...")
+list_of_tests = []
+# suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in xbridge_ref.unit_tests_module_strings]
+# test_suite = unittest.TestSuite(suites)
+test_suite = unittest.TestSuite()
+testloader = unittest.TestLoader()
+for class_name in xbridge_ref.unit_tests_class_names:
+    # print(test._tests)
+    testnames = testloader.getTestCaseNames(class_name)
+    # print(len(testnames))
+    for name in testnames:
+      ## suite.addTest(testcase_klass(name, param=param))
+      # print(name)
+      list_of_tests.append((class_name, name))
+    # list_of_tests.append(test._tests)
+# print("%s test cases found" % test_suite.countTestCases())
+# print(str(list_of_tests))
+# print(len(list_of_tests))
+
+
+def build_random_sequence(nb_of_runs=10):
+    global list_of_tests
+    suite = unittest.TestSuite()
+    selected_Tests = []
+    for i in range(1, 1+nb_of_runs):
+        selected_Test = random.choice(list_of_tests)
+        print(selected_Test)
+        selected_Tests.append(selected_Test)
+    return selected_Tests
+
+
+def build_defined_order_sequence(nb_of_runs=10):
+    global list_of_tests
+    suite = unittest.TestSuite()
+    selected_Tests = []
+    for i in range(1, 1+nb_of_runs):
+        selected_Test = random.choice(list_of_tests)
+        print(selected_Test)
+        selected_Tests.append(selected_Test)
+    return selected_Tests
+
+
+
+def test_random_UT_sequence(nb_of_runs=10, data_nature=3, char_min_size=1, char_max_size=12000):
+    time_distribution = []
+    elapsed_Time = 0
+    run_count = 0
+    # print("API call order will be random. Number of runs: %s" % (str(nb_of_runs)))
+    selected_Tests = build_random_sequence(nb_of_runs)
+    for selected_Test in selected_Tests:
+        te = 0
+        ts = 0
+        suite = unittest.TestSuite()
+        suite.addTest(selected_Test[0](selected_Test[1]))
+        ts = time.time()
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        # sys.exit(not result.wasSuccessful())
+        te = time.time()
+        elapsed_Time = te - ts
+        print("Random sequence test - %s (%s secs)" % (str(selected_Test[1]), str(elapsed_Time)))
+        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "random_sequence", "API": str(selected_Test[1]), "time": elapsed_Time}
+        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
+        # if elapsed_Time > 1.5:
+        #    print("outlier - %s: %s - data: %s" % (str(elapsed_Time), selected_Test, j) )
+        run_count += 1
+        json_str = {"time": elapsed_Time, "API": str(selected_Test)}
+        time_distribution.append(json_str)
+    xbridge_utils.export_data("random_RPC_calls_sequence.xlsx", time_distribution)
+
+
+def random_RPC_calls_sequence(nb_of_runs=100, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
     global txid_func_list
     time_distribution = []
@@ -90,7 +162,7 @@ def random_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, c
 
 """
 
-def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
+def defined_order_RPC_calls_sequence(nb_of_runs=100, data_nature=3, char_min_size=1, char_max_size=12000):
     global no_param_func_list
     global txid_func_list
     merged_list = no_param_func_list.copy()
@@ -135,3 +207,5 @@ def defined_order_RPC_calls_sequence(nb_of_runs=1000, data_nature=3, char_min_si
 
 # random_RPC_calls_sequence(nb_of_runs=1000)
 # defined_order_RPC_calls_sequence(nb_of_runs=50)
+
+test_random_UT_sequence()

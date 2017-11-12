@@ -39,6 +39,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
     """
                 - Specific tests with txid = c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a
     """
+    @unittest.skip("DISABLED - TX IS NOT AVAILABLE ANYMORE")
     def test_valid_tx_id_1(self):
         try:
             rst = xbridge_rpc.get_tx_info("c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a")
@@ -54,16 +55,15 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             log_json = {"group": "test_valid_tx_id_1", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_valid_tx_id_1 valid unit test FAILED: %s' % ass_err)
+        except IndexError as index_err:
+            log_json = {"group": "test_valid_tx_id_1", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_valid_tx_id_1 valid unit test FAILED: %s' % index_err)
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_valid_tx_id_1", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_valid_tx_id_1 unit test ERROR: %s' % json_excpt)
 
-        # print("dxGetTxInfo Valid Unit Test OK")
-
-    """
-          - Basic Checks
-    """
     def test_invalid_get_tx_info_1(self):
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             with self.subTest(basic_garbage_str=basic_garbage_str):
@@ -140,7 +140,6 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
                         xbridge_logger.logger.info('dxGetTxInfo unit test group 4 FAILED on parameter: %s', generated_str)
 
-
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
@@ -162,14 +161,57 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
                         xbridge_logger.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
 
+    def test_get_transaction_list(self):
+        try:
+            self.assertIsInstance(xbridge_rpc.get_transaction_list(), list)
+            log_json = {"group": "test_get_transaction_list", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_transaction_list unit test FAILED: %s' % ass_err)
+        except JSONRPCException as json_err:
+            log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_transaction_list unit test ERROR: %s' % json_err)
 
-"""
-def repeat_tx_info_unit_tests(nb_of_runs):
-    for i in (1, 1+nb_of_runs):
-        wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
-        if not wasSuccessful:
-            sys.exit(1)
+    def test_get_transaction_history_list(self):
+        try:
+            self.assertIsInstance(xbridge_rpc.get_transaction_history_list(), list)
+            log_json = {"group": "test_get_transaction_history_list", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_transaction_history_list unit test FAILED: %s' % ass_err)
+        except JSONRPCException as json_err:
+            log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_transaction_history_list unit test ERROR: %s' % json_err)
+
+    def test_get_currency_list(self):
+        try:
+            self.assertIsInstance(xbridge_rpc.get_currency_list(), dict)
+            log_json = {"group": "test_get_currency_list", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_currency_list unit test FAILED: %s' % ass_err)
+        except JSONRPCException as json_err:
+            log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_get_currency_list unit test ERROR: %s' % json_err)
+
 
 # unittest.main()
+
 """
+suite = unittest.TestSuite()
+# suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
+suite.addTest(get_Tx_Info_UnitTest("test_get_transaction_list"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""
+
 

@@ -10,7 +10,6 @@ from utils import xbridge_utils
 
 from strgen import StringGenerator
 
-
 """
     - Combine optional parameters in a way that generate the test cases you want.
 """
@@ -35,7 +34,6 @@ def dxSign_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_ma
 
 
 """                       ***  UNIT TESTS ***
-
 """
 
 class signUnitTest(unittest.TestCase):
