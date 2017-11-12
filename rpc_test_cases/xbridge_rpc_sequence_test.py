@@ -8,11 +8,6 @@ from interface import xbridge_rpc
 
 from rpc_test_cases import xbridge_rpc_misc_test
 
-"""                       
-        - RANDOM SEQUENCE 
-        - INPUT PARAMETERS MAY BE OF ANY SIZE
-"""
-
 # Lists of function that will be run in an ordered or random way
 no_param_func_list = [xbridge_rpc.rpc_connection.getpeerinfo,
                       xbridge_rpc.rpc_connection.listlockunspent,
@@ -40,11 +35,8 @@ txid_func_list = [xbridge_rpc.cancel_tx, xbridge_rpc.get_tx_info,
                   xbridge_rpc.rpc_connection.listsinceblock
                   ]
 
-# https://stackoverflow.com/questions/9004455/how-can-i-extract-a-list-of-testcases-from-a-testsuite
-print("Loading available unit test cases...")
 list_of_tests = []
-# suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in xbridge_ref.unit_tests_module_strings]
-# test_suite = unittest.TestSuite(suites)
+
 test_suite = unittest.TestSuite()
 testloader = unittest.TestLoader()
 for class_name in xbridge_ref.unit_tests_class_names:
@@ -55,10 +47,6 @@ for class_name in xbridge_ref.unit_tests_class_names:
       ## suite.addTest(testcase_klass(name, param=param))
       # print(name)
       list_of_tests.append((class_name, name))
-    # list_of_tests.append(test._tests)
-# print("%s test cases found" % test_suite.countTestCases())
-# print(str(list_of_tests))
-# print(len(list_of_tests))
 
 
 def build_random_sequence(nb_of_runs=10):
@@ -70,18 +58,6 @@ def build_random_sequence(nb_of_runs=10):
         print(selected_Test)
         selected_Tests.append(selected_Test)
     return selected_Tests
-
-
-def build_defined_order_sequence(nb_of_runs=10):
-    global list_of_tests
-    suite = unittest.TestSuite()
-    selected_Tests = []
-    for i in range(1, 1+nb_of_runs):
-        selected_Test = random.choice(list_of_tests)
-        print(selected_Test)
-        selected_Tests.append(selected_Test)
-    return selected_Tests
-
 
 
 def test_random_UT_sequence(nb_of_runs=10, data_nature=3, char_min_size=1, char_max_size=12000):
@@ -204,8 +180,7 @@ def defined_order_RPC_calls_sequence(nb_of_runs=100, data_nature=3, char_min_siz
         time_distribution.append(json_str)
     xbridge_utils.export_data("defined_order_RPC_calls_sequence.xlsx", time_distribution)
 
-
 # random_RPC_calls_sequence(nb_of_runs=1000)
 # defined_order_RPC_calls_sequence(nb_of_runs=50)
 
-test_random_UT_sequence()
+# test_random_UT_sequence()

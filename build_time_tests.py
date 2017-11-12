@@ -2,30 +2,28 @@ import unittest
 import argparse
 
 from utils import xbridge_utils
+from utils import xbridge_ref
 from interface import xbridge_rpc
 import xbridge_logger
 import xbridge_config
 
+from rpc_test_cases import xbridge_rpc_createtx_test
+from rpc_test_cases import xbridge_rpc_sequence_test
 from rpc_test_cases import xbridge_rpc_accept_tx_test
 from rpc_test_cases import xbridge_rpc_canceltx_test
 from rpc_test_cases import xbridge_rpc_get_tx_info_test
-from rpc_test_cases import xbridge_rpc_createtx_test
 from rpc_test_cases import xbridge_rpc_market_orders_test
 from rpc_test_cases import xbridge_rpc_heavy_polling_test
-from rpc_test_cases import xbridge_rpc_sequence_test
 from rpc_test_cases import xbridge_rpc_misc_test
-
+from rpc_test_cases import xbridge_rpc_mining_test
 from rpc_test_cases import xbridge_rpc_signtx_test
 from rpc_test_cases import xbridge_rpc_sendtx_test
-
-from rpc_test_cases import xbridge_rpc_blockchain_test
-from rpc_test_cases import xbridge_rpc_blocknetdx_test
 from rpc_test_cases import xbridge_rpc_network_test
 from rpc_test_cases import xbridge_rpc_wallet_list_test
 from rpc_test_cases import xbridge_rpc_wallet_set_test
-from rpc_test_cases import xbridge_rpc_mining_test
-
 from rpc_test_cases import xbridge_rpc_send_test
+from rpc_test_cases import xbridge_rpc_blockchain_test
+from rpc_test_cases import xbridge_rpc_blocknetdx_test
 
 """
 from test_cases import xbridge_client_get_tx_info_test
@@ -66,6 +64,7 @@ if args.unittest is not None:
 """
 
 # When data_nature is not specified, this will generate both valid and invalid data.
+
 
 xbridge_rpc_sequence_test.random_RPC_calls_sequence(nb_of_runs=NUMBER_OF_WANTED_RUNS, data_nature=xbridge_utils.INVALID_DATA, char_min_size=10000, char_max_size=12000)
 xbridge_rpc_sequence_test.random_RPC_calls_sequence(nb_of_runs=NUMBER_OF_WANTED_RUNS, data_nature=xbridge_utils.VALID_DATA)
@@ -131,39 +130,32 @@ if NUMBER_OF_WANTED_RUNS > 0:
 """
 
 if UNIT_TESTS_NB_OF_RUNS < 1:
-    xbridge_logger.logger.info('')
     print("No unit tests to run")
     exit(0)
 
 xbridge_logger.logger.info('')
-xbridge_logger.logger.info('Starting unit tests with version %s', str(xbridge_rpc.get_core_version()))
+xbridge_logger.logger.info('Starting unit tests with version %s \n', str(xbridge_rpc.get_core_version()))
 
-unit_tests_module_strings = [xbridge_rpc_createtx_test,
-                            xbridge_rpc_canceltx_test,
-                            xbridge_rpc_accept_tx_test,
-                            xbridge_rpc_get_tx_info_test,
-                            xbridge_rpc_misc_test,
-                            xbridge_rpc_signtx_test,
-                            xbridge_rpc_sendtx_test,
-                            xbridge_rpc_blockchain_test,
-                            xbridge_rpc_blocknetdx_test,
-                            xbridge_rpc_network_test,
-                            xbridge_rpc_wallet_list_test,
-                            xbridge_rpc_wallet_set_test,
-                            xbridge_rpc_mining_test,
-                            xbridge_rpc_send_test
-                             ]
-
+suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in xbridge_ref.unit_tests_module_strings]
+test_suite = unittest.TestSuite(suites)
 
 for i in range(1, 1 + UNIT_TESTS_NB_OF_RUNS):
-    suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in unit_tests_module_strings]
+    suites = [unittest.TestLoader().loadTestsFromModule(modul) for modul in xbridge_ref.unit_tests_module_strings]
     test_suite = unittest.TestSuite(suites)
+    # print("%s test cases found" % test_suite.countTestCases())
+    for test in test_suite:
+        print(test._tests)
     testResult = unittest.TextTestRunner(verbosity=2).run(test_suite)
     
 summary_df = xbridge_utils.prepare_results_Summary()
+filtered_df = summary_df[ (summary_df["failure"] > 0) | (summary_df["error"] > 0) ]
 
 xbridge_logger.logger.info('\n ********************* SUMMARY *********************\n')
-xbridge_logger.logger.info("%s" % str(summary_df))
+xbridge_logger.logger.info("Successes: %s" % str(summary_df["success"].sum()))
+xbridge_logger.logger.info("Failures: %s" % str(summary_df["failure"].sum()))
+xbridge_logger.logger.info("Errors: %s" % str(summary_df["error"].sum()))
+if not filtered_df.empty:
+    xbridge_logger.logger.info("\n %s" % str(filtered_df))
 
 xbridge_logger.logger.info('\n Unit tests are done !')
 
