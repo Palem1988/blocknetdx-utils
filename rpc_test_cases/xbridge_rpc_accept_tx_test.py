@@ -8,7 +8,7 @@ import xbridge_logger
 from utils import xbridge_utils
 from interface import xbridge_rpc
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-
+import sys
 
 """
     - Combine optional parameters in a way that generate the test cases you want.
@@ -200,13 +200,17 @@ class accept_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid)
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
+            sys.exit(1)
 
 """
 unittest.main()
 """
 
-
-
-
-
-
+"""
+suite = unittest.TestSuite()
+for i in range(50):
+    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
+# suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""
