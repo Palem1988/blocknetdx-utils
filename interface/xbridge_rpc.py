@@ -43,9 +43,85 @@ def get_node_list():
     
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
-    
+
+# Exception chaining
+def getreceivedbyaccount(address):
+    try:
+        return rpc_connection.getreceivedbyaccount(address)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
+def getaccountaddress(address):
+    try:
+        return rpc_connection.getbalance(address)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
+def getaddressesbyaccount(account):
+    try:
+        return rpc_connection.getbalance(account)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
+# getbalance ( "account" minconf includeWatchonly )
+def getbalance(account, minconf, includeWatchonly):
+    try:
+        return rpc_connection.getbalance(account, minconf, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
+def sendtoaddress(txid):
+    try:
+        return rpc_connection.sendtoaddress(txid)
+    except JSONRPCException as json_excpt:
+        valid_msgs = ["-6: Insufficient funds"]
+        # print(str(json_excpt))
+        if str(json_excpt) in valid_msgs:
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
 def send_tx(txid):
-    return rpc_connection.sendrawtransaction(txid)
+    try:
+        return rpc_connection.sendrawtransaction(txid)
+    except JSONRPCException as json_excpt:
+        valid_msgs = ["-22: TX decode failed"]
+        # print(str(json_excpt))
+        if str(json_excpt) in valid_msgs:
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# Exception chaining
+def decode_raw_tx(txid):
+    try:
+        return rpc_connection.decoderawtransaction(txid)
+    except JSONRPCException as json_excpt:
+        valid_msgs = ["-22: TX decode failed"]
+        # print(str(json_excpt))
+        if str(json_excpt) in valid_msgs:
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # Exception chaining
 def sign_message(address, msg):
@@ -63,9 +139,6 @@ def sign_message(address, msg):
 
 def sign_tx(txid):
     return rpc_connection.signrawtransaction(txid)
-    
-def decode_raw_tx(txid):
-    return rpc_connection.decoderawtransaction(txid)
     
 def cancel_tx(txid):
     return rpc_connection.dxCancelTransaction(txid)
@@ -261,4 +334,11 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(rpc_connection.getrawmempool(-1))
 
 # print(rpc_connection.spork("*", "*"))
+
+# print(decode_raw_tx(9999999999999999999999999999999999999999999999999999999999999999))
+# print(decode_raw_tx(-9999999999999999999999999999999999999999999999999999999999999999))
+
+# print(send_tx("-"))
+# print(send_tx(9999999999999999999999999999999999999999999999999999999999999999))
+# print(send_tx(-9999999999999999999999999999999999999999999999999999999999999999))
 
