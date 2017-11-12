@@ -37,7 +37,7 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                             xbridge_rpc_send_test
                             ]
 
-unit_tests_class_names = [xbridge_rpc_misc_test.Misc_UnitTest,
+all_UT_class_names = [xbridge_rpc_misc_test.Misc_UnitTest,
                           xbridge_rpc_accept_tx_test.accept_Tx_Test,
                           xbridge_rpc_send_test.send_UnitTest,
                           xbridge_rpc_createtx_test.create_Tx_Test,
