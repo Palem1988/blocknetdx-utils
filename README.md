@@ -1,18 +1,20 @@
 ## BlocknetDX Utils Recent Changelog
 
-- **[Upcoming - High Priority]** Expanding coverage of unit tests.
-- **[Upcoming - Medium Priority]** Improved logging (summary of failure counts).
-- **[Upcoming - Lower Priority]** Adding new functions to sequence tests.
-- Completing xbridge_rpc_wallet_list_test
-- Code fix in xbridge_utils.
-- New unit tests.
-- New functions added to sequence tests.
-- To maintain code clarity, some unit tests have been splitted accross new files.
+-	Expanded coverage and improved existing test groups.
+-	Improved logging: a) increased verbosity.  b) summary, when applicable, of failure and error counts (at the end of log file).
+- Higher entropy through parameter order and type randomnization.
+Note ! Many unit tests now each generate a lot of subtests to shuffle out-of-bounds or garbage around the parameters ; therefore, the number of
+atomic tests will increase exponentially as you increase the number of unit tests you will run.
+- Revamped sequenced tests: better scaling by now leveraging directly the unit tests.
+- Code cleanings.
+
+- Important Note ! The console will wrongly report assertion failures. You can safely ignore these. Only the log file will report the real assertions failures. This is due to exception chaining.
+
 
 # Current known issues
 
-- dxCreateTx test group 8 failed assertions without known reason for now.
-- When calling getnewaddress, the following error will appear frequently: ** bitcoinrpc.authproxy.JSONRPCException: -12: Error: Keypool ran out, please call keypoolrefill first **.
+- Because of the use of exception chaining, the assertion failure notifications and counts of the compiler are **wrong**. Check the log to get the real assertion failures.
+- Popups will appear when using the client.
 
 
 # TODO
