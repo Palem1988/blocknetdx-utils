@@ -119,4 +119,4 @@ class Mining_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_prioritisetransaction unit test ERROR: %s' % str(json_excpt))
 
-unittest.main()
+# unittest.main()
