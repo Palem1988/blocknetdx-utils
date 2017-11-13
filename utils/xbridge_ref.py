@@ -18,6 +18,7 @@ from rpc_test_cases import xbridge_rpc_wallet_set_test
 from rpc_test_cases import xbridge_rpc_wallet_get_test
 
 from rpc_test_cases import xbridge_rpc_send_test
+from rpc_test_cases import xbridge_rpc_privkey_test
 
 
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
@@ -34,7 +35,8 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                             xbridge_rpc_wallet_get_test,
                             xbridge_rpc_wallet_set_test,
                             xbridge_rpc_mining_test,
-                            xbridge_rpc_send_test
+                            xbridge_rpc_send_test,
+                            xbridge_rpc_privkey_test
                             ]
 
 all_UT_class_names = [xbridge_rpc_misc_test.Misc_UnitTest,
