@@ -44,6 +44,16 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+def importprivkey(blocknetdxprivkey, label=None, rescan=None):
+    try:
+        return rpc_connection.importprivkey(blocknetdxprivkey, label, rescan)
+    except JSONRPCException as json_excpt:
+        if "Invalid private key encoding" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 def dumpprivkey(blocknetdxaddress):
     try:
         return rpc_connection.dumpprivkey(blocknetdxaddress)
@@ -357,9 +367,6 @@ Requires wallet passphrase to be set with walletpassphrase call.
 
 # print(rpc_connection.getrawmempool(-1))
 
-
-# print(rpc_connection.spork("*", "*"))
-
 # print(decode_raw_tx(9999999999999999999999999999999999999999999999999999999999999999))
 # print(decode_raw_tx(-9999999999999999999999999999999999999999999999999999999999999999))
 
@@ -368,8 +375,8 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(send_tx(-9999999999999999999999999999999999999999999999999999999999999999))
 
 # print(rpc_connection.getmininginfo())
-print(rpc_connection.getnetworkhashps())
-print(rpc_connection.getnetworkhashps(0, -9999999))
+# print(rpc_connection.getnetworkhashps())
+# print(rpc_connection.getnetworkhashps(0, -9999999))
 # print(rpc_connection.prioritisetransaction(9999999999999999999999999999999999999999999999999999999999999999, "-", " "))
 
-
+# print(importprivkey(True))
