@@ -44,7 +44,38 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
-# Exception chaining
+def dumpprivkey(blocknetdxaddress):
+    try:
+        return rpc_connection.dumpprivkey(blocknetdxaddress)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+def prioritisetransaction(txid, priority, fee):
+    try:
+        return rpc_connection.prioritisetransaction(txid, priority, fee)
+    except UnicodeDecodeError as unicode_err:
+        raise xbridge_custom_exceptions.ValidBlockNetException from unicode_err
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "txid must be hexadecimal string" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+def getnetworkhashps(blocks, height):
+    try:
+        return rpc_connection.getnetworkhashps(blocks, height)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            # print("chained: " + str(json_excpt))
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 def getreceivedbyaccount(address):
     try:
         return rpc_connection.getreceivedbyaccount(address)
@@ -53,7 +84,6 @@ def getreceivedbyaccount(address):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def getaccountaddress(address):
     try:
         return rpc_connection.getbalance(address)
@@ -62,7 +92,6 @@ def getaccountaddress(address):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def getaddressesbyaccount(account):
     try:
         return rpc_connection.getbalance(account)
@@ -71,7 +100,6 @@ def getaddressesbyaccount(account):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 # getbalance ( "account" minconf includeWatchonly )
 def getbalance(account, minconf, includeWatchonly):
     try:
@@ -81,7 +109,6 @@ def getbalance(account, minconf, includeWatchonly):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def sendtoaddress(txid):
     try:
         return rpc_connection.sendtoaddress(txid)
@@ -95,7 +122,6 @@ def sendtoaddress(txid):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def send_tx(txid):
     try:
         return rpc_connection.sendrawtransaction(txid)
@@ -109,7 +135,6 @@ def send_tx(txid):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def decode_raw_tx(txid):
     try:
         return rpc_connection.decoderawtransaction(txid)
@@ -123,7 +148,6 @@ def decode_raw_tx(txid):
             # print("chained: " + str(json_excpt))
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# Exception chaining
 def sign_message(address, msg):
     try:
         rpc_connection.signmessage(address, msg)
@@ -333,6 +357,7 @@ Requires wallet passphrase to be set with walletpassphrase call.
 
 # print(rpc_connection.getrawmempool(-1))
 
+
 # print(rpc_connection.spork("*", "*"))
 
 # print(decode_raw_tx(9999999999999999999999999999999999999999999999999999999999999999))
@@ -341,4 +366,10 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(send_tx("-"))
 # print(send_tx(9999999999999999999999999999999999999999999999999999999999999999))
 # print(send_tx(-9999999999999999999999999999999999999999999999999999999999999999))
+
+# print(rpc_connection.getmininginfo())
+print(rpc_connection.getnetworkhashps())
+print(rpc_connection.getnetworkhashps(0, -9999999))
+# print(rpc_connection.prioritisetransaction(9999999999999999999999999999999999999999999999999999999999999999, "-", " "))
+
 
