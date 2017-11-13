@@ -21,7 +21,8 @@ basic_garbage_list = ["", " ", "/", "\\", "//////////", "+", "-", "=", "*",
                         "-----------", "%%%%%%%", "::::::::::", "^^^^^^^^", "<<<<<<<<<<<<<", ">>>>>>>>>>>>>",
                         "~&#'@$!%^.;?-"
                      ]
-
+current_basic_garbage_item = ""
+                     
 one_classes_list = ["[\\a]", "[\p]", "[\d]", "[\W]", "[\w]", "[\h]", "[\s]"]
 two_classes_list = ["[\p\d]", "[\p\\a]", "[\p\h]", "[\s\d]", "[\s\\a]", "[\s\h]", "[\s\p]", "[\W\d]", "[\W\\a]", "[\W\h]",
                     "[\W\p]"]
@@ -57,25 +58,33 @@ ca_random_tx_id = ""
 # General purpose
 valid_account_str = ""
 invalid_account_str = ""
+invalid_str_from_random_classes_1 = ""
+invalid_str_from_random_classes_2 = ""
+invalid_str_from_random_classes_3 = ""
+invalid_str_from_random_classes_4 = ""
 
-
-set_of_invalid_parameters = ["", " ",
-                    0, -fixed_large_positive_int, fixed_large_positive_int, fixed_small_positive_float,
+set_of_invalid_parameters = ["", " ", 0, -1,
                     True, False, "yes", "no",
-                    ca_random_tx_id,
+                    invalid_str_from_random_classes_1,
+                    invalid_str_from_random_classes_2,
+                    invalid_str_from_random_classes_3,
+                    invalid_str_from_random_classes_4,
+                    -fixed_large_positive_int, 
+                    fixed_large_positive_int, 
+                    fixed_small_positive_float,
+                    -fixed_small_positive_float,
                     fixed_positive_int,
+                    -fixed_positive_int,
                     invalid_random_positive_int,
                     invalid_random_positive_float,
                     -invalid_random_positive_int,
                     -invalid_random_positive_float,
                     valid_random_positive_float,
-                    fixed_positive_float,
                     -valid_random_positive_float,
-                    -fixed_positive_float
+                    fixed_positive_float,                    
+                    -fixed_positive_float,
+                    current_basic_garbage_item,
                     ]
-
-# WE COMPLETE THE LIST
-set_of_invalid_parameters.extend(basic_garbage_list)
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     # Set for create_tx
@@ -98,6 +107,16 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
     global invalid_random_positive_int
     global valid_random_positive_float
     global invalid_random_positive_float
+    global current_basic_garbage_item
+    global invalid_str_from_random_classes_1
+    global invalid_str_from_random_classes_2
+    global invalid_str_from_random_classes_3
+    global invalid_str_from_random_classes_4
+    invalid_str_from_random_classes_1 = generate_input_from_random_classes_combinations(1, 400)
+    invalid_str_from_random_classes_2 = generate_input_from_random_classes_combinations(400, 1000)
+    invalid_str_from_random_classes_3 = generate_input_from_random_classes_combinations(5000, 10000)
+    invalid_str_from_random_classes_4 = generate_input_from_random_classes_combinations(10000, 12000)
+    current_basic_garbage_item = random.choice(basic_garbage_list)
     valid_random_positive_int = generate_random_int(1, 1000)
     invalid_random_positive_int = generate_random_int(999999999999999999999, 9999999999999999999999999999999999999999999999999999)
     valid_random_positive_float = generate_random_number(1, 1000)
