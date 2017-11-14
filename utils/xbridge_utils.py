@@ -19,7 +19,7 @@ basic_garbage_list = ["", " ", "/", "\\", "//////////", "+", "-", "=", "*",
                         "<", ">", "<>", "<<", ">>", "<<>", "><",
                         ".", ";", "?", "-", ":", "!", "�", "%", "�", "�", "�", "�", "@", "|", "#", "^", "_",
                         "-----------", "%%%%%%%", "::::::::::", "^^^^^^^^", "<<<<<<<<<<<<<", ">>>>>>>>>>>>>",
-                        "~&#'@$!%^.;?-"
+                        "~&#'@$!%^.;?-", "yes", "no"
                      ]
 current_basic_garbage_item = ""
                      
@@ -63,27 +63,28 @@ invalid_str_from_random_classes_2 = ""
 invalid_str_from_random_classes_3 = ""
 invalid_str_from_random_classes_4 = ""
 
-set_of_invalid_parameters = ["", " ", 0, -1,
-                    True, False, "yes", "no",
+# CAUTION ! Be careful when changing this set, otherwise you may decrease entropy
+# CAUTION ! Some items appear multiple times voluntarily: we want to increase their chances of being drawn during the random process
+set_of_invalid_parameters = ["", 0,
+                    True, False,
                     invalid_str_from_random_classes_1,
                     invalid_str_from_random_classes_2,
                     invalid_str_from_random_classes_3,
                     invalid_str_from_random_classes_4,
-                    -fixed_large_positive_int, 
-                    fixed_large_positive_int, 
+                    invalid_str_from_random_classes_1,
+                    invalid_str_from_random_classes_2,
+                    invalid_str_from_random_classes_3,
+                    invalid_str_from_random_classes_4,
+                    current_basic_garbage_item,
+                    current_basic_garbage_item,
                     fixed_small_positive_float,
                     -fixed_small_positive_float,
-                    fixed_positive_int,
-                    -fixed_positive_int,
                     invalid_random_positive_int,
                     invalid_random_positive_float,
                     -invalid_random_positive_int,
                     -invalid_random_positive_float,
                     valid_random_positive_float,
                     -valid_random_positive_float,
-                    fixed_positive_float,                    
-                    -fixed_positive_float,
-                    current_basic_garbage_item,
                     ]
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
