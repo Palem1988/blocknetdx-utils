@@ -11,32 +11,6 @@ from utils import xbridge_utils
 
 from strgen import StringGenerator
 
-"""
-    - Combine optional parameters in a way that generate the test cases you want.
-"""
-def dxCancel_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
-    time_distribution = []
-    # total_elapsed_seconds = 0
-    for i in range(1, 1 + nb_of_runs):
-        elapsed_Time = 0
-        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
-        ts = time.time()
-        assert type(xbridge_rpc.cancel_tx(xbridge_utils.ca_random_tx_id)) == dict
-        te = time.time()
-        elapsed_Time = te - ts
-        # total_elapsed_seconds += elapsed_Time
-        print("single API seq - dxCancel - elapsedTime: %s" % (str(elapsed_Time)))
-        json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxCancel"}
-        time_distribution.append(json_str)
-        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxCancel_RPC_sequence",
-                         "API": "dxCancel", "time": elapsed_Time}
-        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-    xbridge_utils.export_data("dxCancel_RPC_sequence.xlsx", time_distribution)
-
-
-"""                       ***  UNIT TESTS ***
-"""
-
 class cancelUnitTest(unittest.TestCase):
     def test_valid_cancel_1(self):
         try:

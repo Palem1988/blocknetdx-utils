@@ -20,9 +20,8 @@ no_param_returns_dict_func_list = [
 
 class wallet_get_UnitTest(unittest.TestCase):
     def setUp(self):
-        xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
+        xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
         
-    # @unittest.skip("disabled")
     def test_group_no_param_return_dict_batch(self):
         for func_name in no_param_returns_dict_func_list:
             with self.subTest("batch test of no_param_returns_dict_func_list"):
@@ -190,20 +189,20 @@ class wallet_get_UnitTest(unittest.TestCase):
 
     # getbalance ( "account" minconf includeWatchonly )
     def test_getbalance(self):
-        for i in range(1, 51):
+        for i in range(50):
             log_json = ""
             with self.subTest("combinations"):
                 try:      
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_account = ""
+                        optional_account = None
                     else:
                         optional_account = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_minconf = ""
+                        optional_minconf = None
                     else:
                         optional_minconf = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_includeWatchonly = ""
+                        optional_includeWatchonly = None
                     else:
                         optional_includeWatchonly = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if any(optional_account, optional_minconf, optional_includeWatchonly) in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):

@@ -9,34 +9,6 @@ from interface import xbridge_rpc
 import xbridge_logger
 from utils import xbridge_custom_exceptions
 
-
-"""
-    - Combine optional parameters in a way that generate the test cases you want.
-"""
-
-def dxCreate_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
-    time_distribution = []
-    elapsed_Time = 0
-    for i in range(1, 1 + nb_of_runs):
-        ts = 0
-        te = 0
-        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
-        ts = time.time()
-        xbridge_rpc.create_tx(xbridge_utils.c_src_Address, xbridge_utils.c_src_Token, xbridge_utils.source_nb, xbridge_utils.c_dest_Address, xbridge_utils.c_dest_Token,
-                              xbridge_utils.dest_nb)
-        te = time.time()
-        elapsed_Time = te - ts
-        json_str = {"time": te - ts, "API": "dxCreateTransaction"}
-        time_distribution.append(json_str)
-        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxCreate_RPC_sequence",
-                         "API": "dxCreate", "time": elapsed_Time}
-        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-    xbridge_utils.export_data("dxCreate_RPC_sequence.xlsx", time_distribution)
-
-
-"""                       ***  UNIT TESTS ***
-"""
-
 class create_Tx_Test(unittest.TestCase):
     # Generate new data before each run
     def setUp(self):
@@ -61,7 +33,7 @@ class create_Tx_Test(unittest.TestCase):
        self.nb_with_leading_zeros_2 = xbridge_utils.generate_random_number_with_leading_zeros()
 
     def test_invalid_create_tx_v0(self):
-        for i in range(1, 51):
+        for i in range(50):
             log_json = ""
             with self.subTest("random garbage"):
                 try:
@@ -72,7 +44,6 @@ class create_Tx_Test(unittest.TestCase):
                     dest_Token = random.choice(xbridge_utils.set_of_invalid_parameters)
                     fromAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
                     toAmount = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    # self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount), dict)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.create_tx, src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount)
                     log_json = {"group": "test_invalid_create_tx_v0", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -102,7 +73,6 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v1", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v1 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
@@ -110,8 +80,7 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
-            """
-
+            
     # Combinations with empty addresses
     def test_invalid_create_tx_v2(self):
         try:
@@ -125,14 +94,12 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v2", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v2 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('new_address: %s', new_address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
-            """
             
 
     def test_invalid_create_tx_v3(self):
@@ -149,7 +116,6 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v3", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v3 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
@@ -158,8 +124,7 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
-            """
-
+            
         
     # Combinations of address parameters containing quotes
     def test_invalid_create_tx_v4(self):
@@ -176,7 +141,6 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v4", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v4 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
@@ -185,7 +149,6 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('valid_positive_nb_2: %s', self.valid_positive_nb_2)
-            """
             
 
     # Combinations of quotes + out-of-bounds quantities
@@ -200,7 +163,6 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v5", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v5 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
             xbridge_logger.logger.info('valid_src_Token: %s', self.valid_src_Token)
             xbridge_logger.logger.info('valid_dest_Token: %s', self.valid_dest_Token)
@@ -211,8 +173,7 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_dest_Address_2: %s', "'LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy'")
             xbridge_logger.logger.info('valid_dest_Address_3: %s', "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy")
             xbridge_logger.logger.info('valid_positive_nb_1: %s', "LTnoVFAnKSMj4v2eFXBJuMmyjqSQT9eXBy")
-            """
-
+            
             
     # Combinations of multiple invalid parameters leading up to ALL parameters being invalid
     def test_invalid_create_tx_v6(self):
@@ -249,7 +210,6 @@ class create_Tx_Test(unittest.TestCase):
 
     # Combinations of very small and very large numerical parameters, all other parameters being valid
     # bitcoinrpc.authproxy.JSONRPCException: -32700: Parse error
-    # @unittest.skip("Temporarily disabled tests")
     def test_invalid_create_tx_v8(self):
         # very small + very small
         with self.subTest("test_invalid_create_tx_v8-1"):

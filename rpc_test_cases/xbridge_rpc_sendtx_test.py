@@ -1,8 +1,4 @@
-"""
-BLOCKNET API TESTING TOOLS
-"""
 import unittest
-import time
 import xbridge_logger
 
 from interface import xbridge_rpc
@@ -12,52 +8,16 @@ from strgen import StringGenerator
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from utils import xbridge_custom_exceptions
 
-
-"""
-    - Combine optional parameters in a way that generate the test cases you want.
-"""
-def dxSend_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
-    time_distribution = []
-    # total_elapsed_seconds = 0
-    for i in range(1, 1 + nb_of_runs):
-        elapsed_Time = 0
-        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
-        ts = time.time()
-        assert type(xbridge_rpc.send_tx(xbridge_utils.ca_random_tx_id)) == dict
-        te = time.time()
-        elapsed_Time = te - ts
-        # total_elapsed_seconds += elapsed_Time
-        print("single API seq - dxSend - elapsedTime: %s" % (str(elapsed_Time)))
-        json_str = {"time": elapsed_Time, "char_nb": len(xbridge_utils.ca_random_tx_id), "API": "dxSend"}
-        time_distribution.append(json_str)
-        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxSend_RPC_sequence",
-                         "API": "dxSend", "time": elapsed_Time}
-        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-    xbridge_utils.export_data("dxSend_RPC_sequence.xlsx", time_distribution)
-
-
-"""                       ***  UNIT TESTS ***
-
-"""
-
 class sendUnitTest(unittest.TestCase):
-    def test_valid_tx_id_1(self):
-        try:
-            self.assertIsNone(xbridge_rpc.send_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"))
-            # print("dxSend Valid Unit Test Group 1 OK")
-        except AssertionError as e:
-            # print("****** dxSend valid Unit Test Group 1 FAILED ******")
-            xbridge_logger.logger.info('dxSend valid unit test group 1 FAILED')
-    
-    """
-            - Basic tests
-    """
+    def setUp(self):
+        xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
+
     def test_invalid_send_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     if basic_garbage_str in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):
-                        self.assertIsNone(xbridge_rpc.decode_raw_tx(basic_garbage_str))
+                        self.assertIsNone(xbridge_rpc.send_tx(basic_garbage_str))
                     else:
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.send_tx, basic_garbage_str)
                     log_json = {"group": "test_invalid_send_1", "success": 1, "failure": 0, "error": 0}
@@ -98,7 +58,6 @@ class sendUnitTest(unittest.TestCase):
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_send_2 unit test ERROR: %s' % str(json_excpt))
 
-                    
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
@@ -124,7 +83,6 @@ class sendUnitTest(unittest.TestCase):
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_send_1 unit test ERROR: %s' % str(json_excpt))
 
-                            
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
@@ -150,14 +108,6 @@ class sendUnitTest(unittest.TestCase):
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_send_1 unit test ERROR: %s' % str(json_excpt))
 
-
-"""
-def repeat_send_tx_unit_tests(runs=1000):
-    for j in (1, runs):
-        wasSuccessful = unittest.main(exit=False).result.wasSuccessful()
-        if not wasSuccessful:
-            sys.exit(1)
-"""
 
 """
 if __name__ == '__main__':

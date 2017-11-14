@@ -16,18 +16,14 @@ class Misc_UnitTest(unittest.TestCase):
 
     # signmessage "blocknetdxaddress" "message"
     # Please enter the wallet passphrase with walletpassphrase first.
-    # @unittest.skip("DISABLED - STILL TOO MANY ERRORS")
-    # The address is always invalid here
     # TODO: valid test
     def test_signmessage_invalid(self):
-        # valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         for i in range(1, 51):
             log_json = ""
-            with self.subTest("We test -3: Invalid address error message"):
+            with self.subTest("test_signmessage_invalid"):
                 try:
                     invalid_blocknet_address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     message = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    # self.assertIsInstance(xbridge_rpc.rpc_connection.signmessage(invalid_blocknet_address, message), dict)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.sign_message, invalid_blocknet_address, message)
                     log_json = {"group": "test_signmessage_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -44,7 +40,6 @@ class Misc_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
                     xbridge_logger.logger.info('message: %s \n' % message)
 
-    # VALID COMBINATIONS
     # autocombinerewards <true/false> threshold
     def test_autocombinerewards_valid(self):
         try:
@@ -74,10 +69,7 @@ class Misc_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('autocombinerewards valid unit test ERROR: %s' % json_excpt)
 
-    # SUBTESTS WITH PARAMETER ORDER AND TYPE RANDOMNIZATION
-    # INVALID COMBINATIONS : GARBAGE + OUT-OF-BOUNDS DATA + DATA WE EXPECT THE FUNCTION TO REJECT
     # autocombinerewards <true/false> threshold
-    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_autocombinerewards_invalid(self):
         for i in range(1, 51):
             log_json = ""
@@ -93,16 +85,8 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "autocombinerewards", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('autocombinerewards invalid unit test FAILED: %s' % ass_err)
-                """
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('autocombinerewards invalid unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "autocombinerewards", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)        
-                """
 
-    # SUBTESTS WITH PARAMETER ORDER AND TYPE RANDOMNIZATION
     # move "fromaccount" "toaccount" amount ( minconf "comment" )
-    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_move_invalid(self):
         log_json = ""
         for i in range(1, 51):
