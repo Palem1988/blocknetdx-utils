@@ -13,16 +13,14 @@ atomic tests will increase exponentially as you increase the number of unit test
 
 # Current known issues
 
-- Because of the use of exception chaining, the assertion failure notifications and counts of the compiler are **wrong**. Check the log to get the real assertion failures.
 - Popups will appear when using the client.
-
 
 # TODO
 
 - Add unit tests with valid data present in the dex once it's loaded.
 - Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
-- When the code of the RPC calls are settled, apply the same structure and coding style for the client.
+- When the code of the RPC calls are settled, apply the same structure for the client.
 - Documentation.
 
 # Running the tests
@@ -77,49 +75,6 @@ All arguments are optional.- Use *-s* or *--sequence* argument to specify the nu
 # Requirements
 
 - This code won't run on Python < 3.4 because of the use of subtests and exception chaining.
-
-# Sequence Tests Usage Examples
-
-- Optional parameters are available for sequence test functions to make their use easy, allow for some flexibility, and place boundaries on the randomness to test for specific scenarios.
-
-For example, the following calls do the same thing:
-```python
-random_RPC_sequence()
-random_RPC_sequence(nb_of_runs=1000)
-random_RPC_sequence(nb_of_runs=1000, data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000)
-```
-
-- To generate only valid data, set **data_nature=VALID_DATA**.
-- To generate only garbage data, set **data_nature=INVALID_DATA**.
-
-If **data_nature=INVALID_DATA**, *char_min_size* and *char_min_size* define how long the string will be supplied by the random generator.
-
-The following combinations may be used during the testing phase, because they generate very different test cases:
-```python
-random_RPC_sequence(nb_of_runs=50000, data_nature=INVALID_DATA, char_min_size=10000, char_max_size=12000)
-random_RPC_sequence(nb_of_runs=50000, data_nature=VALID_DATA)
-# This will generate both valid and invalid data, because the parameter is not specified.
-random_RPC_sequence(nb_of_runs=50000, char_max_size=1000)
-
-defined_order_RPC_sequence(nb_of_runs=30000, data_nature=INVALID_DATA, char_min_size=5000, char_max_size=12000)
-defined_order_RPC_sequence(nb_of_runs=30000, data_nature=VALID_DATA)
-defined_order_RPC_sequence(nb_of_runs=30000, char_max_size=10000)
-
-dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=INVALID_DATA, char_min_size=1, char_max_size=15000)
-dxCancel_RPC_sequence(nb_of_runs=20000, data_nature=VALID_DATA)
-dxCancel_RPC_sequence(nb_of_runs=20000, char_max_size=5000)
-
-dxCreate_RPC_sequence(nb_of_runs=x, char_min_size=y)
-
-dxAccept_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_max_size=y)
-dxGetTransactionInfo_RPC_sequence(nb_of_runs=x, data_nature=INVALID_DATA, char_max_size=y)
-
-```
-
-
-# Unit Tests Usage Examples
-
-- TODO
 
 # Testing model
 
