@@ -131,7 +131,7 @@ class Utils_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('test_verify_message_invalid FAILED: %s' % ass_err)
 
    
-unittest.main()
+# unittest.main()
 
 """
 suite = unittest.TestSuite()
