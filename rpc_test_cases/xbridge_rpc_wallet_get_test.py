@@ -11,6 +11,8 @@ from utils import xbridge_custom_exceptions
 """                       ***  UNIT TESTS FOR ALL WALLET RELATED FUNCTIONS STARTING WITH GET ***
 """
 
+subTest_count = 10
+
 no_param_returns_dict_func_list = [
                         xbridge_rpc.rpc_connection.getnettotals,
                         xbridge_rpc.rpc_connection.getnetworkinfo,
@@ -188,10 +190,11 @@ class wallet_get_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
 
     # getbalance ( "account" minconf includeWatchonly )
+    # TODO : review
     def test_getbalance(self):
-        for i in range(50):
+        for i in range(subTest_count):
             log_json = ""
-            with self.subTest("combinations"):
+            with self.subTest("test_getbalance"):
                 try:      
                     modified_set = [x for x in xbridge_utils.set_of_invalid_parameters if x not in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999)]
                     if random.choice(["", modified_set]) == "":
@@ -206,7 +209,7 @@ class wallet_get_UnitTest(unittest.TestCase):
                         optional_includeWatchonly = None
                     else:
                         optional_includeWatchonly = random.choice(modified_set)
-                    # if any(optional_account, optional_minconf, optional_includeWatchonly) in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):
+                    # if any([optional_account, optional_minconf, optional_includeWatchonly]) in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):
                     #    self.assertIsNone(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly))
                     # else:
                     if isinstance(optional_minconf, int):
