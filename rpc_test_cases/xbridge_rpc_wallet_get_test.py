@@ -193,25 +193,26 @@ class wallet_get_UnitTest(unittest.TestCase):
             log_json = ""
             with self.subTest("combinations"):
                 try:      
-                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
+                    modified_set = [x for x in xbridge_utils.set_of_invalid_parameters if x not in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999)]
+                    if random.choice(["", modified_set]) == "":
                         optional_account = None
                     else:
-                        optional_account = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
+                        optional_account = random.choice(modified_set)
+                    if random.choice(["", modified_set]) == "":
                         optional_minconf = None
                     else:
-                        optional_minconf = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
+                        optional_minconf = random.choice(modified_set)
+                    if random.choice(["", modified_set]) == "":
                         optional_includeWatchonly = None
                     else:
-                        optional_includeWatchonly = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    if any(optional_account, optional_minconf, optional_includeWatchonly) in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):
-                        self.assertIsNone(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly))
+                        optional_includeWatchonly = random.choice(modified_set)
+                    # if any(optional_account, optional_minconf, optional_includeWatchonly) in (9999999999999999999999999999999999999999999999999999999999999999, -9999999999999999999999999999999999999999999999999999999999999999):
+                    #    self.assertIsNone(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly))
+                    # else:
+                    if isinstance(optional_minconf, int):
+                        self.assertIsInstance(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly), Decimal)
                     else:
-                        if isinstance(optional_minconf, int):
-                            self.assertIsInstance(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly), Decimal)
-                        else:
-                            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getbalance, optional_account, optional_minconf, optional_includeWatchonly)
+                        self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getbalance, optional_account, optional_minconf, optional_includeWatchonly)
                     log_json = {"group": "test_getbalance", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
