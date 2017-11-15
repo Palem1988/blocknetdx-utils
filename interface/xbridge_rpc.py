@@ -44,6 +44,32 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+
+# reservebalance [<reserve> [amount]]
+def reservebalance(reserve, amount):
+    try:
+        return rpc_connection.reservebalance(reserve, amount)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+
+# addnode "node" "add|remove|onetry"
+def addnode(node_str, cmd):
+    try:
+        return rpc_connection.addnode(node_str, cmd)
+    except JSONRPCException as json_excpt:
+        if "Error: Node has not been added" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# getaddednodeinfo dns bool ( "node" )
+def getaddednodeinfo(dns_bool, node_str):
+    try:
+        return rpc_connection.getaddednodeinfo(dns_bool, node_str)
+    except JSONRPCException as json_excpt:
+        if "Error: Node has not been added" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 # verifymessage "blocknetdxaddress" "signature" "message"
 def verifymessage(blocknetdxaddress, signature, message):
     try:
@@ -337,6 +363,7 @@ print(rpc_connection.keypoolrefill())
 # print(rpc_connection.dumpwallet("dsds"))
 
 # Auto Combine Rewards Threshold Set
+# print(rpc_connection.autocombinerewards(True, -99999999999999))
 # print(rpc_connection.autocombinerewards(False, -99999999999999))
 # print(rpc_connection.autocombinerewards(False))
 # Error
@@ -385,6 +412,14 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # bitcoinrpc.authproxy.JSONRPCException: -3: Expected type integer, got string
 # decimal
 print(rpc_connection.estimatefee(0))
+print(rpc_connection.estimatefee(-100))
 
 # returns None if wrong int or bool, or if wrong string {'isvalid': False}
-print(verifymessage("dsds", "dsd", "sdsdk"))
+# print(verifymessage("dsds", "dsd", "sdsdk"))
+# print(rpc_connection.importprivkey("dsdsdddddddddddddddddddddddddd"))
+# print(rpc_connection.reservebalance(True, "dklsd"))
+
+# print(rpc_connection.getaddednodeinfo(False, ""))
+# print(addnode("dsd", "dsdsd"))
+
+# print(rpc_connection.getinfo())
