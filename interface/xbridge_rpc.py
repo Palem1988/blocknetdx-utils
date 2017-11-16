@@ -44,6 +44,45 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+# backupwallet "destination"
+def backupwallet(destination):
+    try:
+        return rpc_connection.backupwallet(destination)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
+    
+# bip38encrypt "blocknetdxaddress"
+def bip38decrypt(blocknetdxaddress):
+    try:
+        return rpc_connection.bip38decrypt(blocknetdxaddress)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
+    
+# bip38encrypt "blocknetdxaddress"
+def bip38encrypt(blocknetdxaddress):
+    try:
+        return rpc_connection.bip38encrypt(blocknetdxaddress)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
+    
+# setgenerate generate ( genproclimit )
+def setgenerate(generate, genproclimit=None):
+    try:
+        return rpc_connection.setgenerate(generate, genproclimit)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# listtransactions ( "account" count from includeWatchonly)
+def listtransactions(account=None, count=None, from_param=None, includeWatchonly=None):
+    try:
+        return rpc_connection.listtransactions(account, count, from_param, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # reservebalance [<reserve> [amount]]
 def reservebalance(reserve, amount):
@@ -63,7 +102,7 @@ def addnode(node_str, cmd):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getaddednodeinfo dns bool ( "node" )
-def getaddednodeinfo(dns_bool, node_str):
+def getaddednodeinfo(dns_bool, node_str=None):
     try:
         return rpc_connection.getaddednodeinfo(dns_bool, node_str)
     except JSONRPCException as json_excpt:
@@ -411,8 +450,8 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # bitcoinrpc.authproxy.JSONRPCException: -3: Expected type integer, got real
 # bitcoinrpc.authproxy.JSONRPCException: -3: Expected type integer, got string
 # decimal
-print(rpc_connection.estimatefee(0))
-print(rpc_connection.estimatefee(-100))
+# print(rpc_connection.estimatefee(0))
+# print(rpc_connection.estimatefee(-100))
 
 # returns None if wrong int or bool, or if wrong string {'isvalid': False}
 # print(verifymessage("dsds", "dsd", "sdsdk"))
@@ -423,3 +462,13 @@ print(rpc_connection.estimatefee(-100))
 # print(addnode("dsd", "dsdsd"))
 
 # print(rpc_connection.getinfo())
+
+## print(getaddednodeinfo("dsd", "dsd"))
+
+# {'id': '0000000000000000000000000000000000000000000000000000000000000000'}
+# print(create_tx("", "", 0, "", "", 0))
+# print(create_tx("dsds", "dsd", 10, "dsqdsq", "dsqdsqd", 10))
+
+# returns a list
+# print(rpc_connection.listtransactions("", 0, 0, False))
+# print(rpc_connection.listtransactions("", 0, 0, True))
