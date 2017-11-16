@@ -8,6 +8,8 @@ conf_file_path = os.path.join(__location__, 'tests.conf')
 
 config.read(conf_file_path)
 
+test_value = 10
+
 def conf_exists():
     if not os.path.exists(conf_file_path):
         return False
@@ -81,15 +83,27 @@ def get_conf_sequence_run_number():
             return 0
 
 def get_conf_unit_tests_run_number():
-    try:
-        if not conf_exists():
-            return 0
-        if "DEFAULT_NUMBER_OF_RUNS" in config.sections():
+    if not conf_exists():
+        return 0
+    if "DEFAULT_NUMBER_OF_RUNS" in config.sections():
+        try:
             return config.getint('DEFAULT_NUMBER_OF_RUNS', 'UNIT_TESTS_NB_OF_RUNS')
-        else:
+        except configparser.NoOptionError:
             return 0
-    except KeyError:
+        except KeyError:
             return 0
+    else:
+        return 0
 
-
-
+def get_conf_subtests_run_number():
+    if not conf_exists():
+        return 10
+    if "DEFAULT_NUMBER_OF_RUNS" in config.sections():
+        try:
+            return config.getint('DEFAULT_NUMBER_OF_RUNS', 'SUB_TESTS_NB_OF_RUNS')
+        except KeyError:
+            return 10
+        except configparser.NoOptionError:
+            return 10
+    else:
+        return 10
