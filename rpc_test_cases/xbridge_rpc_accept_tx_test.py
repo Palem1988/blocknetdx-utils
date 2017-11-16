@@ -1,7 +1,7 @@
 from strgen import StringGenerator
-import time
 import unittest
 import random
+import itertools
 
 import xbridge_logger
 
@@ -9,28 +9,11 @@ from utils import xbridge_utils
 from interface import xbridge_rpc
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
-"""
-    - Combine optional parameters in a way that generate the test cases you want.
-"""
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
 
-def dxAccept_RPC_sequence(nb_of_runs=1000, data_nature=3, char_min_size=1, char_max_size=12000):
-    time_distribution = []
-    for i in range(1, 1 + nb_of_runs):
-        xbridge_utils.generate_new_set_of_data(data_nature, char_min_size, char_max_size)
-        ts = time.time()
-        xbridge_rpc.accept_tx(xbridge_utils.a_random_tx_id, xbridge_utils.a_src_Address, xbridge_utils.a_dest_Address)
-        te = time.time()
-        elapsed_Time = te - ts
-        json_str = {"time": te - ts, "API": "dxAcceptTransaction"}
-        time_distribution.append(json_str)
-        full_json_str = {"version": xbridge_rpc.get_core_version(), "sequence": "dxAccept_RPC_sequence",
-                         "API": "dxAccept", "time": elapsed_Time}
-        xbridge_utils.TIME_DISTRIBUTION.append(full_json_str)
-    xbridge_utils.export_data("dxAccept_RPC_sequence.xlsx", time_distribution)
-
-
-"""                       ***  UNIT TESTS ***
-"""
+subTest_count = xbridge_config.get_conf_subtests_run_number()
 
 class accept_Tx_Test(unittest.TestCase):
     def setUp(self):
@@ -51,8 +34,9 @@ class accept_Tx_Test(unittest.TestCase):
        self.input_str_from_random_classes_2 = xbridge_utils.generate_input_from_random_classes_combinations(9000, 12000)
        self.input_str_from_random_classes_3 = xbridge_utils.generate_input_from_random_classes_combinations(1, 100)
         
-    def test_invalid_accept_tx_11(self):
-        for i in range(1, 51):
+    # This test will not run during sequence tests as it contains "noseq" in its name.
+    def test_invalid_accept_tx_noseq(self):
+        for i in range(subTest_count):
             log_json = ""
             with self.subTest("random garbage"):
                 try:
@@ -69,7 +53,29 @@ class accept_Tx_Test(unittest.TestCase):
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_accept_tx_0", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                
+
+    
+    @unittest.skip("IN TESTING - PERMUTATION BASED UNIT TESTS")
+    def test_invalid_accept_tx_0b_noseq(self):
+        permutation_list = list(itertools.permutations(xbridge_utils.set_of_invalid_parameters, 3))
+        for permutation in permutation_list:
+            log_json = ""
+            with self.subTest(permutation=permutation):
+                try:
+                    txid = permutation[0]
+                    src_Address = permutation[1]
+                    dest_Address = permutation[2]
+                    self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, txid, src_Address, dest_Address)
+                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_accept_tx_0b unit test FAILED: %s' % ass_err)
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    
     # Combinations of valid and invalid parameters
     def test_invalid_accept_tx_1(self):
         try:
@@ -137,11 +143,9 @@ class accept_Tx_Test(unittest.TestCase):
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1)
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1)
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3)
-            # print("dxAccept Unit Test Group 3 OK")
             log_json = {"group": "test_invalid_accept_tx_3", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            # print("****** dxAccept Unit Test Group 3 FAILED ******")
             log_json = {"group": "test_invalid_accept_tx_3", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('-------- dxAccept unit test group 3 FAILED --------: %s \n' % str(ass_err))
@@ -184,7 +188,6 @@ class accept_Tx_Test(unittest.TestCase):
         try:
             log_json = ""
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.invalid_txid, self.valid_src_Address, self.valid_src_Address)
-            # self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.valid_txid, self.valid_src_Address, self.valid_src_Address)
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, "", self.valid_src_Address, self.valid_src_Address)
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.invalid_txid, self.invalid_src_Address, self.invalid_src_Address)
             self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, self.valid_txid, self.invalid_src_Address, self.invalid_src_Address)
@@ -200,15 +203,18 @@ class accept_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
 
+
 """
-unittest.main()
+ unittest.main()
 """
 
 """
 suite = unittest.TestSuite()
 for i in range(50):
     suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
+    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0b"))
 # suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
+
