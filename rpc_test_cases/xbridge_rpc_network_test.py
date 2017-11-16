@@ -7,13 +7,19 @@ from interface import xbridge_rpc
 from utils import xbridge_utils
 from utils import xbridge_custom_exceptions
 
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+subTest_count = xbridge_config.get_conf_subtests_run_number()
+
 class Network_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
     def test_addnode_invalid(self):
         log_json = ""
-        for i in range(50):
+        for i in range(subTest_count):
             log_json = ""
             with self.subTest("test_getaddednodeinfo_invalid"):
                 try:
@@ -41,7 +47,7 @@ class Network_UnitTest(unittest.TestCase):
         log_json = ""
         self.assertIsInstance(xbridge_rpc.rpc_connection.getaddednodeinfo(True), list)
         self.assertIsInstance(xbridge_rpc.rpc_connection.getaddednodeinfo(False), list)
-        for i in range(50):
+        for i in range(subTest_count):
             log_json = ""
             with self.subTest("test_getaddednodeinfo_invalid"):
                 try:

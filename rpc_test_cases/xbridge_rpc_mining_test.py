@@ -9,10 +9,11 @@ from interface import xbridge_rpc
 from utils import xbridge_utils
 from utils import xbridge_custom_exceptions
 
-"""                       ***  UNIT TESTS ***
-"""
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
 
-subTest_count = 10
+subTest_count = xbridge_config.get_conf_subtests_run_number()
 
 class Mining_UnitTest(unittest.TestCase):
     def setUp(self):

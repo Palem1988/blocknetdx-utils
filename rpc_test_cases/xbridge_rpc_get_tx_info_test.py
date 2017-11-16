@@ -49,7 +49,6 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     self.assertIsInstance(xbridge_rpc.get_tx_info(basic_garbage_str), list)
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.get_tx_info, basic_garbage_str)
                     log_json = {"group": "test_invalid_get_tx_info_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
