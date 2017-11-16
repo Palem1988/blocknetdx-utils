@@ -9,6 +9,7 @@ from interface import xbridge_rpc
 
 TIME_DISTRIBUTION = []
 ERROR_LOG = []
+IS_SEQUENCE_TEST = False
 
 VALID_DATA = 1
 INVALID_DATA = 2
@@ -68,17 +69,15 @@ invalid_str_from_random_classes_4 = ""
 set_of_invalid_parameters = ["", 0,
                     True, False,
                     invalid_str_from_random_classes_1,
-                    invalid_str_from_random_classes_2,
-                    invalid_str_from_random_classes_3,
-                    invalid_str_from_random_classes_4,
                     invalid_str_from_random_classes_1,
                     invalid_str_from_random_classes_2,
+                    invalid_str_from_random_classes_2,
                     invalid_str_from_random_classes_3,
+                    invalid_str_from_random_classes_3,
+                    invalid_str_from_random_classes_4,
                     invalid_str_from_random_classes_4,
                     current_basic_garbage_item,
                     current_basic_garbage_item,
-                    fixed_small_positive_float,
-                    -fixed_small_positive_float,
                     invalid_random_positive_int,
                     invalid_random_positive_float,
                     -invalid_random_positive_int,
@@ -86,6 +85,7 @@ set_of_invalid_parameters = ["", 0,
                     valid_random_positive_float,
                     -valid_random_positive_float,
                     ]
+
 
 def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, char_max_size=12000):
     # Set for create_tx
@@ -146,7 +146,8 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
     if data_nature == VALID_DATA:
         # Set for create_tx
         # c_src_Address = xbridge_rpc.rpc_connection.getnewaddress()
-        c_src_Address = generate_random_valid_address()
+        # c_src_Address = generate_random_valid_address()
+        c_src_Address = generate_valid_blocknet_address()
         c_dest_Address = generate_random_valid_address()
         c_src_Token = generate_random_valid_token()
         c_dest_Token = generate_random_valid_token()
