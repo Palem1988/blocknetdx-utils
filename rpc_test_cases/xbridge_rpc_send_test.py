@@ -8,10 +8,11 @@ from utils import xbridge_utils
 
 from strgen import StringGenerator
 
-"""                       ***  UNIT TESTS ***
-"""
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
 
-valid_multisend_cmds = ["print"]
+subTest_count = xbridge_config.get_conf_subtests_run_number()
 
 class send_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -21,7 +22,6 @@ class send_UnitTest(unittest.TestCase):
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_multisend_valid(self):
         log_json = ""
-        # VALID
         with self.subTest("valid multisends commands"):
             try:
                 self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("print"), list)
@@ -57,7 +57,7 @@ class send_UnitTest(unittest.TestCase):
     def test_senttoaddress_invalid_random(self):
         send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
         for send_address_func in send_address_list:
-            for i in range(1, 51):
+            for i in range(subTest_count):
                 log_json = ""
                 with self.subTest("sendfrom combinations"):
                     try:      
@@ -80,7 +80,7 @@ class send_UnitTest(unittest.TestCase):
     def test_senttoaddress_invalid_fixed(self):
         send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
         for send_address_func in send_address_list:
-            with self.subTest("invalid sendtoaddress"):
+            with self.subTest("test_senttoaddress_invalid_fixed"):
                 try:
                     log_json = ""
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, "", "")
@@ -98,7 +98,6 @@ class send_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_senttoaddress_invalid_fixed", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('%s invalid unit test FAILED: %s' % (send_address_func, ass_err))
-                    """
                     xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
                     xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
                     xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
@@ -106,11 +105,6 @@ class send_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('valid_random_positive_float: %s \n' % xbridge_utils.valid_random_positive_float)
                     xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
                     xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
-                    """
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('%s unit test ERROR: %s' % (str(send_address_func), str(json_excpt)))
-                    log_json = {"group": "test_senttoaddress_invalid_fixed", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
 
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     # JSONRPCException: -5: Invalid BlocknetDX address
@@ -149,7 +143,7 @@ class send_UnitTest(unittest.TestCase):
     # sendfrom "fromaccount" "toblocknetdxaddress" amount ( minconf "comment" "comment-to" )
     def test_sendfrom_invalid(self):
         log_json = ""
-        for i in range(1, 51):
+        for i in range(subTest_count):
             log_json = ""
             with self.subTest("sendfrom combinations"):
                 try:      

@@ -8,23 +8,23 @@ from utils import xbridge_custom_exceptions
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
-"""                       ***  UNIT TESTS ***
-"""
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+subTest_count = xbridge_config.get_conf_subtests_run_number()
 
 class private_Key_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
     # importprivkey "blocknetdxprivkey" ( "label" rescan )
-    # @unittest.skip("disabled - not tested")
     def test_importprivkey_invalid(self):
         modified_set = [x for x in xbridge_utils.set_of_invalid_parameters if x not in (-9999999999999999999999999999999999999999999999999999999999999999, 9999999999999999999999999999999999999999999999999999999999999999)]
-        for basic_garbage_str in modified_set:
-            with self.subTest(basic_garbage_str=basic_garbage_str):
+        for i in range(subTest_count):
+            with self.subTest("test_importprivkey_invalid"):
                 try:
                     blocknetdxprivkey = random.choice(modified_set)
-                    optional_label = random.choice(modified_set)
-                    optional_rescan = random.choice(modified_set)
                     if random.choice(["", modified_set]) == "":
                         optional_label = None
                     else:
@@ -41,8 +41,8 @@ class private_Key_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_importprivkey_invalid FAILED: %s' % ass_err)
                     xbridge_logger.logger.info('blocknetdxprivkey: %s \n' % blocknetdxprivkey)
-                    xbridge_logger.logger.info('optional_label: %s \n' % optional_label)
-                    xbridge_logger.logger.info('optional_rescan: %s \n' % optional_rescan)
+                    xbridge_logger.logger.info('optional_label: %s \n' % str(optional_label))
+                    xbridge_logger.logger.info('optional_rescan: %s \n' % str(optional_rescan))
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_importprivkey_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -54,7 +54,7 @@ class private_Key_UnitTest(unittest.TestCase):
         try:
             log_json = ""
             valid_blocknetdx_address = xbridge_utils.generate_valid_blocknet_address()
-            self.assertIsInstance(xbridge_rpc.rpc_connection.importprivkey(valid_blocknetdx_address), dict)
+            self.assertIsInstance(xbridge_rpc.importprivkey(valid_blocknetdx_address), dict)
             log_json = {"group": "test_importprivkey_valid", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:

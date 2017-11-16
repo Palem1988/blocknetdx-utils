@@ -8,8 +8,6 @@ from utils import xbridge_custom_exceptions
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
-"""                       ***  UNIT TESTS ***
-"""
 
 class Utils_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -67,7 +65,6 @@ class Utils_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_estimatepriority ERROR: %s' % json_excpt)
                     xbridge_logger.logger.info('basic_str: %s \n' % basic_str)
-    
 
     # validateaddress "blocknetdxaddress"
     def test_validateaddress_invalid(self):
@@ -85,14 +82,13 @@ class Utils_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_validateaddress_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_validateaddress_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_str: %s \n' % basic_str)
+                    xbridge_logger.logger.info('basic_str: %s \n' % str(basic_str))
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_validateaddress_invalid", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_validateaddress_invalid ERROR: %s' % json_excpt)
-                    xbridge_logger.logger.info('basic_str: %s \n' % basic_str)
+                    xbridge_logger.logger.info('basic_str: %s \n' % str(basic_str))
 
-     
     # validateaddress "blocknetdxaddress"
     def test_validateaddress_valid(self):
         try:
@@ -110,8 +106,7 @@ class Utils_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_validateaddress_valid ERROR: %s' % json_excpt)
             xbridge_logger.logger.info('valid_block_address: %s \n' % valid_block_address)
-     
-    
+
     # verifymessage "blocknetdxaddress" "signature" "message"
     def test_verify_message_invalid(self):
         for i in range(50):
