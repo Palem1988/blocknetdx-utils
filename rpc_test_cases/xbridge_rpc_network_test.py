@@ -7,18 +7,10 @@ from interface import xbridge_rpc
 from utils import xbridge_utils
 from utils import xbridge_custom_exceptions
 
-"""                       ***  UNIT TESTS ***
-"""
-
 class Network_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
-    # getaddednodeinfo dns bool ( "node" )
-    # getaddednodeinfo true
-    # getaddednodeinfo true "192.168.0.201"
-    # Returns information about the given added node, or all added nodes
-    # If dns is false, only a list of added nodes will be provided, otherwise connected information will also be available.
     def test_addnode_invalid(self):
         log_json = ""
         for i in range(50):
@@ -67,7 +59,6 @@ class Network_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('test_getaddednodeinfo_invalid ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-
 
     def test_get_connection_count(self):
         try:
