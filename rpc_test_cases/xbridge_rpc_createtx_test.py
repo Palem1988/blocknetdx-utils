@@ -1,6 +1,6 @@
-import time
 import unittest
 import random
+import itertools
 
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
@@ -8,6 +8,12 @@ from utils import xbridge_utils
 from interface import xbridge_rpc
 import xbridge_logger
 from utils import xbridge_custom_exceptions
+
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+subTest_count = xbridge_config.get_conf_subtests_run_number()
 
 class create_Tx_Test(unittest.TestCase):
     # Generate new data before each run
@@ -33,7 +39,7 @@ class create_Tx_Test(unittest.TestCase):
        self.nb_with_leading_zeros_2 = xbridge_utils.generate_random_number_with_leading_zeros()
 
     def test_invalid_create_tx_v0(self):
-        for i in range(50):
+        for i in range(subTest_count):
             log_json = ""
             with self.subTest("random garbage"):
                 try:
@@ -51,6 +57,39 @@ class create_Tx_Test(unittest.TestCase):
                     log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('src_Address: %s', src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s', dest_Address)
+                    xbridge_logger.logger.info('src_Token: %s', src_Token)
+                    xbridge_logger.logger.info('dest_Token: %s', dest_Token)
+                    xbridge_logger.logger.info('fromAmount: %s', fromAmount)
+                    xbridge_logger.logger.info('toAmount: %s', toAmount)
+
+    @unittest.skip("IN TESTING")
+    def test_invalid_create_tx_v0b(self):
+        permutation_list = list(itertools.permutations(xbridge_utils.set_of_invalid_parameters, 6))
+        for permutation in permutation_list:
+            log_json = ""
+            with self.subTest("random garbage"):
+                try:
+                    src_Address = permutation[0]
+                    dest_Address = permutation[1]
+                    src_Token = permutation[2]
+                    dest_Token = permutation[3]
+                    fromAmount = permutation[4]
+                    toAmount = permutation[5]
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.create_tx, src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount)
+                    log_json = {"group": "test_invalid_create_tx_v0", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('src_Address: %s', src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s', dest_Address)
+                    xbridge_logger.logger.info('src_Token: %s', src_Token)
+                    xbridge_logger.logger.info('dest_Token: %s', dest_Token)
+                    xbridge_logger.logger.info('fromAmount: %s', fromAmount)
+                    xbridge_logger.logger.info('toAmount: %s', toAmount)
 
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
@@ -196,7 +235,6 @@ class create_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_create_tx_v6", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_create_tx_v6 unit test FAILED: %s' % ass_err)
-            """
             xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address)
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
@@ -206,7 +244,6 @@ class create_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('invalid_dest_Token: %s', self.invalid_dest_Token)
             xbridge_logger.logger.info('valid_positive_nb_1: %s', self.valid_positive_nb_1)
             xbridge_logger.logger.info('invalid_neg_nb: %s', self.invalid_neg_nb)
-            """
 
     # Combinations of very small and very large numerical parameters, all other parameters being valid
     # bitcoinrpc.authproxy.JSONRPCException: -32700: Parse error
