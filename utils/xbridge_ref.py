@@ -23,8 +23,6 @@ from rpc_test_cases import xbridge_rpc_utils_test
 
 from rpc_test_cases import xbridge_rpc_encrypt_test
 from rpc_test_cases import xbridge_rpc_decoderawtx_test
-from rpc_test_cases import xbridge_rpc_generating_test
-
 
 unit_tests_module_strings = [xbridge_rpc_createtx_test,
                             xbridge_rpc_canceltx_test,
@@ -45,7 +43,6 @@ unit_tests_module_strings = [xbridge_rpc_createtx_test,
                             xbridge_rpc_utils_test,
                             xbridge_rpc_encrypt_test,
                             xbridge_rpc_decoderawtx_test,
-                            xbridge_rpc_generating_test,
                             xbridge_rpc_encrypt_test
                             ]
 
@@ -65,7 +62,6 @@ all_UT_class_names = [xbridge_rpc_misc_test.Misc_UnitTest,
                           xbridge_rpc_wallet_set_test.wallet_Set_UnitTest,
                           xbridge_rpc_mining_test.Mining_UnitTest,
                           xbridge_rpc_utils_test.Utils_UnitTest,
-                          xbridge_rpc_generating_test.Generate_UnitTest,
                           xbridge_rpc_decoderawtx_test.decodeUnitTest,
                           xbridge_rpc_encrypt_test.Encrypt_UnitTest
                           ]
