@@ -57,7 +57,7 @@ def bip38decrypt(blocknetdxaddress):
     try:
         return rpc_connection.bip38decrypt(blocknetdxaddress)
     except JSONRPCException as json_excpt:
-        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+        if "-1: bip38decrypt \"blocknetdxaddress\"" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
     
 # bip38encrypt "blocknetdxaddress"
@@ -65,7 +65,7 @@ def bip38encrypt(blocknetdxaddress):
     try:
         return rpc_connection.bip38encrypt(blocknetdxaddress)
     except JSONRPCException as json_excpt:
-        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+        if "-1: bip38encrypt \"blocknetdxaddress\"" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
     
 # setgenerate generate ( genproclimit )
@@ -91,7 +91,6 @@ def reservebalance(reserve, amount):
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-
 
 # addnode "node" "add|remove|onetry"
 def addnode(node_str, cmd):
@@ -174,21 +173,21 @@ def getnetworkhashps(blocks, height):
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def getreceivedbyaccount(address):
+def getreceivedbyaccount(address=None):
     try:
         return rpc_connection.getreceivedbyaccount(address)
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def getaccountaddress(address):
+def getaccountaddress(address=None):
     try:
         return rpc_connection.getbalance(address)
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def getaddressesbyaccount(account):
+def getaddressesbyaccount(account=None):
     try:
         return rpc_connection.getbalance(account)
     except JSONRPCException as json_excpt:
@@ -203,7 +202,7 @@ def getbalance(account=None, minconf=None, includeWatchonly=None):
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def sendtoaddress(txid):
+def sendtoaddress(txid=None):
     try:
         return rpc_connection.sendtoaddress(txid)
     except JSONRPCException as json_excpt:
@@ -213,7 +212,7 @@ def sendtoaddress(txid):
         if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def send_tx(txid):
+def send_tx(txid=None):
     try:
         return rpc_connection.sendrawtransaction(txid)
     except JSONRPCException as json_excpt:
@@ -223,7 +222,7 @@ def send_tx(txid):
         if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def decode_raw_tx(txid):
+def decode_raw_tx(txid=None):
     try:
         return rpc_connection.decoderawtransaction(txid)
     except JSONRPCException as json_excpt:
@@ -233,7 +232,7 @@ def decode_raw_tx(txid):
         if "Expected type" in str(json_excpt) and "got" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def sign_message(address, msg):
+def sign_message(address=None, msg=None):
     try:
         rpc_connection.signmessage(address, msg)
     except JSONRPCException as json_excpt:
@@ -243,23 +242,23 @@ def sign_message(address, msg):
         if "-1: get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def sign_tx(txid):
+def sign_tx(txid=None):
     return rpc_connection.signrawtransaction(txid)
     
-def cancel_tx(txid):
+def cancel_tx(txid=None):
     return rpc_connection.dxCancelTransaction(txid)
     
-def get_tx_info(txid):
+def get_tx_info(txid=None):
     return rpc_connection.dxGetTransactionInfo(txid)
 
-def create_tx(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount):
+def create_tx(fromAddress=None, fromToken=None, fromAmount=None, toAddress=None, toToken=None, toAmount=None):
     try:
         return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
     except JSONRPCException as json_err:
         # raise JSONRPCException
         raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
     
-def accept_tx(txid, src, dest):
+def accept_tx(txid=None, src=None, dest=None):
     return rpc_connection.dxAcceptTransaction(txid, src, dest)
     
 def get_currency_list():
@@ -278,7 +277,7 @@ def get_transaction_history_list():
         return None
 
 # mnbudgetvoteraw <servicenode-tx-hash> <servicenode-tx-index> <proposal-hash> <yes|no> <time> <vote-sig>
-def mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig):
+def mnbudgetvoteraw(txhash=None, txindex=None, proposal_hash=None, yes_no=None, time=None, vote_sig=None):
     try:
         return rpc_connection.mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig)
     except UnicodeDecodeError as unicode_err:
@@ -288,7 +287,7 @@ def mnbudgetvoteraw(txhash, txindex, proposal_hash, yes_no, time, vote_sig):
         # raise JSONRPCException
         raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
 
-def spork(name_param, value_param):
+def spork(name_param=None, value_param=None):
     try:
         rst = rpc_connection.spork(name_param, value_param)
         if rst == "Invalid spork name":
@@ -472,3 +471,12 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # returns a list
 # print(rpc_connection.listtransactions("", 0, 0, False))
 # print(rpc_connection.listtransactions("", 0, 0, True))
+
+# print(rpc_connection.bip38decrypt(-2))
+# print(rpc_connection.validateaddress("dksldks"))
+# print(rpc_connection.validateaddress(2))
+# print(rpc_connection.verifymessage(rpc_connection.getnewaddress(), "dsdsd", "dsdsds"))
+
+# print(rpc_connection.encryptwallet("mypwd"))
+# print(rpc_connection.walletpassphrase("mypwd", 60))
+# print(rpc_connection.dumpwallet("C:\\Users\\kbentahmed\\Desktop\\BlockNetDX\\test_wallet_dump5.dat"))
