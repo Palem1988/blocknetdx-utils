@@ -18,7 +18,7 @@ class Encrypt_UnitTest(unittest.TestCase):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
     @unittest.skip("NEED A SPECIAL FLAG SO IT DOES NOT SHUTDOWN")
-    def test_encryptwallet(self):
+    def test_encryptwallet_noseq(self):
         try:
             log_json = ""
             random_str = random.choice([xbridge_utils.invalid_str_from_random_classes_1, 
