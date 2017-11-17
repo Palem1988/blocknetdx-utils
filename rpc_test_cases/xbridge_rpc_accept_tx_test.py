@@ -35,7 +35,7 @@ class accept_Tx_Test(unittest.TestCase):
        self.input_str_from_random_classes_3 = xbridge_utils.generate_input_from_random_classes_combinations(1, 100)
         
     # This test will not run during sequence tests as it contains "noseq" in its name.
-    def test_invalid_accept_tx_noseq(self):
+    def test_invalid_accept_tx_0a_noseq(self):
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("random garbage"):
@@ -44,20 +44,32 @@ class accept_Tx_Test(unittest.TestCase):
                     src_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     dest_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, txid, src_Address, dest_Address)
-                    log_json = {"group": "test_invalid_accept_tx_0", "success": 1, "failure": 0, "error": 0}
+                    log_json = {"group": "test_invalid_accept_tx_0a", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_invalid_accept_tx_0", "success": 0, "failure": 1, "error": 0}
+                    log_json = {"group": "test_invalid_accept_tx_0a", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_accept_tx_0 unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('test_invalid_accept_tx_0a FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('txid: %s' % txid)
+                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
                 except JSONRPCException as json_excpt:
-                    log_json = {"group": "test_invalid_accept_tx_0", "success": 0, "failure": 0, "error": 1}
+                    log_json = {"group": "test_invalid_accept_tx_0a", "success": 0, "failure": 0, "error": 1}
+                    xbridge_logger.logger.info('test_invalid_accept_tx_0a ERROR: %s' % ass_err)
+                    xbridge_logger.logger.info('txid: %s' % txid)
+                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
                     xbridge_utils.ERROR_LOG.append(log_json)
 
-    
-    @unittest.skip("IN TESTING - PERMUTATION BASED UNIT TESTS")
+    # This test will generate 5!/3! = 20 subtests based on all possible ordered permutations from the set.
+    # CAUTION ! DO NOT INCREASE THE SIZE OF THE SET, OR THE NUMBER OF GENERATED SUBTESTS WILL EXPLODE.
+    # @unittest.skip("IN TESTING - PERMUTATION BASED UNIT TESTS")
     def test_invalid_accept_tx_0b_noseq(self):
-        permutation_list = list(itertools.permutations(xbridge_utils.set_of_invalid_parameters, 3))
+        random_float = xbridge_utils.generate_random_number(-999999999999, 999999999999)
+        random_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 12000)
+        current_bool = random.choice([True, False])
+        custom_set = [current_bool, random_str, None, random_float]
+        permutation_list = list(itertools.permutations(custom_set, 3))
         for permutation in permutation_list:
             log_json = ""
             with self.subTest(permutation=permutation):
@@ -71,9 +83,16 @@ class accept_Tx_Test(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_accept_tx_0b unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('test_invalid_accept_tx_0b FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('txid: %s' % txid)
+                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 0, "error": 1}
+                    xbridge_logger.logger.info('test_invalid_accept_tx_0b ERROR: %s' % ass_err)
+                    xbridge_logger.logger.info('txid: %s' % txid)
+                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
+                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
                     xbridge_utils.ERROR_LOG.append(log_json)
                     
     # Combinations of valid and invalid parameters
@@ -99,7 +118,6 @@ class accept_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address)
             xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
             xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address)
-
 
     # Combinations of empty parameters
     def test_invalid_accept_tx_2(self):
@@ -132,7 +150,6 @@ class accept_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('whitespace_str_1 length: %s', len(whitespace_str_1))
             xbridge_logger.logger.info('whitespace_str_2 length: %s', len(whitespace_str_2))
             xbridge_logger.logger.info('whitespace_str_3 length: %s', len(whitespace_str_3))
-
             
     # Input parameter(s) is from combination of random character classes
     def test_invalid_accept_tx_3(self):
@@ -204,17 +221,15 @@ class accept_Tx_Test(unittest.TestCase):
             xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address)
 
 
-"""
- unittest.main()
-"""
+# unittest.main()
 
 """
 suite = unittest.TestSuite()
-for i in range(50):
-    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
-    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0b"))
+for i in range(1):
+    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
+    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
+    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0b_noseq"))
 # suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
-
