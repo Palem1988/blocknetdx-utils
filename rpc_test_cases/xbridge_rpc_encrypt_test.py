@@ -17,6 +17,48 @@ class Encrypt_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
+    # walletpassphrase "passphrase" timeout ( anonymizeonly )
+    @unittest.skip("IN TESTING")
+    def test_walletpassphrase_invalid(self):
+        try:
+            log_json = ""
+            random_str = random.choice([xbridge_utils.invalid_str_from_random_classes_1,
+                                        xbridge_utils.invalid_str_from_random_classes_2,
+                                        xbridge_utils.invalid_str_from_random_classes_3,
+                                        xbridge_utils.invalid_str_from_random_classes_4])
+            random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+            if random.choice(["", random.choice([True, False])]) == "":
+                random_bool = None
+            else:
+                random_bool = random.choice([True, False])
+            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.walletpassphrase, random_str, random_int, random_bool)
+            log_json = {"group": "test_walletpassphrase", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except JSONRPCException as json_excpt:
+            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+
+    # walletpassphrase "passphrase" timeout ( anonymizeonly )
+    @unittest.skip("IN TESTING")
+    def test_walletpassphrase_valid(self):
+        try:
+            log_json = ""
+            valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+            random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+            random_bool = random.choice([True, False])
+            self.assertIsNone(xbridge_rpc.walletpassphrase(valid_passphrase, random_int, random_bool))
+            log_json = {"group": "test_walletpassphrase", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except JSONRPCException as json_excpt:
+            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+
     @unittest.skip("NEED A SPECIAL FLAG SO IT DOES NOT SHUTDOWN")
     def test_encryptwallet_noseq(self):
         try:
@@ -25,7 +67,7 @@ class Encrypt_UnitTest(unittest.TestCase):
                                         xbridge_utils.invalid_str_from_random_classes_2, 
                                         xbridge_utils.invalid_str_from_random_classes_3, 
                                         xbridge_utils.invalid_str_from_random_classes_4])
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.encryptwallet, )
+            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.rpc_connection.encryptwallet, random_str)
             log_json = {"group": "test_encryptwallet", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
