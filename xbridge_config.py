@@ -25,7 +25,9 @@ def get_conf_log_dir():
         else:
             return ""
     except KeyError:
-            return ""
+        return ""
+    except configparser.NoOptionError:
+        return ""
 
 def get_conf_login():
     try:
@@ -36,7 +38,9 @@ def get_conf_login():
         else:
             return ""
     except KeyError:
-            return ""
+        return ""
+    except configparser.NoOptionError:
+        return ""
 
 def get_conf_password():
     try:
@@ -58,7 +62,9 @@ def get_conf_IP():
         else:
             return ""
     except KeyError:
-            return ""
+        return ""
+    except configparser.NoOptionError:
+        return ""
 
 def should_log_Excel_files():
     try:
@@ -69,7 +75,9 @@ def should_log_Excel_files():
         else:
             return True
     except KeyError:
-            return True
+        return True
+    except configparser.NoOptionError:
+        return True
 
 def get_conf_sequence_run_number():
     try:
@@ -107,3 +115,38 @@ def get_conf_subtests_run_number():
             return 10
     else:
         return 10
+
+def should_run_extended_tests():
+    try:
+        if not conf_exists():
+            return False
+        if "BEHAVIOR" in config.sections():
+            return config["BEHAVIOR"].getboolean('run_extended_tests')
+        else:
+            return False
+    except KeyError:
+        return False
+    except configparser.NoOptionError:
+        return False
+
+def get_wallet_encryption_passphrase():
+    try:
+        if not conf_exists():
+            return "mypwd"
+        if "WALLET" in config.sections():
+            return config['WALLET']['wallet_encryption_passphrase']
+        else:
+            return "mypwd"
+    except KeyError:
+            return "mypwd"
+
+def get_wallet_decryption_passphrase():
+    try:
+        if not conf_exists():
+            return "mypwd"
+        if "WALLET" in config.sections():
+            return config['WALLET']['wallet_decryption_passphrase']
+        else:
+            return "mypwd"
+    except KeyError:
+            return "mypwd"
