@@ -1,5 +1,8 @@
 ## BlocknetDX Utils Recent Changelog
 
+- **[Upcoming]** New test groups.
+- **[Upcoming]** Various improvements to existing test groups.
+
 -	Expanded coverage and improved existing test groups.
 -	Improved logging: a) increased verbosity.  b) summary, when applicable, of failure and error counts (at the end of log file).
 - Higher entropy through parameter order and type randomnization.
