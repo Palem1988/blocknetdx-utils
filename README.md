@@ -25,6 +25,8 @@ atomic tests will increase exponentially as you increase the number of unit test
 
 # Running the tests
 
+Wallet needs to be encrypted and unlocked.
+
 1. Update the tests.conf file with your credential parameters, and adjust the options to control some
 behaviors of the program.
 
