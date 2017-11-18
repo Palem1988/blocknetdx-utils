@@ -2,6 +2,7 @@
 
 - **[Upcoming]** New test groups.
 - **[Upcoming]** Various improvements to existing test groups.
+- **[Upcoming]** Additions to sequence tests.
 
 -	Expanded coverage and improved existing test groups.
 -	Improved logging: a) increased verbosity.  b) summary, when applicable, of failure and error counts (at the end of log file).
