@@ -19,6 +19,32 @@ class Encrypt_UnitTest(unittest.TestCase):
 
     # walletpassphrasechange "oldpassphrase" "newpassphrase"
     @unittest.skip("IN TESTING")
+    def test_walletpassphrasechange_valid(self):
+        try:
+            log_json = ""
+            if xbridge_config.get_wallet_decryption_passphrase() == "":
+                return
+            current_valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+            random_valid_new_passphrase = xbridge_utils.generate_random_valid_passphrase()
+            self.assertIsNone(xbridge_rpc.walletpassphrasechange(current_valid_passphrase, random_valid_new_passphrase))
+            self.assertIsNone(xbridge_rpc.walletpassphrasechange(random_valid_new_passphrase, current_valid_passphrase))
+            log_json = {"group": "test_walletpassphrasechange_valid", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_walletpassphrasechange_valid", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_walletpassphrasechange_valid FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('current_valid_passphrase: %s' % current_valid_passphrase)
+            xbridge_logger.logger.info('random_valid_new_passphrase: %s' % str(random_valid_new_passphrase))
+        except JSONRPCException as json_excpt:
+            log_json = {"group": "test_walletpassphrasechange_valid", "success": 0, "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('current_valid_passphrase: %s' % current_valid_passphrase)
+            xbridge_logger.logger.info('random_valid_new_passphrase: %s' % str(random_valid_new_passphrase))
+
+
+    # walletpassphrasechange "oldpassphrase" "newpassphrase"
+    @unittest.skip("IN TESTING")
     def test_walletpassphrasechange_invalid(self):
         for i in range(subTest_count):
             log_json = ""
@@ -56,9 +82,11 @@ class Encrypt_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_walletpassphrase FAILED: %s' % ass_err)
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_walletpassphrase ERROR: %s' % json_excpt)
             xbridge_logger.logger.info('random_str: %s' % random_str)
             xbridge_logger.logger.info('random_int: %s' % str(random_int))
             xbridge_logger.logger.info('random_bool: %s' % random_bool)
@@ -68,18 +96,22 @@ class Encrypt_UnitTest(unittest.TestCase):
     def test_walletpassphrase_valid(self):
         try:
             log_json = ""
+            if xbridge_config.get_wallet_decryption_passphrase() == "":
+                return
             valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
             random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
             random_bool = random.choice([True, False])
             self.assertIsNone(xbridge_rpc.walletpassphrase(valid_passphrase, random_int, random_bool))
-            log_json = {"group": "test_walletpassphrase", "success": 1, "failure": 0, "error": 0}
+            log_json = {"group": "test_walletpassphrase_valid", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 1, "error": 0}
+            log_json = {"group": "test_walletpassphrase_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_walletpassphrase_valid FAILED: %s' % ass_err)
         except JSONRPCException as json_excpt:
-            log_json = {"group": "test_walletpassphrase", "success": 0, "failure": 0, "error": 1}
+            log_json = {"group": "test_walletpassphrase_valid", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_walletpassphrase_valid ERROR: %s' % json_excpt)
             xbridge_logger.logger.info('random_str: %s' % valid_passphrase)
             xbridge_logger.logger.info('random_int: %s' % str(random_int))
             xbridge_logger.logger.info('random_bool: %s' % random_bool)
