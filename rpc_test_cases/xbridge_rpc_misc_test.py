@@ -97,6 +97,8 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_autocombinerewards_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_autocombinerewards_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('true_false: %s' % true_false)
+                    xbridge_logger.logger.info('threshold: %s' % threshold)
 
     # move "fromaccount" "toaccount" amount ( minconf "comment" )
     def test_move_invalid(self):
@@ -123,7 +125,11 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_move_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_move_invalid FAILED: %s' % ass_err)
-                    
+                    xbridge_logger.logger.info('fromAccount: %s' % fromAccount)
+                    xbridge_logger.logger.info('toaccount: %s' % toaccount)
+                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
+                    xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment))
+
     # lockunspent unlock [{"txid":"txid","vout":n},...]
     def test_lockunspent_invalid(self):
         log_json = ""
@@ -140,6 +146,8 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_lockunspent_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_lockunspent_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('unlock_param: %s' % unlock_param)
+                    xbridge_logger.logger.info('transactions: %s' % transactions)
 
 # unittest.main()
 
