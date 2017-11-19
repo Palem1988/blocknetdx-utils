@@ -44,6 +44,14 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+def walletpassphrasechange(old=None, new=None):
+    try:
+        return rpc_connection.walletpassphrasechange(old, new)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Error: The wallet passphrase entered was incorrect" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def walletpassphrase(passphrase=None, timeout=0, anonymizeonly=False):
     try:
@@ -490,3 +498,6 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(rpc_connection.encryptwallet("mypwd"))
 # print(rpc_connection.walletpassphrase("mypwd", 60, False))
 # print(rpc_connection.dumpwallet("C:\\Users\\kbentahmed\\Desktop\\BlockNetDX\\test_wallet_dump5.dat"))
+
+# None if successful
+print(rpc_connection.walletpassphrasechange("mypwd2", "mypwd"))
