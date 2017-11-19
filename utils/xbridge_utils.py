@@ -234,6 +234,10 @@ def generate_valid_blocknet_address():
     xbridge_rpc.rpc_connection.keypoolrefill(1000)
     return xbridge_rpc.rpc_connection.getnewaddress()
 
+def generate_random_valid_passphrase():
+    template_str = '[a-zA-Z0-9]{1:7000}'
+    return StringGenerator(template_str).render()
+
 def generate_random_valid_address():
     template_str = '[\h]{30:70}'
     return StringGenerator(template_str).render()
