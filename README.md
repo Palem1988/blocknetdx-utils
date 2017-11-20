@@ -51,7 +51,7 @@ python build_time_tests.py --unittest=10 --sequence=200
 ```
 
 3. Check the logs (log and Excel files) to analyze results.
-Do not rely on your console for that. The console will only display what the program is currently doing, not the results.
+The console will wrongly show assertions errors. These can be safely ignored.
 
 
 ## Remarks !
