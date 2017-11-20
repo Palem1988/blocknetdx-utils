@@ -500,4 +500,5 @@ Requires wallet passphrase to be set with walletpassphrase call.
 # print(rpc_connection.dumpwallet("C:\\Users\\kbentahmed\\Desktop\\BlockNetDX\\test_wallet_dump5.dat"))
 
 # None if successful
-print(rpc_connection.walletpassphrasechange("mypwd2", "mypwd"))
+# print(rpc_connection.walletpassphrasechange("mypwd2", "mypwd"))
+# print(rpc_connection.walletlock(""))
