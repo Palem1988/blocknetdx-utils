@@ -4,7 +4,7 @@
 - **[Upcoming]** Various improvements to existing test groups.
 - **[Upcoming]** Additions to sequence tests.
 - **[Upcoming]** New feature.
-- **[Upcoming]** Various code improvements.
+- **[Upcoming]** Various code improvements and cleanings.
 
 -	Expanded coverage and improved existing test groups.
 -	Improved logging: a) increased verbosity.  b) summary, when applicable, of failure and error counts (at the end of log file).
