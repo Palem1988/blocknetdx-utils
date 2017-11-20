@@ -12,9 +12,8 @@
 Note ! Many unit tests now each generate a lot of subtests to shuffle out-of-bounds or garbage around the parameters ; therefore, the number of
 atomic tests will increase exponentially as you increase the number of unit tests you will run.
 - Revamped sequenced tests: better scaling by now leveraging directly the unit tests.
-- Code cleanings.
 
-- Important Note ! The console will **wrongly** report assertion failures. You can safely ignore these. Only the log file will report the real assertions failures. This is due to exception chaining.
+- **Important !** The console will **wrongly** report assertion failures. You can safely ignore these. Only the log file will report the real assertions failures. This is due to exception chaining.
 
 
 # Current known issues
