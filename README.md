@@ -56,7 +56,7 @@ Do not rely on your console for that. The console will only display what the pro
 
 - If you want for example run only unittests, just put **--unittest=10 --sequence=0**.
 or set them accordingly in the **tests.conf** file.
-
+- Do not set the unittest parameter too high, because subtests are automatically generated from some unit test groups ; the number of subtests will therefore increase exponentially as the parameter is increased.
 
 # Tests.conf file
 
