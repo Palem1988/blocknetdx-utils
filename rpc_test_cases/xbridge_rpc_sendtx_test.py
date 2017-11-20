@@ -23,14 +23,15 @@ class sendUnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_send_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    xbridge_logger.logger.info('test_invalid_send_1 unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('test_invalid_send_1 FAILED: %s' % ass_err)
                     log_json = {"group": "test_invalid_send_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_send_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_send_1 unit test ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('test_invalid_send_1 ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     """
           - We test various random inputs from individual character classes.
@@ -51,12 +52,13 @@ class sendUnitTest(unittest.TestCase):
                     except AssertionError as ass_err:
                         log_json = {"group": "test_invalid_send_2", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_send_2 FAILED on parameter: %s', ass_err)
+                        xbridge_logger.logger.info('test_invalid_send_2 FAILED: %s', ass_err)
                         xbridge_logger.logger.info('param: %s', generated_str)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_send_2", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_send_2 unit test ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('test_invalid_send_2 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s', generated_str)
 
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
@@ -74,14 +76,15 @@ class sendUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_send_3", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        xbridge_logger.logger.info('test_invalid_send_3 FAILED on parameter: %s', ass_err)
+                        xbridge_logger.logger.info('test_invalid_send_3 FAILED: %s', ass_err)
                         xbridge_logger.logger.info('param: %s', generated_str)
                         log_json = {"group": "test_invalid_send_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_send_3", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_send_1 unit test ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('test_invalid_send_3 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s', generated_str)
 
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
@@ -99,14 +102,15 @@ class sendUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_send_4", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        xbridge_logger.logger.info('test_invalid_send_4 FAILED on parameter: %s', ass_err)
+                        xbridge_logger.logger.info('test_invalid_send_4 FAILED: %s', ass_err)
                         xbridge_logger.logger.info('param: %s', generated_str)
                         log_json = {"group": "test_invalid_send_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_send_4", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_send_1 unit test ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('test_invalid_send_4 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s', generated_str)
 
 
 """
