@@ -45,7 +45,7 @@ behaviors of the program.
 
 ```
 python build_time_tests.py
-python build_time_tests.py --unittest=100 --sequence=200
+python build_time_tests.py --unittest=10 --sequence=200
 ```
 
 3. Check the logs (log and Excel files) to analyze results.
@@ -54,11 +54,13 @@ Do not rely on your console for that. The console will only display what the pro
 
 ## Remarks !
 
-- If you want for example run only unittests, just put **--unittest=100 --sequence=0**.
+- If you want for example run only unittests, just put **--unittest=10 --sequence=0**.
 or set them accordingly in the **tests.conf** file.
 
 
 # Tests.conf file
+
+- Remark ! Do not put quotes when you input the parameters.
 
 ```
 [CONNECTION]
@@ -100,14 +102,12 @@ So the longer the tests are run, the better.
 # Testing groups
 
 - Unit tests for each API.
-- Single API sequences.
-- Random multi API sequences.
-- Ordered multi API sequences.
+- Various random multi API sequences.
 
 # Program outputs
 
-- Unit tests will log data and tell if each test was successful (and the number of runs) and an assertion error was thrown (with the input parameter that was used to make the call).
+- A log file will be generated reporting all errors. It will also tell you the number of tests run, and the number of assertions errors.
 - Sequence tests generate an Excel file with the timing distribution.
-
+- If the walletpassphrase unit tests run, you will also see some dumped wallet.dat files.
 
 
