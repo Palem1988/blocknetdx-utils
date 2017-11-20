@@ -64,33 +64,6 @@ class create_Tx_Test(unittest.TestCase):
                     xbridge_logger.logger.info('fromAmount: %s', fromAmount)
                     xbridge_logger.logger.info('toAmount: %s', toAmount)
 
-    @unittest.skip("IN TESTING")
-    def test_invalid_create_tx_v0b(self):
-        permutation_list = list(itertools.permutations(xbridge_utils.set_of_invalid_parameters, 6))
-        for permutation in permutation_list:
-            log_json = ""
-            with self.subTest("random garbage"):
-                try:
-                    src_Address = permutation[0]
-                    dest_Address = permutation[1]
-                    src_Token = permutation[2]
-                    dest_Token = permutation[3]
-                    fromAmount = permutation[4]
-                    toAmount = permutation[5]
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.create_tx, src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount)
-                    log_json = {"group": "test_invalid_create_tx_v0", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                except AssertionError as ass_err:
-                    log_json = {"group": "test_invalid_create_tx_v0", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_create_tx_v0 unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('src_Address: %s', src_Address)
-                    xbridge_logger.logger.info('dest_Address: %s', dest_Address)
-                    xbridge_logger.logger.info('src_Token: %s', src_Token)
-                    xbridge_logger.logger.info('dest_Token: %s', dest_Token)
-                    xbridge_logger.logger.info('fromAmount: %s', fromAmount)
-                    xbridge_logger.logger.info('toAmount: %s', toAmount)
-
     # Various numerical parameter combinations
     def test_invalid_create_tx_v1(self):
         try:

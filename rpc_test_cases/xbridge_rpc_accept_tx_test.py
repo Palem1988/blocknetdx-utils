@@ -61,40 +61,6 @@ class accept_Tx_Test(unittest.TestCase):
                     xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
                     xbridge_utils.ERROR_LOG.append(log_json)
 
-    # This test will generate 5!/3! = 20 subtests based on all possible ordered permutations from the set.
-    # CAUTION ! DO NOT INCREASE THE SIZE OF THE SET, OR THE NUMBER OF GENERATED SUBTESTS WILL EXPLODE.
-    # @unittest.skip("IN TESTING - PERMUTATION BASED UNIT TESTS")
-    def test_invalid_accept_tx_0b_noseq(self):
-        random_float = xbridge_utils.generate_random_number(-999999999999, 999999999999)
-        random_str = xbridge_utils.generate_input_from_random_classes_combinations(1, 12000)
-        current_bool = random.choice([True, False])
-        custom_set = [current_bool, random_str, None, random_float]
-        permutation_list = list(itertools.permutations(custom_set, 3))
-        for permutation in permutation_list:
-            log_json = ""
-            with self.subTest(permutation=permutation):
-                try:
-                    txid = permutation[0]
-                    src_Address = permutation[1]
-                    dest_Address = permutation[2]
-                    self.assertRaises(JSONRPCException, xbridge_rpc.accept_tx, txid, src_Address, dest_Address)
-                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                except AssertionError as ass_err:
-                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_accept_tx_0b FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('txid: %s' % txid)
-                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
-                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
-                except JSONRPCException as json_excpt:
-                    log_json = {"group": "test_invalid_accept_tx_0b", "success": 0, "failure": 0, "error": 1}
-                    xbridge_logger.logger.info('test_invalid_accept_tx_0b ERROR: %s' % ass_err)
-                    xbridge_logger.logger.info('txid: %s' % txid)
-                    xbridge_logger.logger.info('src_Address: %s' % src_Address)
-                    xbridge_logger.logger.info('dest_Address: %s' % dest_Address)
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    
     # Combinations of valid and invalid parameters
     def test_invalid_accept_tx_1(self):
         try:
