@@ -18,6 +18,7 @@ atomic tests will increase exponentially as you increase the number of unit test
 # Current known issues
 
 - Popups will appear when using the client.
+- Some APIs require the returned values to be reviewed, so that the assertion tests are tightened.
 
 # TODO
 
@@ -37,6 +38,7 @@ behaviors of the program.
     - If some required parameters are not filled, the program will stop.
     - Also set the number of runs you want launch by default, when command line parameters are not provided.
     - Make sure the **tests.conf** file is in the same directory as the main program.
+    - If some parameter are not filled, so unit tests may be voluntarily skipped by the test suite.
 
 2. Run the python with or without the optional parameters.
 
