@@ -3,6 +3,8 @@
 - **[Upcoming]** New test groups.
 - **[Upcoming]** Various improvements to existing test groups.
 - **[Upcoming]** Additions to sequence tests.
+- **[Upcoming]** New feature.
+- **[Upcoming]** Various code improvements.
 
 -	Expanded coverage and improved existing test groups.
 -	Improved logging: a) increased verbosity.  b) summary, when applicable, of failure and error counts (at the end of log file).
@@ -12,7 +14,7 @@ atomic tests will increase exponentially as you increase the number of unit test
 - Revamped sequenced tests: better scaling by now leveraging directly the unit tests.
 - Code cleanings.
 
-- Important Note ! The console will wrongly report assertion failures. You can safely ignore these. Only the log file will report the real assertions failures. This is due to exception chaining.
+- Important Note ! The console will **wrongly** report assertion failures. You can safely ignore these. Only the log file will report the real assertions failures. This is due to exception chaining.
 
 
 # Current known issues
