@@ -1,5 +1,4 @@
 import unittest
-import time, random
 import xbridge_logger
 
 from interface import xbridge_rpc
