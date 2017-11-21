@@ -45,6 +45,22 @@ def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
+def sendtoaddressix(blocknetdxaddress=None, amount=None, comment=None, commentto=None):
+    try:
+        return rpc_connection.sendtoaddressix(blocknetdxaddress, amount, comment, commentto)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid BlocknetDX address" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Please enter the wallet passphrase with walletpassphrase first" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Insufficient funds" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid amount" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
 def sendtoaddress(blocknetdxaddress=None, amount=None, comment=None, commentto=None):
     try:
         return rpc_connection.sendtoaddress(blocknetdxaddress, amount, comment, commentto)
