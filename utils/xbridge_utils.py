@@ -209,16 +209,9 @@ def prepare_results_Summary():
     if len(ERROR_LOG) == 0:
         return ""
     filtered_list = [itm for itm in ERROR_LOG if str(itm["group"])[0:1] != "<"]
-    # for itm in ERROR_LOG:
-        # print(itm["group"])
-        #if str(itm["group"])[0:1] == "<":
-        #    print("filter: " + str(itm["group"]))
-    # x = re.findall(r'<bitcoinrpc.authproxy.AuthServiceProxy object(.*?)>',strr)
     my_df = pd.DataFrame(filtered_list)
     # reorder the columns
     my_df = my_df[["group", "success", "failure", "error"]]
-    # print(my_df)
-    # aggregation
     aggregated_df = my_df.groupby(by=['group'])["success", "failure", "error"].sum()
     return aggregated_df
                
