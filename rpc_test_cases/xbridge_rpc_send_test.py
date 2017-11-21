@@ -5,8 +5,7 @@ import random
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
-
-from strgen import StringGenerator
+from utils import xbridge_custom_exceptions
 
 import sys
 sys.path.insert(0,'..')
@@ -22,10 +21,18 @@ class send_UnitTest(unittest.TestCase):
     # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
     def test_multisend_valid(self):
         log_json = ""
+        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         with self.subTest("valid multisends commands"):
             try:
                 self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("print"), list)
-                log_json = {"group": "test_multisend", "success": 1, "failure": 0, "error": 0}
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("enableall"), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable"), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate"), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("clear"), dict)
+                log_json = {"group": "test_multisend_valid", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
                 log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
@@ -78,11 +85,16 @@ class send_UnitTest(unittest.TestCase):
 
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     def test_senttoaddress_invalid_fixed(self):
-        send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
+        send_address_list = [xbridge_rpc.sendtoaddress, xbridge_rpc.sendtoaddressix]
+        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         for send_address_func in send_address_list:
             with self.subTest("test_senttoaddress_invalid_fixed"):
                 try:
                     log_json = ""
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException,
+                        send_address_func, valid_blocknet_address, -xbridge_utils.valid_random_positive_float)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException,
+                                      send_address_func, valid_blocknet_address, 0)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, "", "")
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, False, -9999999999999999999999999999999999999)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.send_address_func, True, -9999999999999999999999999999999999999)
@@ -106,40 +118,6 @@ class send_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
                     xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
 
-    # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
-    # JSONRPCException: -5: Invalid BlocknetDX address
-    # bitcoinrpc.authproxy.JSONRPCException: -13: Error: Please enter the wallet passphrase with walletpassphrase first.
-    # bitcoinrpc.authproxy.JSONRPCException: -6: Insufficient funds
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
-    def test_senttoaddress_valid(self):
-        send_address_list = [xbridge_rpc.rpc_connection.sendtoaddress, xbridge_rpc.rpc_connection.sendtoaddressix]
-        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
-        for send_address_func in send_address_list:
-            log_json = ""
-            with self.subTest("valid sendtoaddress"):
-                try:        
-                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.valid_random_positive_int), dict)
-                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.valid_random_positive_float), dict)
-                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.fixed_positive_int), dict)
-                    self.assertIsInstance(send_address_func(valid_blocknet_address, xbridge_utils.fixed_positive_float), dict)
-                    # TODO
-                    # NEGATIVE NUMBERS
-                    # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, -xbridge_utils.xbridge_utils.valid_random_positive_float), dict)
-                    # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, -xbridge_utils.xbridge_utils.fixed_positive_int), dict)
-                    # 0 SEND
-                    # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, 0), dict)
-                    # self.assertIsInstance(xbridge_rpc.rpc_connection.send_address_func(valid_blocknet_address, 0), dict)
-                    log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                except AssertionError as ass_err:
-                    log_json = {"group": send_address_func, "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('%s invalid unit test FAILED' % send_address_func)
-                    xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
-                    xbridge_logger.logger.info('valid_random_positive_float: %s \n' % xbridge_utils.valid_random_positive_float)
-                    xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
-                    xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
-            
     # sendfrom "fromaccount" "toblocknetdxaddress" amount ( minconf "comment" "comment-to" )
     def test_sendfrom_invalid(self):
         log_json = ""
@@ -176,3 +154,15 @@ class send_UnitTest(unittest.TestCase):
 
 
 # unittest.main()
+
+"""
+print(xbridge_rpc.rpc_connection.walletpassphrase("mypwd", 60, False))
+
+suite = unittest.TestSuite()
+for i in range(1):
+    suite.addTest(send_UnitTest("test_senttoaddress_valid"))
+    # suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""
+
