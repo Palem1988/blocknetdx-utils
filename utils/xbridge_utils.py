@@ -66,7 +66,11 @@ invalid_str_from_random_classes_4 = ""
 
 # CAUTION ! Be careful when changing this set, otherwise you may decrease entropy
 # CAUTION ! Some items appear multiple times voluntarily: we want to increase their chances of being drawn during the random process
-set_of_invalid_parameters = ["", 0,
+set_of_invalid_parameters = []
+
+def update_set_of_invalid_parameters():
+    global set_of_invalid_parameters
+    set_of_invalid_parameters = ["", 0,
                     True, False,
                     invalid_str_from_random_classes_1,
                     invalid_str_from_random_classes_1,
@@ -161,6 +165,7 @@ def generate_new_set_of_data(data_nature=RANDOM_VALID_INVALID, char_min_size=1, 
         # set for any function that takes a txid as parameter
         ca_random_tx_id = generate_random_valid_txid()
         valid_account_str = generate_random_valid_account_str()
+    update_set_of_invalid_parameters()
 
 
 def export_Full_Excel_Log():
