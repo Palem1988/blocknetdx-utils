@@ -8,6 +8,12 @@ from strgen import StringGenerator
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 from utils import xbridge_custom_exceptions
 
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+subTest_count = xbridge_config.get_conf_subtests_run_number()
+
 class sendUnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
@@ -119,4 +125,5 @@ if __name__ == '__main__':
 
 unittest.main()
 """
+
 
