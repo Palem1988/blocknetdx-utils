@@ -47,11 +47,12 @@ class signUnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_sign_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_sign_1 FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_sign_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_sign_1 ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     """
           - We test various random inputs from individual character classes.
@@ -73,11 +74,11 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_2", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_2 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_2", "success": 0, "failure": 0, "error": 1}
-                        xbridge_logger.logger.info('test_invalid_sign_2 ERROR: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('test_invalid_sign_2 ERROR: %s' % json_excpt)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
                     
@@ -100,11 +101,11 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_3 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_3", "success": 0, "failure": 0, "error": 1}
-                        xbridge_logger.logger.info('test_invalid_sign_3 ERROR: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('test_invalid_sign_3 ERROR: %s' % json_excpt)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
                             
@@ -127,11 +128,11 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_4 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_4", "success": 0, "failure": 0, "error": 1}
-                        xbridge_logger.logger.info('test_invalid_sign_4 ERROR: %s' % ass_err)
-                        xbridge_logger.logger.info('generated_str: %s' % generated_str)
+                        xbridge_logger.logger.info('test_invalid_sign_4 ERROR: %s' % json_excpt)
+                        xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
 
