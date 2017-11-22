@@ -8,7 +8,7 @@ conf_file_path = os.path.join(__location__, 'tests.conf')
 
 config.read(conf_file_path)
 
-test_value = 10
+MAX_CHAR_LENGTH_TO_DISPLAY = 20000
 
 def conf_exists():
     if not os.path.exists(conf_file_path):
@@ -129,17 +129,6 @@ def should_run_extended_tests():
     except configparser.NoOptionError:
         return False
 
-def get_wallet_encryption_passphrase():
-    try:
-        if not conf_exists():
-            return "mypwd"
-        if "WALLET" in config.sections():
-            return config['WALLET']['wallet_encryption_passphrase']
-        else:
-            return "mypwd"
-    except KeyError:
-            return "mypwd"
-
 def get_wallet_decryption_passphrase():
     try:
         if not conf_exists():
@@ -150,3 +139,16 @@ def get_wallet_decryption_passphrase():
             return "mypwd"
     except KeyError:
             return "mypwd"
+
+def get_param_max_char_length_to_display():
+    if not conf_exists():
+        return 20000
+    if "OUTPUT" in config.sections():
+        try:
+            return config.getint('OUTPUT', 'MAX_CHAR_LENGTH_TO_DISPLAY')
+        except configparser.NoOptionError:
+            return 20000
+        except KeyError:
+            return 20000
+    else:
+        return 20000
