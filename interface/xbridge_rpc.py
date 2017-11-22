@@ -44,6 +44,15 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+def settxfee(amount=None):
+    try:
+        return rpc_connection.settxfee(amount)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid amount" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
 def sendtoaddressix(blocknetdxaddress=None, amount=None, comment=None, commentto=None):
     try:
@@ -292,9 +301,21 @@ def sign_message(address=None, msg=None):
         if "-1: get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def sign_tx(txid=None):
-    return rpc_connection.signrawtransaction(txid)
-    
+# signrawtransaction "hexstring" ( [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...] ["privatekey1",...] sighashtype )
+def signrawtransaction(hexstring=None, optional_param=None):
+    try:
+        return rpc_connection.signrawtransaction(hexstring, optional_param)
+    except JSONRPCException as json_excpt:
+        if "must be hexadecimal string" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "TX decode failed" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "-32700: Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "-3: Expected type" in str(json_excpt) and "got" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+
 def cancel_tx(txid=None):
     return rpc_connection.dxCancelTransaction(txid)
     
