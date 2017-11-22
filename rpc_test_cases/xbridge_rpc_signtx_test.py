@@ -17,8 +17,8 @@ subTest_count = xbridge_config.get_conf_subtests_run_number()
 class signUnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
-    
-    @unittest.skip("Disabled -> fails")
+
+    @unittest.skip("Disabled")
     def test_valid_tx_id_1(self):
         try:
             """
@@ -32,15 +32,12 @@ class signUnitTest(unittest.TestCase):
         except AssertionError as e:
             xbridge_logger.logger.info('dxSign valid unit test group 1 FAILED')
     
-    @unittest.skip("IN TESTING")
     def test_invalid_sign_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
-                    if isinstance(basic_garbage_str, str):
-                        self.assertIsNone(xbridge_rpc.signrawtransaction(basic_garbage_str))
-                    else:
-                        self.assertRaises(JSONRPCException, xbridge_rpc.cancel_tx, basic_garbage_str)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.signrawtransaction,
+                                      basic_garbage_str)
                     log_json = {"group": "test_invalid_sign_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -59,7 +56,6 @@ class signUnitTest(unittest.TestCase):
           - We then combine those character classes.
           - Size of the input parameter is fixed.
     """
-    @unittest.skip("IN TESTING")
     def test_invalid_sign_2(self):
         string_length=64
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -68,9 +64,7 @@ class signUnitTest(unittest.TestCase):
                     clss_str = sub_item + "{" + str(string_length) + "}"
                     try:
                         generated_str = StringGenerator(clss_str).render()
-                        # self.assertIsNone(xbridge_rpc.signrawtransaction(generated_str))
-                        self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.signrawtransaction,
-                                          generated_str)
+                        self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.signrawtransaction, generated_str)
                         log_json = {"group": "test_invalid_sign_2", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
@@ -84,11 +78,9 @@ class signUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
-                    
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
-    @unittest.skip("IN TESTING")
     def test_invalid_sign_3(self):
         string_lower_bound=9000
         string_upper_bound=11000
@@ -114,11 +106,10 @@ class signUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
-                            
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
-    @unittest.skip("IN TESTING")
+    # @unittest.skip("IN TESTING")
     def test_invalid_sign_4(self):
         string_lower_bound=1
         string_upper_bound=4000
@@ -144,10 +135,21 @@ class signUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
 
-
 """
 if __name__ == '__main__':
     unittest.main()
+unittest.main()
+"""
+"""
+suite = unittest.TestSuite()
+for i in range(50):
+    suite.addTest(signUnitTest("test_invalid_sign_4"))
+    # suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
 """
 
+"""
 unittest.main()
+"""
+

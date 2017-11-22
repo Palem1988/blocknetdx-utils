@@ -36,7 +36,7 @@ class wallet_get_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": str(func_name), "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('%s unit test FAILED: %s' % (str(func_name), str(func_name)))
+                    xbridge_logger.logger.info('%s FAILED' % (str(func_name)))
 
     def test_getunconfirmedbalance(self):
         try:
@@ -137,7 +137,7 @@ class wallet_get_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_getreceivedbyaddress", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getreceivedbyaddress unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     def test_getaccount(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -150,7 +150,7 @@ class wallet_get_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_getaccount", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getaccount unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     def test_getaccountaddress(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -209,8 +209,8 @@ class wallet_get_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_gettransaction", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_gettransaction unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('test_gettransaction FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     # getbalance ( "account" minconf includeWatchonly )
     # TODO : review
@@ -242,15 +242,15 @@ class wallet_get_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_getbalance", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getbalance FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_account: %s' % optional_account)
-                    xbridge_logger.logger.info('optional_minconf: %s' % optional_minconf)
+                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account))
+                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
                     xbridge_logger.logger.info('optional_includeWatchonly: %s' % optional_includeWatchonly)
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_getbalance ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_getbalance", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('optional_account: %s' % optional_account)
-                    xbridge_logger.logger.info('optional_minconf: %s' % optional_minconf)
+                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account))
+                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
                     xbridge_logger.logger.info('optional_includeWatchonly: %s' % optional_includeWatchonly)
         
 # unittest.main()
