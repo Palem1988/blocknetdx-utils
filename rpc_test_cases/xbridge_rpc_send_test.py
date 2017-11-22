@@ -22,23 +22,22 @@ class send_UnitTest(unittest.TestCase):
     def test_multisend_valid(self):
         log_json = ""
         valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
-        with self.subTest("valid multisends commands"):
-            try:
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("print"), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("enableall"), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable"), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate"), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("clear"), dict)
-                log_json = {"group": "test_multisend_valid", "success": 1, "failure": 0, "error": 0}
-                xbridge_utils.ERROR_LOG.append(log_json)
-            except AssertionError as ass_err:
-                log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
-                xbridge_utils.ERROR_LOG.append(log_json)
-                xbridge_logger.logger.info('test_multisend unit test FAILED: %s' % ass_err)
-                xbridge_logger.logger.info('multisend("print") FAILED \n')
+        try:
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("print"), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("enableall"), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable"), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate"), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("clear"), dict)
+            log_json = {"group": "test_multisend_valid", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_multisend unit test FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('multisend("print") FAILED \n')
 
     # multisend <command>
     def test_multisend_invalid(self):
