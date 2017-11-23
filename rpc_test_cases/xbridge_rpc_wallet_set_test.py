@@ -22,8 +22,6 @@ class wallet_Set_UnitTest(unittest.TestCase):
                                                                  99999999999999999999999999999999999999999999999999999999999999999999999999)
         self.random_large_positive_int = xbridge_utils.generate_random_number(999999999999999999999999,
                                                                              99999999999999999999999999999999999999999999999999999999999999999999999999)
-        self.fixed_negative_number = -10
-        self.fixed_positive_number = 10
         self.positive_float = 10.2
         self.fixed_small_positive_number = 0.00000000000000000000000000000000000000000000000000000001
         self.valid_random_positive_number = xbridge_utils.generate_random_number(0, 1000)
@@ -82,7 +80,8 @@ class wallet_Set_UnitTest(unittest.TestCase):
                 try:
                     custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, int) and not isinstance(x, float)]
                     amount = random.choice(custom_set)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.settxfee, amount)
+                    # self.assertRaises(JSONRPCException, xbridge_rpc.settxfee, amount)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.settxfee, amount)
                     log_json = {"group": "test_settxfee_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -98,42 +97,50 @@ class wallet_Set_UnitTest(unittest.TestCase):
 
     # Only int are accepted
     # Error: Unlock wallet to use this feature
-    def test_set_stake_split_threshold(self):
+    def test_setstakesplitthreshold_valid(self):
         try:
             self.assertIsInstance(xbridge_rpc.rpc_connection.setstakesplitthreshold(0), dict)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.setstakesplitthreshold(self.fixed_positive_number), dict)
             self.assertIsInstance(xbridge_rpc.rpc_connection.setstakesplitthreshold(self.valid_random_positive_int), dict)
-            # Errors
-            self.assertIsInstance(xbridge_rpc.rpc_connection.setstakesplitthreshold(self.fixed_negative_number), str)
+            log_json = {"group": "test_setstakesplitthreshold_valid", "success": 1, "failure": 0, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+        except AssertionError as ass_err:
+            log_json = {"group": "test_setstakesplitthreshold_valid", "success": 0, "failure": 1, "error": 0}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_setstakesplitthreshold_valid FAILED: %s \n' % ass_err)
+            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % self.valid_random_positive_int)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.logger.info('test_setstakesplitthreshold_valid ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_setstakesplitthreshold_valid", "success": 0,  "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % self.valid_random_positive_int)
+            
+    def test_setstakesplitthreshold_invalid(self):
+        try:
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.random_large_positive_int)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.random_neg_number)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.fixed_small_positive_number)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, self.positive_float)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setstakesplitthreshold, xbridge_utils.ca_random_tx_id)
-            log_json = {"group": "test_set_stake_split_threshold", "success": 1, "failure": 0, "error": 0}
+            log_json = {"group": "test_setstakesplitthreshold_invalid", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            log_json = {"group": "test_set_stake_split_threshold", "success": 0, "failure": 1, "error": 0}
+            log_json = {"group": "test_setstakesplitthreshold_invalid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('set_stake_split_threshold unit test FAILED: %s \n' % ass_err)
+            xbridge_logger.logger.info('test_setstakesplitthreshold_invalid FAILED: %s \n' % ass_err)
             xbridge_logger.logger.info('random_tx_id: \n %s \n' % xbridge_utils.ca_random_tx_id)
-        except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_set_stake_split_threshold invalid unit test ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_set_stake_split_threshold", "success": 0,  "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
 
-    def test_set_account(self):
+    def test_setaccount(self):
         try:
             self.assertIsNone(xbridge_rpc.rpc_connection.setaccount(self.valid_blocknet_address, self.invalid_account_str))
             self.assertIsNone(xbridge_rpc.rpc_connection.setaccount(self.valid_blocknet_address, self.valid_account_str))
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setaccount, self.invalid_blocknet_address, self.invalid_account_str)
             self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.setaccount, self.invalid_blocknet_address, self.valid_account_str)
-            log_json = {"group": "test_set_account", "success": 1, "failure": 0, "error": 0}
+            log_json = {"group": "test_setaccount", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            log_json = {"group": "test_set_account", "success": 0, "failure": 1, "error": 0}
+            log_json = {"group": "test_setaccount", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('setaccount unit test FAILED: %s \n' % ass_err)
+            xbridge_logger.logger.info('test_setaccount FAILED: %s \n' % ass_err)
             xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % self.invalid_blocknet_address)
             xbridge_logger.logger.info('valid_blocknet_address: %s \n' % self.valid_blocknet_address)
             xbridge_logger.logger.info('invalid_account_str: %s \n' % self.invalid_account_str)
