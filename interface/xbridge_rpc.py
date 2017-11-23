@@ -160,6 +160,14 @@ def setgenerate(generate, genproclimit=None):
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
+# listaccounts (minconf includeWatchonly)
+def listaccounts(minconf=None, includeWatchonly=None):
+    try:
+        return rpc_connection.listaccounts(minconf, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 # listtransactions ( "account" count from includeWatchonly)
 def listtransactions(account=None, count=None, from_param=None, includeWatchonly=None):
     try:
