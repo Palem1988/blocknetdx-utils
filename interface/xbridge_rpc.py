@@ -44,6 +44,29 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+
+# listreceivedbyaccount (minconf includeempty includeWatchonly)
+def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None):
+    try:
+        return rpc_connection.listreceivedbyaddress(minconf, includeempty, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse errror" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+
+# listreceivedbyaccount (minconf includeempty includeWatchonly)
+def listreceivedbyaccount(minconf=None, includeempty=None, includeWatchonly=None):
+    try:
+        return rpc_connection.listreceivedbyaccount(minconf, includeempty, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse errror" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+
 def settxfee(amount=None):
     try:
         return rpc_connection.settxfee(amount)
@@ -51,6 +74,8 @@ def settxfee(amount=None):
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Invalid amount" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
