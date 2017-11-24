@@ -89,8 +89,9 @@ class wallet_List_UnitTest(unittest.TestCase):
                     optional_includeWatchonly = random.choice(custom_set)
                     if isinstance(optional_minconf, int) and isinstance(optional_includeempty, bool) and isinstance(optional_includeWatchonly, bool):
                         continue
-                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listreceivedbyaccount, optional_minconf, optional_includeempty, optional_includeWatchonly)
-                    self.assertIsNone(xbridge_rpc.listreceivedbyaccount(optional_minconf, optional_includeempty, optional_includeWatchonly))
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listreceivedbyaccount, optional_minconf, optional_includeempty, optional_includeWatchonly)
+                    # print("param assertIsNone: %s - %s - %s" % (optional_minconf, optional_includeempty, optional_includeWatchonly))
+                    # self.assertIsNone(xbridge_rpc.listreceivedbyaccount(optional_minconf, optional_includeempty, optional_includeWatchonly))
                     log_json = {"group": "test_listreceivedbyaccount_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -135,8 +136,8 @@ class wallet_List_UnitTest(unittest.TestCase):
                     optional_includeWatchonly = random.choice(custom_set)
                     if isinstance(optional_minconf, int) and isinstance(optional_includeempty, bool) and isinstance(optional_includeWatchonly, bool):
                         continue
-                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listreceivedbyaddress, optional_minconf, optional_includeempty, optional_includeWatchonly)
-                    self.assertIsNone(xbridge_rpc.listreceivedbyaddress(optional_minconf, optional_includeempty, optional_includeWatchonly))
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listreceivedbyaddress, optional_minconf, optional_includeempty, optional_includeWatchonly)
+                    # self.assertIsNone(xbridge_rpc.listreceivedbyaddress(optional_minconf, optional_includeempty, optional_includeWatchonly))
                     log_json = {"group": "test_listreceivedbyaddress_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -208,7 +209,7 @@ class wallet_List_UnitTest(unittest.TestCase):
                     optional_blockhash = random.choice(custom_set)
                     optional_target_confirmations = random.choice(custom_set)
                     optional_includeWatchonly = random.choice(custom_set)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.listsinceblock, optional_blockhash, optional_target_confirmations, optional_includeWatchonly)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listsinceblock, optional_blockhash, optional_target_confirmations, optional_includeWatchonly)
                     log_json = {"group": "test_listsinceblock", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -255,7 +256,6 @@ class wallet_List_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly))
     
     # listaccounts (minconf includeWatchonly)
-    # returns None instead of Exception ==> Trello
     def test_listaccounts_invalid(self):
         custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if x is not None]
         for i in range(subTest_count):
@@ -266,14 +266,13 @@ class wallet_List_UnitTest(unittest.TestCase):
                     optional_includeWatchonly = random.choice(custom_set)
                     if isinstance(optional_minconf, int) and isinstance(optional_includeWatchonly, bool):
                         continue
-                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listaccounts, optional_minconf, optional_includeWatchonly)
-                    self.assertIsNone(xbridge_rpc.listaccounts(optional_minconf, optional_includeWatchonly))
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listaccounts, optional_minconf, optional_includeWatchonly)
                     log_json = {"group": "test_listaccounts_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_listaccounts_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_listaccounts_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('\ntest_listaccounts_invalid FAILED: %s' % ass_err)
                     xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
                     xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly))
       
@@ -281,10 +280,9 @@ class wallet_List_UnitTest(unittest.TestCase):
 
 """
 suite = unittest.TestSuite()
-# suite.addTest(wallet_List_UnitTest("test_autocombinerewards_valid"))
-for i in range(150):
-    suite.addTest(wallet_List_UnitTest("test_listtransactions_invalid"))
+# suite.addTest(wallet_List_UnitTest("test_listreceivedbyaccount_invalid"))
+for i in range(40):
+    suite.addTest(wallet_List_UnitTest("test_listsinceblock_invalid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
-
