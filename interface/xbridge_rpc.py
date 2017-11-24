@@ -44,6 +44,18 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+# listsinceblock ("blockhash" target-confirmations includeWatchonly)
+def listsinceblock(blockhash=None, target_confirmations=None, includeWatchonly=None):
+    try:
+        return rpc_connection.listsinceblock(blockhash, target_confirmations, includeWatchonly)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 # getblockhash index
 def getblockhash(index=None):
     try:
@@ -52,6 +64,8 @@ def getblockhash(index=None):
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getrawmempool ( verbose )
@@ -63,6 +77,8 @@ def getrawmempool(verbose=None):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # verifychain ( checklevel numblocks )
 def verifychain(checklevel=None, numblocks=None):
@@ -73,8 +89,10 @@ def verifychain(checklevel=None, numblocks=None):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-# listreceivedbyaccount (minconf includeempty includeWatchonly)
+# listreceivedbyaddress (minconf includeempty includeWatchonly)
 def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None):
     try:
         return rpc_connection.listreceivedbyaddress(minconf, includeempty, includeWatchonly)
@@ -83,7 +101,8 @@ def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listreceivedbyaccount (minconf includeempty includeWatchonly)
 def listreceivedbyaccount(minconf=None, includeempty=None, includeWatchonly=None):
@@ -94,7 +113,8 @@ def listreceivedbyaccount(minconf=None, includeempty=None, includeWatchonly=None
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def settxfee(amount=None):
     try:
@@ -105,6 +125,8 @@ def settxfee(amount=None):
         if "Invalid amount" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
@@ -121,6 +143,8 @@ def sendtoaddressix(blocknetdxaddress=None, amount=None, comment=None, commentto
         if "Insufficient funds" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         if "Invalid amount" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
@@ -196,6 +220,8 @@ def listaccounts(minconf=None, includeWatchonly=None):
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listtransactions ( "account" count from includeWatchonly)
 def listtransactions(account=None, count=None, from_param=None, includeWatchonly=None):
@@ -203,6 +229,8 @@ def listtransactions(account=None, count=None, from_param=None, includeWatchonly
         return rpc_connection.listtransactions(account, count, from_param, includeWatchonly)
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # reservebalance [<reserve> [amount]]
@@ -212,6 +240,8 @@ def reservebalance(reserve, amount):
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # addnode "node" "add|remove|onetry"
 def addnode(node_str, cmd):
@@ -219,6 +249,8 @@ def addnode(node_str, cmd):
         return rpc_connection.addnode(node_str, cmd)
     except JSONRPCException as json_excpt:
         if "Error: Node has not been added" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getaddednodeinfo dns bool ( "node" )
