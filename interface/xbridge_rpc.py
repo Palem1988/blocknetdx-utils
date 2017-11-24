@@ -44,6 +44,35 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+# getblockhash index
+def getblockhash(index=None):
+    try:
+        return rpc_connection.getblockhash(index)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# getrawmempool ( verbose )
+def getrawmempool(verbose=None):
+    try:
+        return rpc_connection.getrawmempool(verbose)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+# verifychain ( checklevel numblocks )
+def verifychain(checklevel=None, numblocks=None):
+    try:
+        return rpc_connection.verifychain(checklevel, numblocks)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listreceivedbyaccount (minconf includeempty includeWatchonly)
 def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None):
@@ -52,7 +81,7 @@ def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-        if "Parse errror" in str(json_excpt):
+        if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 
@@ -63,7 +92,7 @@ def listreceivedbyaccount(minconf=None, includeempty=None, includeWatchonly=None
     except JSONRPCException as json_excpt:
         if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-        if "Parse errror" in str(json_excpt):
+        if "Parse error" in str(json_excpt):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 
