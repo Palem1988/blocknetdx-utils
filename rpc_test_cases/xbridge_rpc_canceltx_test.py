@@ -1,8 +1,4 @@
-"""
-BLOCKNET API TESTING TOOLS
-"""
 import unittest
-import time
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
@@ -12,6 +8,7 @@ from utils import xbridge_utils
 from strgen import StringGenerator
 
 class cancelUnitTest(unittest.TestCase):
+    @unittest.skip("TEMPORARILY DISABLED - THE TXID IS NOT AVAILABLE ANYMORE")
     def test_valid_cancel_1(self):
         try:
             self.assertIsInstance(xbridge_rpc.cancel_tx("c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a"), dict)
@@ -20,11 +17,12 @@ class cancelUnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_valid_cancel_1", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_valid_cancel_1 unit test group 1 FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('test_valid_cancel_1 FAILED: %s' % ass_err)
     
     """
             - Basic tests
     """
+    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_invalid_cancel_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
@@ -38,12 +36,13 @@ class cancelUnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_invalid_cancel_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_cancel_1 unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('test_invalid_cancel_1 FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_cancel_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_cancel_1 unit test ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('test_invalid_cancel_1 ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
     """
           - We test various random inputs from individual character classes.
@@ -62,9 +61,15 @@ class cancelUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_cancel_2", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        # print("****** dxCancel Unit SUBTEST 2 FAILED ON PARAMETER: %s ******" % generated_str)
-                        xbridge_logger.logger.info('dxCancel unit test group 2 FAILED on parameter: %s', generated_str)
-        # print("UT Group 2 - total subtests completed with or without errors: %s" % str(run_count))
+                        xbridge_logger.logger.info('test_invalid_cancel_2 FAILED: %s', ass_err)
+                        xbridge_logger.logger.info('param: %s', generated_str)
+                        log_json = {"group": "test_invalid_cancel_2", "success": 0, "failure": 1, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_cancel_2", "success": 0, "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_cancel_2 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % generated_str)
 
                     
     """
@@ -84,11 +89,15 @@ class cancelUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_cancel_3", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        # print("****** dxCancel Unit SUBTEST 3 FAILED ON PARAMETER: %s ******" % generated_str)
-                        xbridge_logger.logger.info('dxCancel unit test group 3 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('test_invalid_cancel_3 FAILED: %s', ass_err)
+                        xbridge_logger.logger.info('param: %s', generated_str)
                         log_json = {"group": "test_invalid_cancel_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-        # print("UT Group 3 - total subtests completed with or without errors: %s" % str(run_count))
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_cancel_3", "success": 0, "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_cancel_3 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % generated_str)
 
                             
     """
@@ -108,11 +117,15 @@ class cancelUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_cancel_4", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
-                        # print("****** dxCancel Unit SUBTEST 4 FAILED ON PARAMETER: %s ******" % generated_str)
-                        xbridge_logger.logger.info('dxCancel unit test group 4 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('test_invalid_cancel_3 FAILED: %s', ass_err)
+                        xbridge_logger.logger.info('param: %s', generated_str)
                         log_json = {"group": "test_invalid_cancel_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-        # print("UT Group 4 - total subtests completed with or without errors: %s" % str(run_count))
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_cancel_4", "success": 0, "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_cancel_4 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % generated_str)
 
 """
 if __name__ == '__main__':
