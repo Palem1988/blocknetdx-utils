@@ -44,6 +44,22 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+# sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
+def importwallet(filename_str=None):
+    try:
+        return rpc_connection.importwallet(filename_str)
+    except JSONRPCException as json_excpt:
+        if "get_value" in str(json_excpt) and "called on" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Please enter the wallet passphrase with walletpassphrase first" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Invalid parameter" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Parse error" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        if "Cannot open wallet dump file" in str(json_excpt):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 # listsinceblock ("blockhash" target-confirmations includeWatchonly)
 def listsinceblock(blockhash=None, target_confirmations=None, includeWatchonly=None):
     try:
