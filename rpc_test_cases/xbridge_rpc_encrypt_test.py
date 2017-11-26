@@ -52,7 +52,7 @@ class Encrypt_UnitTest(unittest.TestCase):
                 try:
                     old_pwd = random.choice(xbridge_utils.set_of_invalid_parameters)
                     new_pwd = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.rpc_connection.walletpassphrasechange, old_pwd, new_pwd)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.walletpassphrasechange, old_pwd, new_pwd)
                     log_json = {"group": "test_walletpassphrasechange_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
