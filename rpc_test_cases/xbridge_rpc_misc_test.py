@@ -34,31 +34,41 @@ class Misc_UnitTest(unittest.TestCase):
     # Please enter the wallet passphrase with walletpassphrase first.
     # TODO: valid test
     def test_signmessage_invalid(self):
+        if xbridge_config.get_wallet_decryption_passphrase() == "":
+            return
+        valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+        random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+        xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("test_signmessage_invalid"):
                 try:
                     invalid_blocknet_address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     message = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.sign_message, invalid_blocknet_address, message)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.signmessage, invalid_blocknet_address, message)
                     log_json = {"group": "test_signmessage_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_signmessage_invalid unit test FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('test_signmessage_invalid FAILED: %s' % ass_err)
                     xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
-                    xbridge_logger.logger.info('message: %s \n' % message)
+                    xbridge_logger.logger.info('param: %s \n' % message)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_signmessage_invalid unit test ERROR: %s' % json_excpt)
+                    xbridge_logger.logger.info('test_signmessage_invalid ERROR: %s' % json_excpt)
                     xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
-                    xbridge_logger.logger.info('message: %s \n' % message)
+                    xbridge_logger.logger.info('param: %s \n' % message)
 
     # autocombinerewards <true/false> threshold
     def test_autocombinerewards_valid(self):
         try:
+            if xbridge_config.get_wallet_decryption_passphrase() == "":
+                return
+            valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+            random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+            xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
             log_json = ""
             success_str = "Auto Combine Rewards Threshold Set"
             xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.VALID_DATA)            
@@ -73,9 +83,9 @@ class Misc_UnitTest(unittest.TestCase):
             log_json = {"group": "test_autocombinerewards_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_autocombinerewards_valid FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
-            xbridge_logger.logger.info('fixed_negative_int: %s \n' % xbridge_utils.fixed_negative_int)
-            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
+            xbridge_logger.logger.info('fixed_positive_int: %s \n' % str(xbridge_utils.fixed_positive_int))
+            xbridge_logger.logger.info('fixed_negative_int: %s \n' % str(xbridge_utils.fixed_negative_int))
+            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % str(xbridge_utils.valid_random_positive_int))
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_autocombinerewards_valid", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
@@ -83,22 +93,24 @@ class Misc_UnitTest(unittest.TestCase):
 
     # autocombinerewards <true/false> threshold
     def test_autocombinerewards_invalid(self):
+        set_without_bools = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, bool)]
+        set_without_int = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, int)]
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("autocombinerewards combinations"):
                 try:      
-                    modified_set = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, bool)]
-                    true_false = random.choice(modified_set)
-                    threshold = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    true_false = random.choice(set_without_bools)
+                    threshold = random.choice(set_without_int)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.autocombinerewards, true_false, threshold)
+                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.autocombinerewards, true_false, threshold)
                     log_json = {"group": "test_autocombinerewards_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_autocombinerewards_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_autocombinerewards_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('true_false: %s' % true_false)
-                    xbridge_logger.logger.info('threshold: %s' % threshold)
+                    xbridge_logger.logger.info('true_false: %s' % str(true_false))
+                    xbridge_logger.logger.info('threshold: %s' % str(threshold))
 
     # move "fromaccount" "toaccount" amount ( minconf "comment" )
     def test_move_invalid(self):
@@ -118,36 +130,45 @@ class Misc_UnitTest(unittest.TestCase):
                         optional_comment = None
                     else:
                         optional_comment = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.move, fromAccount, toaccount, amount, optional_minconf, optional_comment)
+                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.move, fromAccount, toaccount, amount, optional_minconf, optional_comment)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.move, fromAccount, toaccount, amount,
+                                      optional_minconf, optional_comment)
+                    """
                     log_json = {"group": "test_move_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_move_invalid", 0)
+                    """
                 except AssertionError as ass_err:
+                    """
                     log_json = {"group": "test_move_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_move_invalid FAILED: %s' % ass_err)
                     xbridge_logger.logger.info('fromAccount: %s' % fromAccount)
                     xbridge_logger.logger.info('toaccount: %s' % toaccount)
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
-                    xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment))
+                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:max_Char_Length])
+                    xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment)[:max_Char_Length])
+                    """
+                    xbridge_logger.XLOG("test_move_invalid", 1, ass_err, [fromAccount, toaccount, amount, optional_minconf, optional_comment])
+                except JSONRPCException as json_excpt:
+                    xbridge_logger.XLOG("test_move_invalid", 2, json_excpt, [fromAccount, toaccount, amount, optional_minconf, optional_comment])
 
     # lockunspent unlock [{"txid":"txid","vout":n},...]
     def test_lockunspent_invalid(self):
         log_json = ""
         for i in range(subTest_count):
             log_json = ""
-            with self.subTest("lockunspent combinations"):
+            with self.subTest("combinations"):
                 try:      
                     unlock_param = random.choice(xbridge_utils.set_of_invalid_parameters)
                     transactions = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.lockunspent, unlock_param, transactions)
-                    log_json = {"group": "test_lockunspent_invalid", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    # self.assertRaises(JSONRPCException, xbridge_rpc.lockunspent, unlock_param, transactions)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.lockunspent, unlock_param, transactions)
+                    xbridge_logger.XLOG("test_lockunspent_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_lockunspent_invalid", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_lockunspent_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('unlock_param: %s' % unlock_param)
-                    xbridge_logger.logger.info('transactions: %s' % transactions)
+                    xbridge_logger.XLOG("test_lockunspent_invalid", 1, ass_err, [unlock_param, transactions])
+                except JSONRPCException as json_excpt:
+                    xbridge_logger.XLOG("test_move_invalid", 2, json_excpt, [unlock_param, transactions])
+
 
 # unittest.main()
 
