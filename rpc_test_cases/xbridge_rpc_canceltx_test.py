@@ -19,9 +19,6 @@ class cancelUnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_valid_cancel_1 FAILED: %s' % ass_err)
     
-    """
-            - Basic tests
-    """
     @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_invalid_cancel_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -58,20 +55,12 @@ class cancelUnitTest(unittest.TestCase):
                     try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
-                        log_json = {"group": "test_invalid_cancel_2", "success": 1, "failure": 0, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_2", 0)
                     except AssertionError as ass_err:
-                        xbridge_logger.logger.info('test_invalid_cancel_2 FAILED: %s', ass_err)
-                        xbridge_logger.logger.info('param: %s', generated_str)
-                        log_json = {"group": "test_invalid_cancel_2", "success": 0, "failure": 1, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_2", 1, ass_err, [generated_str])
                     except JSONRPCException as json_excpt:
-                        log_json = {"group": "test_invalid_cancel_2", "success": 0, "failure": 0, "error": 1}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_cancel_2 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.XLOG("test_invalid_cancel_2", 2, json_excpt, [generated_str])
 
-                    
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
     """
@@ -86,18 +75,11 @@ class cancelUnitTest(unittest.TestCase):
                     try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
-                        log_json = {"group": "test_invalid_cancel_3", "success": 1, "failure": 0, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_3", 0)
                     except AssertionError as ass_err:
-                        xbridge_logger.logger.info('test_invalid_cancel_3 FAILED: %s', ass_err)
-                        xbridge_logger.logger.info('param: %s', generated_str)
-                        log_json = {"group": "test_invalid_cancel_3", "success": 0, "failure": 1, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_3", 1, ass_err, [generated_str])
                     except JSONRPCException as json_excpt:
-                        log_json = {"group": "test_invalid_cancel_3", "success": 0, "failure": 0, "error": 1}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_cancel_3 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.XLOG("test_invalid_cancel_3", 2, json_excpt, [generated_str])
 
                             
     """
@@ -114,18 +96,11 @@ class cancelUnitTest(unittest.TestCase):
                     try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.cancel_tx(generated_str), dict)
-                        log_json = {"group": "test_invalid_cancel_4", "success": 1, "failure": 0, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_4", 0)
                     except AssertionError as ass_err:
-                        xbridge_logger.logger.info('test_invalid_cancel_3 FAILED: %s', ass_err)
-                        xbridge_logger.logger.info('param: %s', generated_str)
-                        log_json = {"group": "test_invalid_cancel_4", "success": 0, "failure": 1, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.XLOG("test_invalid_cancel_4", 1, ass_err, [generated_str])
                     except JSONRPCException as json_excpt:
-                        log_json = {"group": "test_invalid_cancel_4", "success": 0, "failure": 0, "error": 1}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_cancel_4 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.XLOG("test_invalid_cancel_4", 2, json_excpt, [generated_str])
 
 """
 if __name__ == '__main__':

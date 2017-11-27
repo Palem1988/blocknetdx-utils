@@ -161,7 +161,6 @@ class Misc_UnitTest(unittest.TestCase):
                 try:      
                     unlock_param = random.choice(xbridge_utils.set_of_invalid_parameters)
                     transactions = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    # self.assertRaises(JSONRPCException, xbridge_rpc.lockunspent, unlock_param, transactions)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.lockunspent, unlock_param, transactions)
                     xbridge_logger.XLOG("test_lockunspent_invalid", 0)
                 except AssertionError as ass_err:
