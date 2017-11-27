@@ -23,7 +23,8 @@ valid_msgs = ["-22: TX decode failed",
                     "-32700: Parse error", 
                     "must be hexadecimal string",
                     "txid must be hexadecimal string",                    
-                    "-3: Expected type", 
+                    "-3: Expected type",
+                    "Expected type"
                     "Invalid private key encoding", 
                     "Error: Node has not been added",
                     "Invalid parameter",
@@ -92,19 +93,20 @@ def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
 # lockunspent unlock [{"txid":"txid","vout":n},...]
+# string + string
 def lockunspent(unlock=None, txid=None):
     try:
         return rpc_connection.lockunspent(unlock, txid)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-    
+
 # move "fromaccount" "toaccount" amount ( minconf "comment" )
 def move(fromaccount=None, toaccount=None, amount=None, minconf=None, comment=None):
     try:
         return rpc_connection.move(fromaccount, toaccount, amount, minconf, comment)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
     
 # autocombinerewards <true/false> threshold
@@ -112,7 +114,7 @@ def autocombinerewards(true_false=None, threshold=None):
     try:
         return rpc_connection.autocombinerewards(true_false, threshold)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
@@ -120,7 +122,7 @@ def importwallet(filename_str=None):
     try:
         return rpc_connection.importwallet(filename_str)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listsinceblock ("blockhash" target-confirmations includeWatchonly)
@@ -128,7 +130,7 @@ def listsinceblock(blockhash=None, target_confirmations=None, includeWatchonly=N
     try:
         return rpc_connection.listsinceblock(blockhash, target_confirmations, includeWatchonly)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getblockhash index
@@ -136,7 +138,7 @@ def getblockhash(index=None):
     try:
         return rpc_connection.getblockhash(index)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getrawmempool ( verbose )
@@ -144,7 +146,7 @@ def getrawmempool(verbose=None):
     try:
         return rpc_connection.getrawmempool(verbose)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # verifychain ( checklevel numblocks )
@@ -152,7 +154,7 @@ def verifychain(checklevel=None, numblocks=None):
     try:
         return rpc_connection.verifychain(checklevel, numblocks)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listreceivedbyaddress (minconf includeempty includeWatchonly)
@@ -160,7 +162,7 @@ def listreceivedbyaddress(minconf=None, includeempty=None, includeWatchonly=None
     try:
         return rpc_connection.listreceivedbyaddress(minconf, includeempty, includeWatchonly)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # listreceivedbyaccount (minconf includeempty includeWatchonly)
@@ -168,7 +170,7 @@ def listreceivedbyaccount(minconf=None, includeempty=None, includeWatchonly=None
     try:
         return rpc_connection.listreceivedbyaccount(minconf, includeempty, includeWatchonly)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def settxfee(amount=None):
@@ -183,7 +185,7 @@ def sendtoaddressix(blocknetdxaddress=None, amount=None, comment=None, commentto
     try:
         return rpc_connection.sendtoaddressix(blocknetdxaddress, amount, comment, commentto)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
@@ -191,7 +193,7 @@ def sendtoaddress(blocknetdxaddress=None, amount=None, comment=None, commentto=N
     try:
         return rpc_connection.sendtoaddress(blocknetdxaddress, amount, comment, commentto)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def walletpassphrasechange(old=None, new=None):
@@ -325,7 +327,7 @@ def importprivkey(blocknetdxprivkey, label=None, rescan=None):
     try:
         return rpc_connection.importprivkey(blocknetdxprivkey, label, rescan)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
             
 def dumpprivkey(blocknetdxaddress):
@@ -341,35 +343,35 @@ def prioritisetransaction(txid, priority, fee):
     except UnicodeDecodeError as unicode_err:
         raise xbridge_custom_exceptions.ValidBlockNetException from unicode_err
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def getnetworkhashps(blocks, height):
     try:
         return rpc_connection.getnetworkhashps(blocks, height)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def getreceivedbyaccount(address=None):
     try:
         return rpc_connection.getreceivedbyaccount(address)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def getaccountaddress(address=None):
     try:
         return rpc_connection.getbalance(address)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def getaddressesbyaccount(account=None):
     try:
         return rpc_connection.getbalance(account)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # getbalance ( "account" minconf includeWatchonly )
@@ -377,35 +379,35 @@ def getbalance(account=None, minconf=None, includeWatchonly=None):
     try:
         return rpc_connection.getbalance(account, minconf, includeWatchonly)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def sendtoaddress(txid=None):
     try:
         return rpc_connection.sendtoaddress(txid)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         
 def send_tx(txid=None):
     try:
         return rpc_connection.sendrawtransaction(txid)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         
 def decode_raw_tx(txid=None):
     try:
         return rpc_connection.decoderawtransaction(txid)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 def sign_message(address=None, msg=None):
     try:
         rpc_connection.signmessage(address, msg)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
         
 # signrawtransaction "hexstring" ( [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...] ["privatekey1",...] sighashtype )
@@ -413,10 +415,9 @@ def signrawtransaction(hexstring=None, optional_param=None):
     try:
         return rpc_connection.signrawtransaction(hexstring, optional_param)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-    
 # mnbudgetvoteraw <servicenode-tx-hash> <servicenode-tx-index> <proposal-hash> <yes|no> <time> <vote-sig>
 def mnbudgetvoteraw(txhash=None, txindex=None, proposal_hash=None, yes_no=None, time=None, vote_sig=None):
     try:
