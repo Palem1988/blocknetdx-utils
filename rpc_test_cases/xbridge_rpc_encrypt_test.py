@@ -18,7 +18,6 @@ class Encrypt_UnitTest(unittest.TestCase):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
     # walletpassphrasechange "oldpassphrase" "newpassphrase"
-    @unittest.skip("IN TESTING")
     def test_walletpassphrasechange_valid(self):
         try:
             log_json = ""
@@ -27,16 +26,20 @@ class Encrypt_UnitTest(unittest.TestCase):
             current_valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
             random_valid_new_passphrase = xbridge_utils.generate_random_valid_passphrase()
             self.assertIsNone(xbridge_rpc.walletpassphrasechange(current_valid_passphrase, random_valid_new_passphrase))
+            # xbridge_logger.XLOG("test_walletpassphrasechange_valid", 0)
             self.assertIsNone(xbridge_rpc.walletpassphrasechange(random_valid_new_passphrase, current_valid_passphrase))
+            # xbridge_logger.XLOG("test_walletpassphrasechange_valid", 0)
             log_json = {"group": "test_walletpassphrasechange_valid", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
+            # xbridge_logger.XLOG("test_walletpassphrasechange_valid", 1, ass_err, [current_valid_passphrase, random_valid_new_passphrase])
             log_json = {"group": "test_walletpassphrasechange_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_walletpassphrasechange_valid FAILED: %s' % ass_err)
             xbridge_logger.logger.info('current_valid_passphrase: %s' % current_valid_passphrase)
             xbridge_logger.logger.info('random_valid_new_passphrase: %s' % str(random_valid_new_passphrase))
         except JSONRPCException as json_excpt:
+            # xbridge_logger.XLOG("test_walletpassphrasechange_valid", 2, json_excpt, [current_valid_passphrase, random_valid_new_passphrase])
             log_json = {"group": "test_walletpassphrasechange_valid", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_walletpassphrasechange_valid ERROR: %s' % json_excpt)
@@ -44,7 +47,6 @@ class Encrypt_UnitTest(unittest.TestCase):
             xbridge_logger.logger.info('random_valid_new_passphrase: %s' % str(random_valid_new_passphrase))
 
     # walletpassphrasechange "oldpassphrase" "newpassphrase"
-    @unittest.skip("IN TESTING")
     def test_walletpassphrasechange_invalid(self):
         for i in range(subTest_count):
             log_json = ""
@@ -185,7 +187,6 @@ class Encrypt_UnitTest(unittest.TestCase):
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_bip38decrypt_invalid ERROR: %s' % json_excpt)
                     xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
-    
     
 # unittest.main()
 
