@@ -8,7 +8,7 @@ conf_file_path = os.path.join(__location__, 'tests.conf')
 
 config.read(conf_file_path)
 
-MAX_CHAR_LENGTH_TO_DISPLAY = 20000
+MAX_CHAR_LENGTH_TO_DISPLAY = 20
 
 def conf_exists():
     if not os.path.exists(conf_file_path):
