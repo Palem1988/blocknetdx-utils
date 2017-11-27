@@ -53,8 +53,8 @@ def XLOG(func_name, type_int, err_descr=None, lst_of_params=None):
             return
         for var_to_log in lst_of_params:
             try:
-                logger.info('param: %s' % str(var_to_log)[:max_Char_Length])
+                logger.info('param: [%s]' % str(var_to_log)[:max_Char_Length])
             except UnicodeEncodeError as err:
-                logger.info('param: %s' % str(var_to_log))
+                logger.info('param: [%s]' % str(var_to_log))
             except UnicodeDecodeError as err:
-                logger.info('param: %s' % str(var_to_log))
+                logger.info('param: [%s]' % str(var_to_log))
