@@ -19,7 +19,8 @@ else:
     exit(1)
 
 valid_msgs = ["-22: TX decode failed", 
-                    "-3: Invalid address", 
+                    "-3: Invalid address",
+                    "Invalid BlocknetDX address",
                     "-32700: Parse error",
                     "Parse error"
                     "must be hexadecimal string",
@@ -393,13 +394,6 @@ def getbalance(account=None, minconf=None, includeWatchonly=None):
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
-def sendtoaddress(txid=None):
-    try:
-        return rpc_connection.sendtoaddress(txid)
-    except JSONRPCException as json_excpt:
-        if any(t in str(json_excpt) for t in valid_msgs):
-            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-        
 def send_tx(txid=None):
     try:
         return rpc_connection.sendrawtransaction(txid)
