@@ -24,7 +24,7 @@
 
 # Running the tests
 
-Wallet needs to be encrypted and unlocked.
+Wallet needs to be encrypted.
 
 1. Update the tests.conf file with your credential parameters, and adjust the options to control some
 behaviors of the program.
@@ -32,7 +32,7 @@ behaviors of the program.
     - If some required parameters are not filled, the program will stop.
     - Also set the number of runs you want launch by default, when command line parameters are not provided.
     - Make sure the **tests.conf** file is in the same directory as the main program.
-    - If some parameter are not filled, so unit tests may be voluntarily skipped by the test suite.
+    - Some APIs require the wallet decryption passphrase, so fill the appropriate field in the tests.conf file. If this field is not set or the supplied passphrase is not correct, the relevant tests will be either skipped or will fail.
 
 2. Run the python with or without the optional parameters.
 
