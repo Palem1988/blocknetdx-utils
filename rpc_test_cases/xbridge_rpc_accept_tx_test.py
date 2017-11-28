@@ -14,7 +14,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
-MAX_LOG_LENGTH = xbridge_config.max_Char_Length  
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class accept_Tx_Test(unittest.TestCase):
     def setUp(self):

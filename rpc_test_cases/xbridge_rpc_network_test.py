@@ -12,6 +12,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class Network_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -21,7 +22,7 @@ class Network_UnitTest(unittest.TestCase):
         log_json = ""
         for i in range(subTest_count):
             log_json = ""
-            with self.subTest("test_getaddednodeinfo_invalid"):
+            with self.subTest("comb"):
                 try:
                     node = random.choice(xbridge_utils.set_of_invalid_parameters)
                     cmd = random.choice(xbridge_utils.set_of_invalid_parameters)
@@ -32,10 +33,14 @@ class Network_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_addnode_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_addnode_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
+                    xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_addnode_invalid ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_addnode_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
+                    xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
 
 
     # getaddednodeinfo dns bool ( "node" )
@@ -49,7 +54,7 @@ class Network_UnitTest(unittest.TestCase):
         self.assertIsInstance(xbridge_rpc.rpc_connection.getaddednodeinfo(False), list)
         for i in range(subTest_count):
             log_json = ""
-            with self.subTest("test_getaddednodeinfo_invalid"):
+            with self.subTest("comb"):
                 try:
                     dns = random.choice(xbridge_utils.set_of_invalid_parameters)
                     node = random.choice(xbridge_utils.set_of_invalid_parameters)
@@ -61,8 +66,12 @@ class Network_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getaddednodeinfo_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
+                    xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_getaddednodeinfo_invalid ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
+                    xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
 
@@ -74,13 +83,13 @@ class Network_UnitTest(unittest.TestCase):
             log_json = {"group": "get_connectioncount", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            xbridge_logger.logger.info('get_connection_count unit test FAILED: %s' % str(ass_err))
+            xbridge_logger.logger.info('test_get_connection_count FAILED: %s' % str(ass_err))
             log_json = {"group": "get_connectioncount", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except JSONRPCException as json_excpt:
             log_json = {"group": "get_connectioncount", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('get_connectioncount unit test ERROR: %s' % str(json_excpt))
+            xbridge_logger.logger.info('test_get_connection_count ERROR: %s' % str(json_excpt))
 
     def test_get_node_list(self):
         try:
@@ -91,12 +100,12 @@ class Network_UnitTest(unittest.TestCase):
             log_json = {"group": "get_node_list", "success": 1,  "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            xbridge_logger.logger.info('get_node_list unit test FAILED: %s' % str(ass_err))
-            log_json = {"group": "get_node_list", "success": 0,  "failure": 1, "error": 0}
+            xbridge_logger.logger.info('test_get_node_list FAILED: %s' % str(ass_err))
+            log_json = {"group": "test_get_node_list", "success": 0,  "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('get_node_list unit test ERROR: %s' % str(json_excpt))
-            log_json = {"group": "get_node_list", "success": 0,  "failure": 0, "error": 1}
+            xbridge_logger.logger.info('test_get_node_list ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_get_node_list", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
 
     def test_get_version(self):
@@ -105,15 +114,15 @@ class Network_UnitTest(unittest.TestCase):
             version_nb = xbridge_rpc.get_core_version()
             self.assertIsInstance(version_nb, int)
             self.assertGreater(version_nb, 3073600)
-            log_json = {"group": "get_version", "success": 1,  "failure": 0, "error": 0}
+            log_json = {"group": "test_get_version", "success": 1,  "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            xbridge_logger.logger.info('get_version unit test FAILED: %s' % str(ass_err))
-            log_json = {"group": "get_version", "success": 0,  "failure": 1, "error": 0}
+            xbridge_logger.logger.info('test_get_version FAILED: %s' % str(ass_err))
+            log_json = {"group": "test_get_version", "success": 0,  "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('get_node_list unit test ERROR: %s' % str(json_excpt))
-            log_json = {"group": "get_version", "success": 0,  "failure": 0, "error": 1}
+            xbridge_logger.logger.info('test_get_version ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_get_version", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
 
     def test_get_peer_info(self):
@@ -122,15 +131,15 @@ class Network_UnitTest(unittest.TestCase):
             peer = xbridge_rpc.rpc_connection.getpeerinfo()
             self.assertIsInstance(peer, list)
             self.assertGreater(len(peer), 0)
-            log_json = {"group": "getpeerinfo", "success": 1,  "failure": 0, "error": 0}
+            log_json = {"group": "test_get_peer_info", "success": 1,  "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            xbridge_logger.logger.info('getpeerinfo unit test FAILED: %s' % str(ass_err))
-            log_json = {"group": "getpeerinfo", "success": 0,  "failure": 1, "error": 0}
+            xbridge_logger.logger.info('test_get_peer_info FAILED: %s' % str(ass_err))
+            log_json = {"group": "test_get_peer_info", "success": 0,  "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('getpeerinfo unit test ERROR: %s' % str(json_excpt))
-            log_json = {"group": "getpeerinfo", "success": 0,  "failure": 0, "error": 1}
+            xbridge_logger.logger.info('test_get_peer_infot ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_get_peer_info", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
 
 # unittest.main()

@@ -12,6 +12,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class send_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -36,25 +37,31 @@ class send_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_multisend unit test FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('multisend("print") FAILED \n')
+            xbridge_logger.logger.info('test_multisend_valid FAILED: %s' % ass_err)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.logger.info('test_multisend_valid ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_multisend_valid", "success": 0,  "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
 
     # multisend <command>
+    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_multisend_invalid(self):
-        for basic_garbage_str in xbridge_utils.basic_garbage_list:
-            with self.subTest(basic_garbage_str=basic_garbage_str):
+        for i in range(subTest_count):
+            with self.subTest("comb"):
                 try:
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.multisend, basic_garbage_str, basic_garbage_str)
-                    log_json = {"group": "test_signmessage", "success": 1, "failure": 0, "error": 0}
+                    random_elt = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.multisend, random_elt)
+                    log_json = {"group": "test_multisend_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
+                    log_json = {"group": "test_multisend_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_multisend unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('test_multisend_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('param: %s \n' % str(random_elt)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_multisend unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_multisend", "success": 0,  "failure": 0, "error": 1}
+                    xbridge_logger.logger.info('test_multisend_invalid ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('param: %s \n' % str(random_elt)[:MAX_LOG_LENGTH])
+                    log_json = {"group": "test_multisend_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
 
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
@@ -66,42 +73,39 @@ class send_UnitTest(unittest.TestCase):
             for i in range(subTest_count):
                 log_json = ""
                 with self.subTest("test_senttoaddress_invalid_random"):
-                    try:      
-                        fromAccount = random.choice(xbridge_utils.set_of_invalid_parameters)
-                        toblocknetdxaddress = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    try:
+                        blocknetdxaddress = random.choice(xbridge_utils.set_of_invalid_parameters)
                         amount = random.choice(xbridge_utils.set_of_invalid_parameters)
                         if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                            optional_comment = ""
+                            optional_comment = None
                         else:
                             optional_comment = random.choice(xbridge_utils.set_of_invalid_parameters)
                         if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                            optional_comment_to = ""
+                            optional_comment_to = None
                         else:
                             optional_comment_to = random.choice(xbridge_utils.set_of_invalid_parameters)
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException,
-                                          send_address_func, fromAccount, toblocknetdxaddress, amount, optional_comment, optional_comment_to)
+                                          send_address_func, blocknetdxaddress, amount, optional_comment, optional_comment_to)
                         log_json = {"group": send_address_func, "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
                         log_json = {"group": "sendtoaddress", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('%s FAILED: %s' % (str(send_address_func), ass_err))
-                        xbridge_logger.logger.info('fromAccount: %s' % fromAccount)
-                        xbridge_logger.logger.info('toblocknetdxaddress: %s' % toblocknetdxaddress)
-                        xbridge_logger.logger.info('amount: %s' % amount)
-                        xbridge_logger.logger.info('amount: %s' % amount)
-                        xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment))
-                        xbridge_logger.logger.info('optional_comment_to: %s' % str(optional_comment_to))
+                        xbridge_logger.logger.info('blocknetdxaddress: %s' % str(blocknetdxaddress)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('amount: %s' % str(amount)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('amount: %s' % str(amount)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_comment_to: %s' % str(optional_comment_to)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         xbridge_logger.logger.info('%s ERROR: %s' % (str(send_address_func), str(json_excpt)))
                         log_json = {"group": "sendtoaddress", "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('fromAccount: %s' % fromAccount)
-                        xbridge_logger.logger.info('toblocknetdxaddress: %s' % toblocknetdxaddress)
-                        xbridge_logger.logger.info('amount: %s' % amount)
-                        xbridge_logger.logger.info('amount: %s' % amount)
-                        xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment))
-                        xbridge_logger.logger.info('optional_comment_to: %s' % str(optional_comment_to))
+                        xbridge_logger.logger.info('blocknetdxaddress: %s' % str(blocknetdxaddress)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('amount: %s' % str(amount)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('amount: %s' % str(amount)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_comment_to: %s' % str(optional_comment_to)[:MAX_LOG_LENGTH])
 
     # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
     def test_senttoaddress_invalid_fixed(self):
@@ -129,14 +133,8 @@ class send_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_senttoaddress_invalid_fixed", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('%s invalid unit test FAILED: %s' % (send_address_func, ass_err))
-                    xbridge_logger.logger.info('ca_random_tx_id: %s \n' % xbridge_utils.ca_random_tx_id)
-                    xbridge_logger.logger.info('invalid_random_positive_int: %s \n' % xbridge_utils.invalid_random_positive_int)
-                    xbridge_logger.logger.info('valid_random_positive_int: %s \n' % xbridge_utils.valid_random_positive_int)
-                    xbridge_logger.logger.info('invalid_random_positive_float: %s \n' % xbridge_utils.invalid_random_positive_float)
-                    xbridge_logger.logger.info('valid_random_positive_float: %s \n' % xbridge_utils.valid_random_positive_float)
-                    xbridge_logger.logger.info('fixed_positive_float: %s \n' % xbridge_utils.fixed_positive_float)
-                    xbridge_logger.logger.info('fixed_positive_int: %s \n' % xbridge_utils.fixed_positive_int)
+                    xbridge_logger.logger.info('%s invalid unit test FAILED: %s' % (str(send_address_func), str(ass_err)))
+                    xbridge_logger.logger.info('random_tx_id: %s \n' % str(xbridge_utils.ca_random_tx_id)[:MAX_LOG_LENGTH])
 
     # sendfrom "fromaccount" "toblocknetdxaddress" amount ( minconf "comment" "comment-to" )
     def test_sendfrom_invalid(self):
@@ -149,28 +147,23 @@ class send_UnitTest(unittest.TestCase):
                     toblocknetdxaddress = random.choice(xbridge_utils.set_of_invalid_parameters)
                     amount = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_minconf = ""
+                        optional_minconf = None
                     else:
                         optional_minconf = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_comment = ""
+                        optional_comment = None
                     else:
                         optional_comment = random.choice(xbridge_utils.set_of_invalid_parameters)
                     if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
-                        optional_comment_to = ""
+                        optional_comment_to = None
                     else:
                         optional_comment_to = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.sendfrom, fromAccount, toblocknetdxaddress, amount, optional_minconf, optional_comment, optional_comment_to)
-                    log_json = {"group": "sendfrom", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.sendfrom, fromAccount, toblocknetdxaddress, amount, optional_minconf, optional_comment, optional_comment_to)
+                    xbridge_logger.XLOG("test_sendfrom_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "sendfrom", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('sendfrom invalid unit test FAILED: %s' % ass_err)
+                    xbridge_logger.XLOG("test_sendfrom_invalid", 1, ass_err, [fromAccount, toblocknetdxaddress, amount, optional_minconf, optional_comment,optional_comment_to])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('sendfrom unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "sendfrom", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_sendfrom_invalid", 2, ass_err, [fromAccount, toblocknetdxaddress, amount, optional_minconf, optional_comment,optional_comment_to])
 
 
 # unittest.main()

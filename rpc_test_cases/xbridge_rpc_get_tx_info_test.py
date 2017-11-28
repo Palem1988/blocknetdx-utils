@@ -3,14 +3,16 @@ import time
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
-
 from interface import xbridge_rpc
 from utils import xbridge_utils
 
 from strgen import StringGenerator
 
-"""                       ***  UNIT TESTS ***
-"""
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class get_Tx_Info_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -42,7 +44,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_valid_tx_id_1", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_valid_tx_id_1 unit test ERROR: %s' % json_excpt)
+            xbridge_logger.logger.info('test_valid_tx_id_1 ERROR: %s' % json_excpt)
 
     def test_invalid_get_tx_info_1(self):
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
@@ -54,12 +56,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_invalid_get_tx_info_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.logger.info('test_invalid_get_tx_info_1 FAILED: %s' % ass_err)
+                    xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_get_tx_info_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('test_invalid_get_tx_info_1 ERROR: %s' % str(json_excpt))
+                    xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
     """
           - Character classes are chosen randomly
@@ -73,8 +76,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_invalid_get_tx_info_2", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('dxGetTxInfo unit test group 2 FAILED on parameter: %s', self.random_length_str_with_random_char_class)
+            xbridge_logger.logger.info('test_invalid_get_tx_info_2 FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
+        except JSONRPCException as json_excpt:
+            log_json = {"group": "test_invalid_get_tx_info_2", "success": 0,  "failure": 0, "error": 1}
+            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.logger.info('test_invalid_get_tx_info_2 ERROR: %s' % str(json_excpt))
+            xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
                 
     """
           - We test various random inputs from individual character classes.
@@ -95,8 +103,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     except AssertionError as ass_err:
                         log_json = {"group": "test_invalid_get_tx_info_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('dxGetTxInfo unit test group 3 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_3 FAILED: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 0,  "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_3 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
     """
           - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
@@ -116,8 +129,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     except AssertionError as ass_err:
                         log_json = {"group": "test_invalid_get_tx_info_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('dxGetTxInfo unit test group 4 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_4 FAILED: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_get_tx_info_4", "success": 0,  "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_4 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
     """
           - Same as before, but now the random input parameters are of random length [1-4 000]
@@ -137,8 +155,13 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     except AssertionError as ass_err:
                         log_json = {"group": "test_invalid_get_tx_info_5", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_get_tx_info_1 unit test FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('dxGetTxInfo unit test group 5 FAILED on parameter: %s', generated_str)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_5 FAILED: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_get_tx_info_5", "success": 0,  "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_5 ERROR: %s' % str(json_excpt))
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
     def test_get_transaction_list(self):
         try:
@@ -148,11 +171,11 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_list unit test FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('test_get_transaction_list FAILED: %s' % ass_err)
         except JSONRPCException as json_err:
             log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_list unit test ERROR: %s' % json_err)
+            xbridge_logger.logger.info('test_get_transaction_list ERROR: %s' % json_err)
 
     def test_get_transaction_history_list(self):
         try:
@@ -162,11 +185,11 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_history_list unit test FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('test_get_transaction_history_list FAILED: %s' % ass_err)
         except JSONRPCException as json_err:
             log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_history_list unit test ERROR: %s' % json_err)
+            xbridge_logger.logger.info('test_get_transaction_history_list ERROR: %s' % json_err)
 
     def test_get_currency_list(self):
         try:
@@ -176,11 +199,11 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_currency_list unit test FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('test_get_currency_list FAILED: %s' % ass_err)
         except JSONRPCException as json_err:
             log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_currency_list unit test ERROR: %s' % json_err)
+            xbridge_logger.logger.info('test_get_currency_list ERROR: %s' % json_err)
 
 
 # unittest.main()
