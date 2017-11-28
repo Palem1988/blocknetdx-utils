@@ -20,13 +20,18 @@ class Network_UnitTest(unittest.TestCase):
 
     def test_addnode_invalid(self):
         log_json = ""
+        if xbridge_config.get_wallet_decryption_passphrase() == "":
+            return
+        valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+        random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+        xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("comb"):
                 try:
                     node = random.choice(xbridge_utils.set_of_invalid_parameters)
                     cmd = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertIsNone(xbridge_rpc.addnode(node, cmd))
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.addnode, node, cmd)
                     log_json = {"group": "test_addnode_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -42,7 +47,6 @@ class Network_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
                     xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
 
-
     # getaddednodeinfo dns bool ( "node" )
     # getaddednodeinfo true
     # getaddednodeinfo true "192.168.0.201"
@@ -50,6 +54,11 @@ class Network_UnitTest(unittest.TestCase):
     # If dns is false, only a list of added nodes will be provided, otherwise connected information will also be available.
     def test_getaddednodeinfo_invalid(self):
         log_json = ""
+        if xbridge_config.get_wallet_decryption_passphrase() == "":
+            return
+        valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
+        random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
+        xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
         self.assertIsInstance(xbridge_rpc.rpc_connection.getaddednodeinfo(True), list)
         self.assertIsInstance(xbridge_rpc.rpc_connection.getaddednodeinfo(False), list)
         for i in range(subTest_count):
@@ -58,8 +67,7 @@ class Network_UnitTest(unittest.TestCase):
                 try:
                     dns = random.choice(xbridge_utils.set_of_invalid_parameters)
                     node = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getaddednodeinfo, dns, node)
-                    self.assertIsNone(xbridge_rpc.getaddednodeinfo(dns, node))
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getaddednodeinfo, dns, node)
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -138,8 +146,17 @@ class Network_UnitTest(unittest.TestCase):
             log_json = {"group": "test_get_peer_info", "success": 0,  "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_get_peer_infot ERROR: %s' % str(json_excpt))
+            xbridge_logger.logger.info('test_get_peer_info ERROR: %s' % str(json_excpt))
             log_json = {"group": "test_get_peer_info", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
 
 # unittest.main()
+
+suite = unittest.TestSuite()
+for i in range(1):
+    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
+    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
+    suite.addTest(Network_UnitTest("test_addnode_invalid"))
+# suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
