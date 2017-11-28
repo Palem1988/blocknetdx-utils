@@ -37,8 +37,8 @@ valid_msgs = ["-22: TX decode failed",
                     "Error: The wallet passphrase entered was incorrect",
                     "Invalid spork name",
                     "-1: walletpassphrasechange",
-                      "-1: bip38decrypt",
-                      "-1: bip38encrypt"]
+                    "-1: bip38decrypt",
+                    "-1: bip38encrypt"]
 
 """
 "-1: bip38decrypt \"blocknetdxaddress\"", 
@@ -99,6 +99,22 @@ def get_node_list():
 def get_tx(txid):
     return rpc_connection.getrawtransaction(txid)
 
+# sendfrom "fromaccount" "toblocknetdxaddress" amount ( minconf "comment" "comment-to" )
+def sendfrom(fromaccount=None, toblocknetdxaddress=None, amount=None, minconf=None, comment=None, comment_to=None):
+    try:
+        return rpc_connection.sendfrom(fromaccount, toblocknetdxaddress, amount, minconf, comment, comment_to)
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
+
+# multisend <command>
+def multisend(cmd=None):
+    try:
+        return rpc_connection.multisend(cmd)
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
+    
 # lockunspent unlock [{"txid":"txid","vout":n},...]
 # string + string
 def lockunspent(unlock=None, txid=None):
@@ -428,5 +444,6 @@ def spork(name_param=None, value_param=None):
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 
 
