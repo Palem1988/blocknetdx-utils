@@ -17,7 +17,6 @@
 # TODO
 
 - Add unit tests with valid data present in the dex once it's loaded.
-- Add test case where Token and Address are not consistent.
 - Running tests and analyzing results.
 - When the code of the RPC calls are settled, apply the same structure for the client.
 - Documentation.
