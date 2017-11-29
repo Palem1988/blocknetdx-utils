@@ -13,6 +13,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class signUnitTest(unittest.TestCase):
     def setUp(self):
@@ -44,12 +45,14 @@ class signUnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_sign_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_sign_1 FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_sign_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_sign_1 ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
     """
           - We test various random inputs from individual character classes.
@@ -71,12 +74,15 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_2", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_2 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_2", "success": 0, "failure": 0, "error": 1}
-                        xbridge_logger.logger.info('test_invalid_sign_2 ERROR: %s' % json_excpt)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
                         xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_sign_2 ERROR: %s' % json_excpt)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                        
 
     """
           - Same as before, but now the random strings are of random but always very long size [9 000-11 000]
@@ -99,11 +105,13 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_3 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_3", "success": 0, "failure": 0, "error": 1}
                         xbridge_logger.logger.info('test_invalid_sign_3 ERROR: %s' % json_excpt)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                         xbridge_utils.ERROR_LOG.append(log_json)
 
     """
@@ -128,12 +136,15 @@ class signUnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_sign_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_sign_4 FAILED: %s' % ass_err)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_sign_4", "success": 0, "failure": 0, "error": 1}
                         xbridge_logger.logger.info('test_invalid_sign_4 ERROR: %s' % json_excpt)
-                        xbridge_logger.logger.info('param: %s' % generated_str)
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                         xbridge_utils.ERROR_LOG.append(log_json)
+
 
 """
 if __name__ == '__main__':

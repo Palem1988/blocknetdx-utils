@@ -13,6 +13,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class private_Key_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -40,13 +41,18 @@ class private_Key_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_importprivkey_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_importprivkey_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('blocknetdxprivkey: %s \n' % blocknetdxprivkey)
-                    xbridge_logger.logger.info('optional_label: %s \n' % str(optional_label))
-                    xbridge_logger.logger.info('optional_rescan: %s \n' % str(optional_rescan))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('blocknetdxprivkey: %s \n' % str(blocknetdxprivkey)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_label: %s \n' % str(optional_label)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_rescan: %s \n' % str(optional_rescan)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_importprivkey_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_importprivkey_invalid ERROR: %s' % str(json_excpt))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('blocknetdxprivkey: %s \n' % str(blocknetdxprivkey)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_label: %s \n' % str(optional_label)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_rescan: %s \n' % str(optional_rescan)[:MAX_LOG_LENGTH])
 
     # importprivkey "blocknetdxprivkey" ( "label" rescan )
     @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
@@ -61,12 +67,14 @@ class private_Key_UnitTest(unittest.TestCase):
             log_json = {"group": "test_importprivkey_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_importprivkey_valid FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_importprivkey_valid", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_importprivkey_valid ERROR: %s' % str(json_excpt))
-            xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % valid_blocknetdx_address)
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
     
      # dumpprivkey "blocknetdxaddress"
     def test_dumpprivkey_invalid(self):
@@ -86,11 +94,14 @@ class private_Key_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_dumpprivkey_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_dumpprivkey_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_dumpprivkey_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_dumpprivkey_invalid ERROR: %s' % str(json_excpt))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
     # dumpprivkey "blocknetdxaddress"
     # FAILED: 'PnXVPpt8TR8P3ZYn6aUDPcvjPhcigsASAxy2c8NEjaKJky4McBG4' is not an instance of <class 'dict'>
@@ -106,10 +117,13 @@ class private_Key_UnitTest(unittest.TestCase):
             log_json = {"group": "test_dumpprivkey_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_dumpprivkey_valid FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('basic_garbage_str: %s \n' % valid_blocknetdx_address)
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_dumpprivkey_valid", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_dumpprivkey_valid ERROR: %s' % str(json_excpt))
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
     
 # unittest.main()
