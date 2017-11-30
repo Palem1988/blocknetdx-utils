@@ -9,6 +9,12 @@ from utils import xbridge_custom_exceptions
 
 from strgen import StringGenerator
 
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
+
 class decodeUnitTest(unittest.TestCase):
     def setUp(self):
        xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
@@ -41,12 +47,12 @@ class decodeUnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_decode_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
-                    xbridge_logger.logger.info('param: %s' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_decode_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_decode_1 unit test ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s' % basic_garbage_str)
+                    xbridge_logger.logger.info('param: %s' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
     
     """
@@ -69,12 +75,12 @@ class decodeUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('test_invalid_decode_2 FAILED: %s', ass_err)
                         log_json = {"group": "test_invalid_decode_2", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_decode_2", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_decode_2 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
 
     """
@@ -96,12 +102,12 @@ class decodeUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('test_invalid_decode_3 FAILED: %s', ass_err)
                         log_json = {"group": "test_invalid_decode_3", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_decode_3", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_decode_3 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
                             
     """
@@ -124,12 +130,12 @@ class decodeUnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('test_invalid_decode_4 FAILED: %s', ass_err)
                         log_json = {"group": "test_invalid_decode_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_decode_4", "success": 0, "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_decode_4 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % generated_str)
+                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
 
 """
