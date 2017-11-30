@@ -39,10 +39,10 @@ def XLOG(func_name, type_int, err_descr=None, lst_of_params=None):
         return
     if type_int == 1:
         log_json = {"group": str(func_name), "success": 0, "failure": 1, "error": 0}
-        logger.info('%s FAILED: %s' % (str(func_name), str(err_descr)))
+        logger.info('\n%s FAILED: %s' % (str(func_name), str(err_descr)))
     if type_int == 2:
         log_json = {"group": str(func_name), "success": 0, "failure": 0, "error": 1}
-        logger.info('% ERROR: %s' % (str(func_name), str(err_descr)))
+        logger.info('\n%s ERROR: %s' % (str(func_name), str(err_descr)))
     xbridge_utils.ERROR_LOG.append(log_json)
     if lst_of_params is None:
         return
