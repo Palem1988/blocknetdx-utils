@@ -12,8 +12,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
-
-# xbridge_config.MAX_CHAR_LENGTH_TO_DISPLAY
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class Blocknetdx_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -34,19 +33,14 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                     service_node_tx_proposal_vote_sig = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.mnbudgetvoteraw, service_node_tx_hash, service_node_tx_index,
                                                              service_node_tx_proposal_hash, service_node_tx_proposal_yes_no, service_node_tx_proposal_time, service_node_tx_proposal_vote_sig)
-                    log_json = {"group": "test_mnbudgetvoteraw", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_mnbudgetvoteraw", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_mnbudgetvoteraw", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_mnbudgetvoteraw invalid FAILED: %s' % ass_err)
+                    xbridge_logger.XLOG("test_mnbudgetvoteraw", 1, ass_err, [service_node_tx_hash, service_node_tx_index, service_node_tx_proposal_hash, service_node_tx_proposal_yes_no, service_node_tx_proposal_time, service_node_tx_proposal_vote_sig])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_mnbudgetvoteraw ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_mnbudgetvoteraw", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)   
+                    xbridge_logger.XLOG("test_mnbudgetvoteraw", 2, json_excpt, [service_node_tx_hash, service_node_tx_index, service_node_tx_proposal_hash, service_node_tx_proposal_yes_no, service_node_tx_proposal_time, service_node_tx_proposal_vote_sig])
 
     # spork <name> [<value>]
-    # @unittest.skip("DISABLED - UNTESTED")
+    @unittest.skip("DISABLED - IN REVIEW - HAS SOMETIMES UNPREDICTABLE BEHAVIOR")
     def test_spork(self):
         for i in range(subTest_count):
             log_json = ""
@@ -55,46 +49,34 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                     name_param = random.choice(xbridge_utils.set_of_invalid_parameters)
                     value_param = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.spork, name_param, value_param)
-                    log_json = {"group": "test_spork", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_spork", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_spork", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_spork invalid unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('name_param: %s' % name_param)
-                    xbridge_logger.logger.info('value_param: %s' % value_param)
+                    xbridge_logger.XLOG("test_spork", 1, ass_err, [name_param, value_param])
+                except JSONRPCException as json_excpt:
+                    xbridge_logger.XLOG("test_spork", 2, json_excpt, [name_param, value_param])
 
     def test_get_budget_valid(self):
         try:
             budget = xbridge_rpc.get_budget()
             self.assertIsInstance(budget, dict)
-            log_json = {"group": "test_get_budget", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_get_budget_valid", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_get_budget", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_budget_valid FAILED: %s' % ass_err)
+            xbridge_logger.XLOG("test_get_budget_valid", 1, ass_err)
         except JSONRPCException as json_excpt:
-            log_json = {"group": "test_get_budget", "success": 0, "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_budget_valid ERROR: %s' % json_excpt)
+            xbridge_logger.XLOG("test_get_budget_valid", 2, json_excpt)
             
     # servicenode "command"... ( "passphrase" )
     # @unittest.skip("DISABLED - UNTESTED")
     def test_servicenode_invalid(self):
         for i in range(subTest_count):
             log_json = ""
-            with self.subTest("servicenode combinations"):
+            with self.subTest("test_servicenode_invalid"):
                 try:      
                     cmd_param = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.servicenode, cmd_param)
-                    log_json = {"group": "test_servicenode", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_servicenode_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_servicenode", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_servicenode_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('cmd_param: %s' % cmd_param)
+                    xbridge_logger.XLOG("test_servicenode_invalid", 1, ass_err, [cmd_param])
     
     # obfuscation <blocknetdxaddress> <amount>
     # @unittest.skip("DISABLED - UNTESTED")
@@ -106,14 +88,9 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                     blocknetdxaddress = random.choice(xbridge_utils.set_of_invalid_parameters)
                     amount = random.choice(xbridge_utils.set_of_invalid_parameters)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.obfuscation, blocknetdxaddress, amount)
-                    log_json = {"group": "test_obfuscation", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_obfuscation_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_obfuscation", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_obfuscation_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('blocknetdxaddress: %s' % blocknetdxaddress)
-                    xbridge_logger.logger.info('amount: %s' % amount)
+                    xbridge_logger.XLOG("test_obfuscation_invalid", 1, ass_err, [blocknetdxaddress, amount])
                 
     # mnsync [status|reset]
     # @unittest.skip("DISABLED - UNTESTED")
@@ -123,23 +100,12 @@ class Blocknetdx_UnitTest(unittest.TestCase):
             log_json = ""
             with self.subTest("combinations"):
                 try:      
-                    cmd_param = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    if isinstance(cmd_param, str):
-                        self.assertIsInstance(xbridge_rpc.rpc_connection.mnsync(cmd_param), str)
-                    else:
-                        self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnsync, cmd_param)
-                    log_json = {"group": "test_mnsync_invalid", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    set_without_str = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, str)]
+                    cmd_param = random.choice(set_without_str)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnsync, cmd_param)
+                    xbridge_logger.XLOG("test_mnsync_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_mnsync_invalid", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_mnsync_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s' % str(cmd_param))
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_mnsync_invalid ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s' % str(cmd_param))
-                    log_json = {"group": "test_mnsync_invalid", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)   
+                    xbridge_logger.XLOG("test_mnsync_invalid", 1, ass_err, [cmd_param])
                     
     # mnsync [status|reset]
     # @unittest.skip("DISABLED - UNTESTED")
@@ -158,55 +124,42 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                         log_json = {"group": "test_mnsync_valid", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_mnsync_valid", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_mnsync_valid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s' % valid_param)
+                    xbridge_logger.XLOG("test_mnsync_valid", 1, ass_err, [valid_param])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_mnsync_valid ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_mnsync_valid", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('param: %s' % valid_param)
+                    xbridge_logger.XLOG("test_mnsync_valid", 2, json_excpt, [valid_param])
                     
-
     # mnbudget "command"... ( "passphrase" )
     # @unittest.skip("DISABLED - UNTESTED")
-    def test_mnbudget(self):
+    def test_mnbudget_invalid(self):
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("combinations"):
                 try:      
                     cmd_param = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnbudget, cmd_param)
-                    log_json = {"group": "test_mnbudget", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
+                        optional_passphrase = None
+                    else:
+                        optional_passphrase = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnbudget, cmd_param, optional_passphrase)
+                    xbridge_logger.XLOG("test_mnbudget_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_mnbudget", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_mnbudget invalid unit test FAILED: %s' % ass_err)
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_mnbudget unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_mnbudget", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)   
+                    xbridge_logger.XLOG("test_mnbudget_invalid", 1, ass_err, [cmd_param, optional_passphrase])
 
     # mnfinalbudget "command"... ( "passphrase" )
     # @unittest.skip("DISABLED - UNTESTED")
-    def test_mnfinalbudget(self):
+    def test_mnfinalbudget_invalid(self):
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("combinations"):
                 try:      
                     cmd_param = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnfinalbudget, cmd_param)
-                    log_json = {"group": "test_mnfinalbudget", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    if random.choice(["", xbridge_utils.set_of_invalid_parameters]) == "":
+                        optional_passphrase = None
+                    else:
+                        optional_passphrase = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.mnfinalbudget, cmd_param, optional_passphrase)
+                    xbridge_logger.XLOG("test_mnfinalbudget_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_mnfinalbudget", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_mnfinalbudget invalid unit test FAILED: %s' % ass_err)
-                except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_mnfinalbudget unit test ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_mnfinalbudget", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)   
+                    xbridge_logger.XLOG("test_mnfinalbudget_invalid", 1, ass_err, [cmd_param, optional_passphrase])
     
 # unittest.main()

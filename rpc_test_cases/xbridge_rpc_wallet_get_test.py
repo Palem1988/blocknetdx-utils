@@ -36,18 +36,21 @@ class wallet_get_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": str(func_name), "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('%s FAILED' % (str(func_name)))
+                    xbridge_logger.logger.info('%s FAILED: %s' % (str(func_name), str(ass_err)))
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": func_name, "success": 0, "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('%s ERROR: %s' % str(json_excpt), str(ass_err))
 
     def test_getunconfirmedbalance(self):
         try:
             log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.getunconfirmedbalance(), Decimal)
-            log_json = {"group": "test_getunconfirmedbalance", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_getunconfirmedbalance", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_getunconfirmedbalance", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getunconfirmedbalance unit test FAILED: %s' % ass_err)
+            xbridge_logger.XLOG("test_getunconfirmedbalance", 1, ass_err)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.XLOG("test_getunconfirmedbalance", 2, json_excpt)
 
     def test_getrawchangeaddress(self):
         try:
@@ -55,30 +58,21 @@ class wallet_get_UnitTest(unittest.TestCase):
             new_address = xbridge_rpc.rpc_connection.getrawchangeaddress()
             self.assertIsInstance(new_address, str)
             self.assertEqual(len(new_address), 34)
-            log_json = {"group": "test_getrawchangeaddress", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_getrawchangeaddress", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_getrawchangeaddress", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('getrawchangeaddress unit test FAILED: %s' % ass_err)
-
+            xbridge_logger.XLOG("test_getrawchangeaddress", 1, ass_err)
+        except JSONRPCException as json_excpt:
+            xbridge_logger.XLOG("test_getrawchangeaddress", 2, json_excpt)
+            
     def test_get_stake_threshold(self):
         try:
             log_json = ""
-            rst = xbridge_rpc.rpc_connection.getstakesplitthreshold()
-            self.assertIsInstance(rst, dict)
-            self.assertIsInstance(rst["split stake threshold set to "], int)
-            log_json = {"group": "test_get_stake_threshold", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            self.assertIsInstance(xbridge_rpc.rpc_connection.getstakesplitthreshold(), dict)
+            xbridge_logger.XLOG("test_get_stake_threshold", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_get_stake_threshold", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('get_stake_threshold FAILED: %s' % ass_err)
+            xbridge_logger.XLOG("test_get_stake_threshold", 1, ass_err)
         except JSONRPCException as json_excpt:
-            log_json = {"group": "test_get_stake_threshold", "success": 0, "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_stake_threshold ERROR: %s' % str(json_excpt))
-            xbridge_logger.logger.info('param: %s \n' % json_excpt)
+            xbridge_logger.XLOG("test_get_stake_threshold", 2, json_excpt)
 
     def test_getnewaddress(self):
         try:
@@ -87,18 +81,11 @@ class wallet_get_UnitTest(unittest.TestCase):
             new_address = xbridge_rpc.rpc_connection.getnewaddress()
             self.assertIsInstance(new_address, str)
             self.assertEqual(len(new_address), 34)
-            log_json = {"group": "test_getnewaddress", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_getnewaddress", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_getnewaddress", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_getnewaddress FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('param: %s \n' % new_address)
+            xbridge_logger.XLOG("test_getnewaddress", 1, ass_err, [new_address])
         except JSONRPCException as json_excpt:
-            log_json = {"group": "test_getnewaddress", "success": 0, "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_getnewaddress ERROR: %s' % str(json_excpt))
-            xbridge_logger.logger.info('param: %s \n' % new_address)
+            xbridge_logger.XLOG("test_getnewaddress", 2, json_excpt, [new_address])
 
     def test_get_received_by_account(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -113,44 +100,29 @@ class wallet_get_UnitTest(unittest.TestCase):
                         self.assertIsNone(xbridge_rpc.getreceivedbyaccount(basic_garbage_str))
                     else:
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getreceivedbyaccount, basic_garbage_str)
-                    log_json = {"group": "test_get_received_by_account", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_get_received_by_account", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_get_received_by_account", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_get_received_by_account FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getreceivedbyaddress", 1, ass_err, [basic_garbage_str])
                 except JSONRPCException as json_excpt:
-                    log_json = {"group": "test_get_received_by_account", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_get_received_by_account ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getreceivedbyaddress", 2, json_excpt, [basic_garbage_str])
 
     def test_getreceivedbyaddress(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getreceivedbyaddress, basic_garbage_str)
-                    log_json = {"group": "test_getreceivedbyaddress", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_getreceivedbyaddress", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_getreceivedbyaddress", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_getreceivedbyaddress unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getreceivedbyaddress", 1, ass_err, [basic_garbage_str])
 
     def test_getaccount(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.getaccount, basic_garbage_str)
-                    log_json = {"group": "test_getaccount", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_getaccount", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_getaccount", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_getaccount unit test FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getaccount", 1, ass_err, [basic_garbage_str])
 
     def test_getaccountaddress(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -162,18 +134,11 @@ class wallet_get_UnitTest(unittest.TestCase):
                         self.assertIsNone(xbridge_rpc.getaccountaddress(basic_garbage_str))
                     else:
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getaccountaddress, basic_garbage_str)
-                    log_json = {"group": "test_getaccountaddress", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_getaccountaddress", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_getaccountaddress", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_getaccountaddress FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('basic_garbage_str: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getaccountaddress", 1, ass_err, [basic_garbage_str])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_getaccountaddress ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_getaccountaddress", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('param: %s' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getaccountaddress", 2, json_excpt, [basic_garbage_str])
 
     def test_getaddressesbyaccount(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
@@ -186,34 +151,22 @@ class wallet_get_UnitTest(unittest.TestCase):
                         self.assertIsNone(xbridge_rpc.getaddressesbyaccount(basic_garbage_str))
                     else:
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getaddressesbyaccount, basic_garbage_str)
-                    log_json = {"group": "test_getaddressesbyaccount", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_getaddressesbyaccount", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_getaddressesbyaccount", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_getaddressesbyaccount FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getaddressesbyaccount", 1, ass_err, [basic_garbage_str])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_getaddressesbyaccount ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_getaddressesbyaccount", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('param: %s' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_getaddressesbyaccount", 2, json_excpt, [basic_garbage_str])
 
     def test_gettransaction(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.gettransaction, basic_garbage_str)
-                    log_json = {"group": "test_gettransaction", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_gettransaction", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_gettransaction", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_gettransaction FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    xbridge_logger.XLOG("test_gettransaction", 1, ass_err, [basic_garbage_str])
 
     # getbalance ( "account" minconf includeWatchonly )
-    # TODO : review
     def test_getbalance(self):
         for i in range(subTest_count):
             log_json = ""
@@ -236,21 +189,10 @@ class wallet_get_UnitTest(unittest.TestCase):
                         self.assertIsInstance(xbridge_rpc.getbalance(optional_account, optional_minconf, optional_includeWatchonly), Decimal)
                     else:
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.getbalance, optional_account, optional_minconf, optional_includeWatchonly)
-                    log_json = {"group": "test_getbalance", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.XLOG("test_getbalance", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_getbalance", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_getbalance FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account))
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % optional_includeWatchonly)
+                    xbridge_logger.XLOG("test_getbalance", 1, ass_err, [optional_account, optional_minconf, optional_includeWatchonly])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.logger.info('test_getbalance ERROR: %s' % str(json_excpt))
-                    log_json = {"group": "test_getbalance", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account))
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf))
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % optional_includeWatchonly)
-        
+                    xbridge_logger.XLOG("test_getbalance", 2, json_excpt, [optional_account, optional_minconf, optional_includeWatchonly])
+                    
 # unittest.main()
