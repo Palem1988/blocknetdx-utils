@@ -201,7 +201,7 @@ def settxfee(amount=None):
     try:
         return rpc_connection.settxfee(amount)
     except JSONRPCException as json_excpt:
-        if str(json_excpt) in valid_msgs:
+        if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
 
 # sendtoaddress "blocknetdxaddress" amount ( "comment" "comment-to" )
