@@ -23,34 +23,22 @@ class wallet_List_UnitTest(unittest.TestCase):
     # listaddressgroupings
     def test_listaddressgroupings(self):
         try:
-            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listaddressgroupings(), list)
-            log_json = {"group": "test_listaddressgroupings", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listaddressgroupings", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_listaddressgroupings", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('listaddressgroupings FAILED: %s' % ass_err)
+            xbridge_logger.XLOG("test_listaddressgroupings", 1, ass_err)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('listaddressgroupings ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_listlockunspent", "success": 0, "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listaddressgroupings", 2, json_excpt)
 
     # listlockunspent
     def test_listlockunspent(self):
         try:
-            log_json = ""
             self.assertIsInstance(xbridge_rpc.rpc_connection.listlockunspent(), list)
-            log_json = {"group": "test_listlockunspent", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listlockunspent", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_listlockunspent", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_listlockunspent FAILED: %s' % ass_err)
+            xbridge_logger.XLOG("test_listlockunspent", 1, ass_err)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_listlockunspent ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_listlockunspent", "success": 0, "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listlockunspent", 2, json_excpt)
             
     # listreceivedbyaccount (minconf includeempty includeWatchonly)
     def test_listreceivedbyaccount_valid(self):
@@ -61,28 +49,16 @@ class wallet_List_UnitTest(unittest.TestCase):
             optional_includeempty = random.choice([True, False])
             optional_includeWatchonly = random.choice([True, False])
             self.assertIsInstance(xbridge_rpc.rpc_connection.listreceivedbyaccount(optional_minconf, optional_includeempty, optional_includeWatchonly), list)
-            log_json = {"group": "test_listreceivedbyaccount_valid", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_listreceivedbyaccount_valid", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_listreceivedbyaccount_valid FAILED: %s \n' % ass_err)
-            xbridge_logger.logger.info('optional_minconf: %s \n' % str(optional_minconf)[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeempty: %s \n' % str(optional_includeempty)[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeWatchonly: %s \n' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+            xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 1, ass_err, [optional_minconf, optional_includeempty, optional_includeWatchonly])
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_listreceivedbyaccount_valid ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_listreceivedbyaccount_valid", "success": 0, "failure": 0, "error": 1}
-            xbridge_logger.logger.info('optional_minconf: %s \n' % str(optional_minconf)[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeempty: %s \n' % str(optional_includeempty)[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeWatchonly: %s \n' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 1, json_excpt, [optional_minconf, optional_includeempty, optional_includeWatchonly])
         
     # listreceivedbyaccount (minconf includeempty includeWatchonly)
     def test_listreceivedbyaccount_invalid(self):
         custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if x is not None]
         for i in range(subTest_count):
-            log_json = ""
             with self.subTest("subtest combinations"):
                 try:
                     optional_minconf = random.choice(custom_set)
@@ -90,39 +66,31 @@ class wallet_List_UnitTest(unittest.TestCase):
                     optional_includeWatchonly = random.choice(custom_set)
                     if isinstance(optional_minconf, int) and isinstance(optional_includeempty, bool) and isinstance(optional_includeWatchonly, bool):
                         continue
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.listreceivedbyaccount, optional_minconf, optional_includeempty, optional_includeWatchonly)
-                    log_json = {"group": "test_listreceivedbyaccount_invalid", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException,
+                                        xbridge_rpc.listreceivedbyaccount, optional_minconf,
+                                            optional_includeempty, optional_includeWatchonly)
+                    xbridge_logger.XLOG("test_listreceivedbyaccount_invalid", 0)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_listreceivedbyaccount_invalid", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_listreceivedbyaccount_invalid FAILED: %s' % ass_err)
+                    xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 1, ass_err, [optional_minconf,
+                                            optional_includeempty, optional_includeWatchonly])
         
     # listreceivedbyaddress (minconf includeempty includeWatchonly)
     def test_listreceivedbyaddress_valid(self):
-        log_json = ""
         try:
             self.assertIsInstance(xbridge_rpc.listreceivedbyaddress(), list)
             optional_minconf = xbridge_utils.generate_random_int(-9999999999, 9999999999)
             optional_includeempty = random.choice([True, False])
             optional_includeWatchonly = random.choice([True, False])
             self.assertIsInstance(xbridge_rpc.listreceivedbyaddress(optional_minconf, optional_includeempty, optional_includeWatchonly), list)
-            log_json = {"group": "test_listreceivedbyaddress_valid", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
+            xbridge_logger.XLOG("test_listreceivedbyaddress_valid", 0)
         except AssertionError as ass_err:
-            log_json = {"group": "test_listreceivedbyaddress_valid", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_listreceivedbyaddress_valid FAILED: %s \n' % ass_err)
-            xbridge_logger.logger.info('optional_minconf: %s \n' % optional_minconf[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeempty: %s \n' % optional_includeempty[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeWatchonly: %s \n' % optional_includeWatchonly[:MAX_LOG_LENGTH])
+            xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 1, ass_err, [optional_minconf,
+                                                                                 optional_includeempty,
+                                                                                 optional_includeWatchonly])
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_listreceivedbyaddress_valid ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_listreceivedbyaddress_valid", "success": 0, "failure": 0, "error": 1}
-            xbridge_logger.logger.info('optional_minconf: %s \n' % optional_minconf[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeempty: %s \n' % optional_includeempty[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('optional_includeWatchonly: %s \n' % optional_includeWatchonly[:MAX_LOG_LENGTH])
-            xbridge_utils.ERROR_LOG.append(log_json)    
+            xbridge_logger.XLOG("test_listreceivedbyaccount_valid", 2, json_excpt, [optional_minconf,
+                                                                                 optional_includeempty,
+                                                                                 optional_includeWatchonly])
         
     def test_listreceivedbyaddress_invalid(self):
         custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if x is not None]
@@ -141,10 +109,11 @@ class wallet_List_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_listreceivedbyaddress_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_listreceivedbyaddress_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeempty: %s' % str(optional_includeempty)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('test_listreceivedbyaddress_invalid FAILED: %s' % ass_err)
+                        xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeempty: %s' % str(optional_includeempty)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
                         
     # listtransactions ( "account" count from includeWatchonly)
     def test_listtransactions_valid(self):
@@ -182,18 +151,21 @@ class wallet_List_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_listtransactions_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('\ntest_listtransactions_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_count: %s' % str(optional_count)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_from: %s' % str(optional_from)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('optional_account: %s' % str(optional_account)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_count: %s' % str(optional_count)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_from: %s' % str(optional_from)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_listtransactions_invalid ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_listtransactions_invalid", "success": 0,  "failure": 0, "error": 1}
-                    xbridge_logger.logger.info('optional_account: %s' % str(optional_account)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_count: %s' % str(optional_count)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_from: %s' % str(optional_from)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
                     xbridge_utils.ERROR_LOG.append(log_json)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('optional_account: %s' % str(optional_account)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_count: %s' % str(optional_count)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_from: %s' % str(optional_from)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+
                     
     # listsinceblock ("blockhash" target-confirmations includeWatchonly)
     def test_listsinceblock_invalid(self):
@@ -213,18 +185,18 @@ class wallet_List_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_listsinceblock", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_listsinceblock FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_blockhash: %s' % str(optional_blockhash)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_target_confirmations: %s' % str(optional_target_confirmations)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('optional_blockhash: %s' % str(optional_blockhash)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_target_confirmations: %s' % str(optional_target_confirmations)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_listsinceblock ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_listsinceblock", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('optional_blockhash: %s' % str(optional_blockhash)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info(
-                        'optional_target_confirmations: %s' % str(optional_target_confirmations)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info(
-                        'optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('optional_blockhash: %s' % str(optional_blockhash)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_target_confirmations: %s' % str(optional_target_confirmations)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
     
     # listaccounts (minconf includeWatchonly)
     def test_listaccounts_valid_1(self):
@@ -248,12 +220,10 @@ class wallet_List_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_listaccounts_valid_2", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
-                    log_json = {"group": "test_listaccounts_valid_2", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_listaccounts_valid_2 FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
-    
+                    xbridge_logger.XLOG("test_listaccounts_valid_2", 1, ass_err, [optional_minconf, optional_includeWatchonly])
+                except JSONRPCException as json_excpt:
+                    xbridge_logger.XLOG("test_listaccounts_valid_2", 2, json_excpt, [optional_minconf, optional_includeWatchonly])
+
     # listaccounts (minconf includeWatchonly)
     def test_listaccounts_invalid(self):
         custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if x is not None]
@@ -271,9 +241,17 @@ class wallet_List_UnitTest(unittest.TestCase):
                 except AssertionError as ass_err:
                     log_json = {"group": "test_listaccounts_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('\ntest_listaccounts_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('\ntest_listaccounts_invalid FAILED: %s' % ass_err)
+                        xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": "test_listaccounts_invalid", "success": 0, "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('\ntest_listaccounts_invalid ERROR: %s' % json_excpt)
+                        xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('optional_includeWatchonly: %s' % str(optional_includeWatchonly)[:MAX_LOG_LENGTH])
       
 # unittest.main()
 
