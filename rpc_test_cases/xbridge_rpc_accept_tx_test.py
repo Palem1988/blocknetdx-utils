@@ -65,13 +65,14 @@ class accept_Tx_Test(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_invalid_accept_tx_1", "success": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('dxAccept unit test group 1 FAILED : %s \n' % str(ass_err))
-            xbridge_logger.logger.info('valid_txid: %s', self.valid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address[:MAX_LOG_LENGTH])
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('dxAccept unit test group 1 FAILED : %s \n' % str(ass_err))
+                xbridge_logger.logger.info('valid_txid: %s', self.valid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_txid: %s', self.invalid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_src_Address: %s', self.valid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_dest_Address: %s', self.valid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_src_Address: %s', self.invalid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_dest_Address: %s', self.invalid_dest_Address[:MAX_LOG_LENGTH])
 
     # Combinations of empty parameters
     def test_invalid_accept_tx_2(self):
@@ -94,16 +95,17 @@ class accept_Tx_Test(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_invalid_accept_tx_2", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_accept_tx_2 FAILED: %s \n' % str(ass_err))
-            xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_txid: [%s]', self.invalid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('whitespace_str_1 length: [%s]', str(len(whitespace_str_1)))
-            xbridge_logger.logger.info('whitespace_str_2 length: [%s]', str(len(whitespace_str_2)))
-            xbridge_logger.logger.info('whitespace_str_3 length: [%s]', str(len(whitespace_str_3)))
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('test_invalid_accept_tx_2 FAILED: %s \n' % str(ass_err))
+                xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_txid: [%s]', self.invalid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('whitespace_str_1 length: [%s]', str(len(whitespace_str_1)))
+                xbridge_logger.logger.info('whitespace_str_2 length: [%s]', str(len(whitespace_str_2)))
+                xbridge_logger.logger.info('whitespace_str_3 length: [%s]', str(len(whitespace_str_3)))
             
     # Input parameter(s) is from combination of random character classes
     def test_invalid_accept_tx_3(self):
@@ -120,14 +122,15 @@ class accept_Tx_Test(unittest.TestCase):
             log_json = {"group": "test_invalid_accept_tx_3", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_invalid_accept_tx_3 FAILED: %s \n' % str(ass_err))
-            xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('input_str_from_random_classes_1: [%s]', self.input_str_from_random_classes_1[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('input_str_from_random_classes_2: [%s]', self.input_str_from_random_classes_2[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('input_str_from_random_classes_3: [%s]', self.input_str_from_random_classes_3[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('input_str_from_random_classes_1: [%s]', self.input_str_from_random_classes_1[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('input_str_from_random_classes_2: [%s]', self.input_str_from_random_classes_2[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('input_str_from_random_classes_3: [%s]', self.input_str_from_random_classes_3[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
         
     # Combinations of very long addresses and transaction ids
     def invalid_accept_tx_4(self):
@@ -145,14 +148,15 @@ class accept_Tx_Test(unittest.TestCase):
             log_json = {"group": "invalid_accept_tx_4", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('invalid_accept_tx_4 FAILED: %s \n' % str(ass_err))
-            xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('long_txid: [%s]', self.long_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('long_src_Address: [%s]', self.long_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('long_dest_Address: [%s]', self.long_dest_Address[:MAX_LOG_LENGTH])
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('long_txid: [%s]', self.long_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_dest_Address: [%s]', self.valid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_dest_Address: [%s]', self.invalid_dest_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('long_src_Address: [%s]', self.long_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('long_dest_Address: [%s]', self.long_dest_Address[:MAX_LOG_LENGTH])
 
     # Combinations of same source and dest Addresses
     def test_invalid_accept_tx_5(self):
@@ -168,11 +172,12 @@ class accept_Tx_Test(unittest.TestCase):
         except AssertionError as ass_err:
             log_json = {"group": "test_invalid_accept_tx_5", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_accept_tx_5 FAILED: %s \n' % str(ass_err))
-            xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_txid: [%s]', self.invalid_txid[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
-            xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('test_invalid_accept_tx_5 FAILED: %s \n' % str(ass_err))
+                xbridge_logger.logger.info('valid_txid: [%s]', self.valid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_txid: [%s]', self.invalid_txid[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('valid_src_Address: [%s]', self.valid_src_Address[:MAX_LOG_LENGTH])
+                xbridge_logger.logger.info('invalid_src_Address: [%s]', self.invalid_src_Address[:MAX_LOG_LENGTH])
 
 
 # unittest.main()
