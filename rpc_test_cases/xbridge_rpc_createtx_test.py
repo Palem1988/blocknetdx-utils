@@ -54,7 +54,6 @@ class create_Tx_Test(unittest.TestCase):
     @unittest.skip("IN REVIEW")
     def test_invalid_create_tx_v0(self):
         for i in range(subTest_count):
-            log_json = ""
             with self.subTest("random garbage"):
                 try:
                     txid = random.choice(xbridge_utils.set_of_invalid_parameters)
@@ -111,7 +110,6 @@ class create_Tx_Test(unittest.TestCase):
     @unittest.skip("IN TESTING")
     def test_invalid_create_tx_v1(self):
         for i in range(subTest_count):
-            log_json = ""
             with self.subTest("combinations"):
                 try:
                     src_Token = random.choice(self.token_pool)
@@ -176,7 +174,7 @@ class create_Tx_Test(unittest.TestCase):
             dest_Address = random.choice(self.address_pool)
             if (src_Address == dest_Address):
                 dest_Address = random.choice(self.address_pool)
-        with self.subTest("Same source and destination Addresses"):
+        with self.subTest("Same source and destination Addresses, different tokens"):
             try:
                 # print("test_invalid_create_tx_v3 - src_Address: %s" % str(src_Address))
                 self.assertIsInstance(
@@ -189,13 +187,25 @@ class create_Tx_Test(unittest.TestCase):
             except JSONRPCException as json_excpt:
                 xbridge_logger.XLOG("test_invalid_create_tx_v3", 2, json_excpt,
                                     [src_Address, src_Token, src_Amount, src_Address, dest_Token, dest_Amount])
-        with self.subTest("same source and destination Tokens, different addresses"):
+        with self.subTest("Same source and destination tokens, different addresses"):
             try:
+                self.assertIsInstance(
+                    xbridge_rpc.create_tx(src_Address, src_Token, src_Amount, dest_Address, src_Token, dest_Amount),
+                    dict)
+                xbridge_logger.XLOG("test_invalid_create_tx_v3", 0)
+            except AssertionError as ass_err:
+                xbridge_logger.XLOG("test_invalid_create_tx_v3", 1, ass_err,
+                                    [src_Address, src_Token, src_Amount, src_Address, dest_Token, dest_Amount])
+            except JSONRPCException as json_excpt:
+                xbridge_logger.XLOG("test_invalid_create_tx_v3", 2, json_excpt,
+                                    [src_Address, src_Token, src_Amount, src_Address, dest_Token, dest_Amount])
+        with self.subTest("same source and destination Tokens, and addresses"):
+            try:
+                param_vector = [src_Address, src_Token, src_Amount, src_Address, src_Token, dest_Amount]
                 self.assertIsInstance(
                     xbridge_rpc.create_tx(src_Address, src_Token, src_Amount, src_Address, src_Token, dest_Amount),
                     dict)
                 xbridge_logger.XLOG("test_invalid_create_tx_v3", 0)
-                param_vector = [src_Address, src_Token, src_Amount, src_Address, src_Token, dest_Amount]
                 # for param in param_vector:
                 #    print("test_invalid_create_tx_v3 param: %s" % (str(param)[:10]))
             except AssertionError as ass_err:
@@ -207,7 +217,6 @@ class create_Tx_Test(unittest.TestCase):
     # @unittest.skip("IN TESTING")
     def test_invalid_create_tx_v4(self):
         for i in range(subTest_count):
-            log_json = ""
             with self.subTest("combinations"):
                 try:
                     address_with_quotes_1 = "'" + str(xbridge_utils.generate_random_valid_address()) + "'"
