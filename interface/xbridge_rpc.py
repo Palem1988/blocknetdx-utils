@@ -55,16 +55,16 @@ def get_tx_info(txid=None):
 def create_tx(fromAddress=None, fromToken=None, fromAmount=None, toAddress=None, toToken=None, toAmount=None):
     try:
         return rpc_connection.dxCreateTransaction(fromAddress, fromToken, fromAmount, toAddress, toToken, toAmount)
-    except JSONRPCException as json_err:
-        if str(json_err) in valid_msgs:
-            raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
     
 def accept_tx(txid=None, src=None, dest=None):
     try:
         return rpc_connection.dxAcceptTransaction(txid, src, dest)
-    except JSONRPCException as json_err:
-        if str(json_err) in valid_msgs:
-            raise xbridge_custom_exceptions.ValidBlockNetException("JSONRPCException") from json_err
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
     
 def get_currency_list():
     return rpc_connection.dxGetCurrencyList()
