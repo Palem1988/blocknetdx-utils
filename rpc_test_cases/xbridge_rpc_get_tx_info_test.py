@@ -1,7 +1,7 @@
 import unittest
-import time
 import xbridge_logger
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+from utils import xbridge_custom_exceptions
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
@@ -57,39 +57,63 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_invalid_get_tx_info_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_get_tx_info_1 FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_get_tx_info_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_get_tx_info_1 ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
+    def test_invalid_get_tx_info_2(self):
+        for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
+            with self.subTest(basic_garbage_str=basic_garbage_str):
+                try:
+                    self.assertIsInstance(xbridge_rpc.get_tx_info, list)
+                    log_json = {"group": "test_invalid_get_tx_info_2", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_invalid_get_tx_info_2", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_get_tx_info_2 FAILED: %s' % ass_err)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": "test_invalid_get_tx_info_2", "success": 0,  "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_get_tx_info_2 ERROR: %s' % str(json_excpt))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
+                        
     """
           - Character classes are chosen randomly
           - Size of the input parameter is chosen randomly too.
     """
-    def test_invalid_get_tx_info_2(self):
+    def test_invalid_get_tx_info_3(self):
         try:
             self.assertIsInstance(xbridge_rpc.get_tx_info(self.random_length_str_with_random_char_class), list)
-            log_json = {"group": "test_invalid_get_tx_info_2", "success": 1, "failure": 0, "error": 0}
+            log_json = {"group": "test_invalid_get_tx_info_3", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            log_json = {"group": "test_invalid_get_tx_info_2", "success": 0, "failure": 1, "error": 0}
+            log_json = {"group": "test_invalid_get_tx_info_3", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_get_tx_info_2 FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
+            xbridge_logger.logger.info('test_invalid_get_tx_info_3 FAILED: %s' % ass_err)
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
         except JSONRPCException as json_excpt:
-            log_json = {"group": "test_invalid_get_tx_info_2", "success": 0,  "failure": 0, "error": 1}
+            log_json = {"group": "test_invalid_get_tx_info_3", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_invalid_get_tx_info_2 ERROR: %s' % str(json_excpt))
-            xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
+            xbridge_logger.logger.info('test_invalid_get_tx_info_3 ERROR: %s' % str(json_excpt))
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('param: %s \n' % str(self.random_length_str_with_random_char_class)[:MAX_LOG_LENGTH])
                 
     """
           - We test various random inputs from individual character classes.
           - We then combine those character classes.
           - Size of the input parameter is fixed.
     """
-    def test_invalid_get_tx_info_3(self):
+    def test_invalid_get_tx_info_4(self):
         string_length=64
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
             for sub_item in itm:
@@ -98,51 +122,27 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         clss_str = sub_item + "{" + str(string_length) + "}"
                         generated_str = StringGenerator(clss_str).render()
                         self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
-                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 1, "failure": 0, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                    except AssertionError as ass_err:
-                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 0, "failure": 1, "error": 0}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_get_tx_info_3 FAILED: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
-                    except JSONRPCException as json_excpt:
-                        log_json = {"group": "test_invalid_get_tx_info_3", "success": 0,  "failure": 0, "error": 1}
-                        xbridge_utils.ERROR_LOG.append(log_json)
-                        xbridge_logger.logger.info('test_invalid_get_tx_info_3 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
-
-    """
-          - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
-    """
-    def test_invalid_get_tx_info_4(self):
-        string_lower_bound=9000
-        string_upper_bound=11000
-        for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
-            for sub_item in itm:
-                with self.subTest(sub_item=sub_item):
-                    try:
-                        clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
-                        generated_str = StringGenerator(clss_str).render()
-                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
                         log_json = {"group": "test_invalid_get_tx_info_4", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
                         log_json = {"group": "test_invalid_get_tx_info_4", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_get_tx_info_4 FAILED: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_get_tx_info_4", "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_get_tx_info_4 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
     """
-          - Same as before, but now the random input parameters are of random length [1-4 000]
+          - Same as before, but now the random strings are of random but always very high size [9 000-11 000]
     """
     def test_invalid_get_tx_info_5(self):
-        string_lower_bound=1
-        string_upper_bound=4000
+        string_lower_bound=9000
+        string_upper_bound=11000
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
             for sub_item in itm:
                 with self.subTest(sub_item=sub_item):
@@ -156,54 +156,44 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         log_json = {"group": "test_invalid_get_tx_info_5", "success": 0, "failure": 1, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_get_tx_info_5 FAILED: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
                     except JSONRPCException as json_excpt:
                         log_json = {"group": "test_invalid_get_tx_info_5", "success": 0,  "failure": 0, "error": 1}
                         xbridge_utils.ERROR_LOG.append(log_json)
                         xbridge_logger.logger.info('test_invalid_get_tx_info_5 ERROR: %s' % str(json_excpt))
-                        xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
-    def test_get_transaction_list(self):
-        try:
-            self.assertIsInstance(xbridge_rpc.get_transaction_list(), list)
-            log_json = {"group": "test_get_transaction_list", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_list FAILED: %s' % ass_err)
-        except JSONRPCException as json_err:
-            log_json = {"group": "test_get_transaction_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_list ERROR: %s' % json_err)
+    """
+          - Same as before, but now the random input parameters are of random length [1-4 000]
+    """
+    def test_invalid_get_tx_info_6(self):
+        string_lower_bound=1
+        string_upper_bound=4000
+        for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
+            for sub_item in itm:
+                with self.subTest(sub_item=sub_item):
+                    try:
+                        clss_str = sub_item + "{" + str(string_lower_bound) + ":" + str(string_upper_bound) + "}"
+                        generated_str = StringGenerator(clss_str).render()
+                        self.assertIsInstance(xbridge_rpc.get_tx_info(generated_str), list)
+                        log_json = {"group": "test_invalid_get_tx_info_6", "success": 1, "failure": 0, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                    except AssertionError as ass_err:
+                        log_json = {"group": "test_invalid_get_tx_info_6", "success": 0, "failure": 1, "error": 0}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_6 FAILED: %s' % str(json_excpt))
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
+                    except JSONRPCException as json_excpt:
+                        log_json = {"group": "test_invalid_get_tx_info_6", "success": 0,  "failure": 0, "error": 1}
+                        xbridge_utils.ERROR_LOG.append(log_json)
+                        xbridge_logger.logger.info('test_invalid_get_tx_info_6 ERROR: %s' % str(json_excpt))
+                        if MAX_LOG_LENGTH > 0:
+                            xbridge_logger.logger.info('param: %s \n' % str(generated_str)[:MAX_LOG_LENGTH])
 
-    def test_get_transaction_history_list(self):
-        try:
-            self.assertIsInstance(xbridge_rpc.get_transaction_history_list(), list)
-            log_json = {"group": "test_get_transaction_history_list", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_history_list FAILED: %s' % ass_err)
-        except JSONRPCException as json_err:
-            log_json = {"group": "test_get_transaction_history_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_transaction_history_list ERROR: %s' % json_err)
-
-    def test_get_currency_list(self):
-        try:
-            self.assertIsInstance(xbridge_rpc.get_currency_list(), dict)
-            log_json = {"group": "test_get_currency_list", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_currency_list FAILED: %s' % ass_err)
-        except JSONRPCException as json_err:
-            log_json = {"group": "test_get_currency_list", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_get_currency_list ERROR: %s' % json_err)
+    
 
 
 # unittest.main()
