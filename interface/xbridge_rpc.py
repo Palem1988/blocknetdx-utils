@@ -18,13 +18,16 @@ else:
     print("credential information missing in the tests.conf file. Program stopped")
     exit(1)
 
-valid_msgs = ["-22: TX decode failed", 
+valid_msgs = ["-22: TX decode failed",
+              "TX decode failed",
                     "-3: Invalid address",
+                    "Invalid BLOCK address",
                     "Invalid BlocknetDX address",
                     "-32700: Parse error",
                     "Parse error"
                     "must be hexadecimal string",
-                    "txid must be hexadecimal string",                    
+                    "txid must be hexadecimal string",
+                    "-8: argument 1 must be hexadecimal string",
                     "-3: Expected type",
                     "Expected type"
                     "Invalid private key encoding", 
@@ -32,6 +35,7 @@ valid_msgs = ["-22: TX decode failed",
                     "Invalid parameter",
                     "Cannot open wallet dump file",
                     "get_value",
+                    "get_value<",
                     "Insufficient funds", 
                     "Invalid amount",
                     "running with an unencrypted wallet, but walletpassphrase was called", 
@@ -53,7 +57,7 @@ def cancel_tx(txid=None):
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
     
-def get_tx_info(txid=None):
+def get_tx_info(txid):
     try:
         return rpc_connection.dxGetTransactionInfo(txid)
     except JSONRPCException as json_excpt:
@@ -312,6 +316,8 @@ def addnode(node_str, cmd):
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        # else:
+        #    print("unchained: %s" % json_excpt)
 
 # getaddednodeinfo dns bool ( "node" )
 def getaddednodeinfo(dns_bool, node_str=None):
@@ -434,9 +440,13 @@ def signmessage(address=None, msg=None):
 def signrawtransaction(hexstring=None, optional_param=None):
     try:
         return rpc_connection.signrawtransaction(hexstring, optional_param)
+        # return rpc_connection.signrawtransaction(hexstring)
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
+            # print("chained signrawtx")
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+        # else:
+            # print("not chained: %s" % json_excpt)
 
 # mnbudgetvoteraw <servicenode-tx-hash> <servicenode-tx-index> <proposal-hash> <yes|no> <time> <vote-sig>
 def mnbudgetvoteraw(txhash=None, txindex=None, proposal_hash=None, yes_no=None, time=None, vote_sig=None):
