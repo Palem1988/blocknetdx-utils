@@ -57,7 +57,8 @@ class accept_Tx_Test(unittest.TestCase):
                     txid = random.choice(xbridge_utils.set_of_invalid_parameters)
                     src_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     dest_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, txid, src_Address, dest_Address)
+                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, txid, src_Address, dest_Address)
+                    self.assertIsInstance(xbridge_rpc.accept_tx(txid, src_Address, dest_Address), dict)
                     xbridge_logger.XLOG("test_invalid_accept_tx_0a", 0)
                 except AssertionError as ass_err:
                     xbridge_logger.XLOG("test_invalid_accept_tx_0a", 1, ass_err, [txid, src_Address, dest_Address])
@@ -67,12 +68,13 @@ class accept_Tx_Test(unittest.TestCase):
     # Specific combinations of valid and invalid parameters
     def test_invalid_accept_tx_1(self):
         try:
-           log_json = ""
-           self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.valid_txid, self.invalid_src_Address, self.valid_dest_Address)
-           self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.valid_txid, self.invalid_src_Address, self.invalid_dest_Address)
-           self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.invalid_txid, self.invalid_src_Address, self.invalid_dest_Address)
-           self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address)
-           self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.invalid_txid, self.valid_src_Address, self.valid_dest_Address)
+           self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.valid_dest_Address), dict)
+           self.assertIsInstance(xbridge_rpc.accept_tx(self.valid_txid, self.invalid_src_Address, self.invalid_dest_Address), dict)
+           self.assertIsInstance(xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.invalid_dest_Address), dict)
+           self.assertIsInstance(
+               xbridge_rpc.accept_tx(self.invalid_txid, self.invalid_src_Address, self.valid_dest_Address), dict)
+           self.assertIsInstance(
+               xbridge_rpc.accept_tx(self.invalid_txid, self.valid_src_Address, self.valid_dest_Address), dict)
            xbridge_logger.XLOG("test_invalid_accept_tx_1", 0)
         except AssertionError as ass_err:
             xbridge_logger.XLOG("test_invalid_accept_tx_1", 1, ass_err)
@@ -113,7 +115,7 @@ class accept_Tx_Test(unittest.TestCase):
                     # set intersection to determine if at least one param is whitespace string
                     if len(set(whitespace_set) & set(chosen_parameters_set)) < 1:
                         continue
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, param_1, param_2, param_3)
+                    self.assertIsInstance(xbridge_rpc.accept_tx(param_1, param_2, param_3), dict)
                     xbridge_logger.XLOG("test_invalid_accept_tx_2", 0)
                 except AssertionError as ass_err:
                     xbridge_logger.XLOG("test_invalid_accept_tx_2", 1, ass_err, [param_1, param_2, param_3])
@@ -124,11 +126,15 @@ class accept_Tx_Test(unittest.TestCase):
     def test_invalid_accept_tx_3(self):
         try:
             log_json = ""
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.input_str_from_random_classes_1, self.valid_src_Address, self.valid_dest_Address)
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.valid_txid, self.input_str_from_random_classes_1, self.valid_dest_Address)
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1)
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1)
-            self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3)
+            self.assertIsInstance(xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.valid_src_Address, self.valid_dest_Address), dict)
+            self.assertIsInstance(
+                xbridge_rpc.accept_tx(self.valid_txid, self.input_str_from_random_classes_1, self.valid_dest_Address), dict)
+            self.assertIsInstance(
+                xbridge_rpc.accept_tx(self.valid_txid, self.valid_src_Address, self.input_str_from_random_classes_1), dict)
+            self.assertIsInstance(
+                xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_1, self.input_str_from_random_classes_1), dict)
+            self.assertIsInstance(
+                xbridge_rpc.accept_tx(self.input_str_from_random_classes_1, self.input_str_from_random_classes_2, self.input_str_from_random_classes_3), dict)
             log_json = {"group": "test_invalid_accept_tx_3", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
@@ -178,13 +184,13 @@ class accept_Tx_Test(unittest.TestCase):
                 try:
                     txid_from_invalid_set = random.choice(xbridge_utils.set_of_invalid_parameters)
                     picked_txid = random.choice([txid_from_invalid_set, self.valid_txid])
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.accept_tx, picked_txid, self.valid_src_Address, self.valid_src_Address)
+                    self.assertIsInstance(
+                        xbridge_rpc.accept_tx(picked_txid, self.valid_src_Address, self.valid_src_Address), dict)
                     xbridge_logger.XLOG("test_invalid_accept_tx_5", 0)
                 except AssertionError as ass_err:
                     xbridge_logger.XLOG("test_invalid_accept_tx_5", 1, ass_err, [picked_txid, self.valid_src_Address, self.valid_src_Address])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.XLOG("test_invalid_accept_tx_5", 2, json_excpt, [picked_txid, self.valid_src_Address, self.valid_src_Address])
-
 
 # unittest.main()
 
@@ -193,7 +199,7 @@ suite = unittest.TestSuite()
 for i in range(1):
     # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
     # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
-    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0b_noseq"))
+    suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
 # suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
