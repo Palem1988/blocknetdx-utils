@@ -74,14 +74,21 @@ def accept_tx(txid=None, src=None, dest=None):
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
     
-def get_currency_list():
-    return rpc_connection.dxGetCurrencyList()
+def dxGetCurrencies():
+    return rpc_connection.dxGetCurrencies()
 
-def get_transaction_list():
-    return rpc_connection.dxGetTransactionList()
+def dxGetTransactions():
+    return rpc_connection.dxGetTransactions()
 
-def get_transaction_history_list():
-    return rpc_connection.dxGetTransactionsHistoryList()
+def dxGetTransactionsHistory():
+    return rpc_connection.dxGetTransactionsHistory()
+
+#  dxGetOrderBook (the level of detail) (from currency) (to currency) (max orders - optional, default = 50)  (code -1)
+def dxGetOrderBook():
+    return rpc_connection.dxGetOrderBook()
+
+def dxGetTradeHistory():
+    return rpc_connection.dxGetTradeHistory()
 
 def get_core_version():
     try:
