@@ -19,7 +19,7 @@ class send_UnitTest(unittest.TestCase):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
     # multisend <command>
-    # @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
+    @unittest.skip("IN REVIEW")
     def test_multisend_valid(self):
         log_json = ""
         valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()

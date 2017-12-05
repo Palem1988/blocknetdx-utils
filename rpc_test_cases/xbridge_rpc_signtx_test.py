@@ -68,6 +68,7 @@ class signUnitTest(unittest.TestCase):
                     try:
                         generated_str = StringGenerator(clss_str).render()
                         self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.signrawtransaction, generated_str)
+                        # self.assertRaises(JSONRPCException, xbridge_rpc.signrawtransaction, generated_str)
                         log_json = {"group": "test_invalid_sign_2", "success": 1, "failure": 0, "error": 0}
                         xbridge_utils.ERROR_LOG.append(log_json)
                     except AssertionError as ass_err:
@@ -151,16 +152,15 @@ if __name__ == '__main__':
     unittest.main()
 unittest.main()
 """
+
 """
 suite = unittest.TestSuite()
-for i in range(50):
-    suite.addTest(signUnitTest("test_invalid_sign_4"))
+for i in range(1):
+    suite.addTest(signUnitTest("test_invalid_sign_2"))
     # suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
 
-"""
-unittest.main()
-"""
+# unittest.main()
 

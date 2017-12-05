@@ -18,19 +18,19 @@ class Network_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
+    @unittest.skip("IN REVIEW")
     def test_addnode_invalid(self):
-        log_json = ""
         if xbridge_config.get_wallet_decryption_passphrase() == "":
             return
         valid_passphrase = xbridge_config.get_wallet_decryption_passphrase()
-        random_int = xbridge_utils.generate_random_int(-999999999999, 999999999999)
-        xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
+        random_int = xbridge_utils.generate_random_int(1, 9999)
         for i in range(subTest_count):
             log_json = ""
             with self.subTest("comb"):
                 try:
                     node = random.choice(xbridge_utils.set_of_invalid_parameters)
                     cmd = random.choice(xbridge_utils.set_of_invalid_parameters)
+                    xbridge_rpc.walletpassphrase(valid_passphrase, random_int, False)
                     self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.addnode, node, cmd)
                     log_json = {"group": "test_addnode_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
@@ -155,6 +155,7 @@ class Network_UnitTest(unittest.TestCase):
             xbridge_utils.ERROR_LOG.append(log_json)
 
 # unittest.main()
+
 
 """
 suite = unittest.TestSuite()

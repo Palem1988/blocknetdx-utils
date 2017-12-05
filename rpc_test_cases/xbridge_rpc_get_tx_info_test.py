@@ -67,10 +67,12 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('param: %s \n' % str(basic_garbage_str)[:MAX_LOG_LENGTH])
 
     def test_invalid_get_tx_info_2(self):
-        for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
+        custom_set = [x for x in xbridge_utils.set_of_invalid_parameters if not isinstance(x, str)]
+        for basic_garbage_str in custom_set:
             with self.subTest(basic_garbage_str=basic_garbage_str):
                 try:
-                    self.assertIsInstance(xbridge_rpc.get_tx_info, list)
+                    # self.assertIsInstance(xbridge_rpc.get_tx_info, list)
+                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.get_tx_info, basic_garbage_str)
                     log_json = {"group": "test_invalid_get_tx_info_2", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -201,7 +203,7 @@ class get_Tx_Info_UnitTest(unittest.TestCase):
 """
 suite = unittest.TestSuite()
 # suite.addTest(Misc_UnitTest("test_autocombinerewards_valid"))
-suite.addTest(get_Tx_Info_UnitTest("test_get_transaction_list"))
+suite.addTest(get_Tx_Info_UnitTest("test_invalid_get_tx_info_2"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """

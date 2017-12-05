@@ -135,8 +135,8 @@ class create_Tx_Test(unittest.TestCase):
                     self.assertIsInstance(xbridge_rpc.create_tx(self.valid_src_Address, self.valid_src_Token, 0, dest_Address, dest_Token, 0), dict)
                     xbridge_logger.XLOG("test_invalid_create_tx_v1", 0)
                     param_vector = [src_Address, src_Token, self.invalid_neg_nb, src_Address, dest_Token, self.valid_positive_nb_2, self.valid_positive_nb_1]
-                    for param in param_vector:
-                        print("test_invalid_create_tx_v1 param: %s" % (str(param)[:10]))
+                    # for param in param_vector:
+                    #     print("test_invalid_create_tx_v1 param: %s" % (str(param)[:10]))
                 except AssertionError as ass_err:
                     xbridge_logger.XLOG("test_invalid_create_tx_v1", 1, ass_err, param_vector)
                 except JSONRPCException as json_excpt:
@@ -234,8 +234,8 @@ class create_Tx_Test(unittest.TestCase):
                     src_Amount = random.choice(self.amount_pool)
                     dest_Amount = random.choice(self.amount_pool)
                     param_vector = [src_Address, src_Token, src_Amount, src_Address, dest_Token, dest_Amount]
-                    for param in param_vector:
-                        print("test_invalid_create_tx_v4 param: %s" % (str(param)[:10]))
+                    # for param in param_vector:
+                    #     print("test_invalid_create_tx_v4 param: %s" % (str(param)[:10]))
                     self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, src_Amount, src_Address, dest_Token, dest_Amount), dict)
                     xbridge_logger.XLOG("test_invalid_create_tx_v4", 0)
                 except AssertionError as ass_err:
