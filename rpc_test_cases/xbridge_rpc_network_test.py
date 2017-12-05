@@ -38,14 +38,16 @@ class Network_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_addnode_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_addnode_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_addnode_invalid ERROR: %s' % str(json_excpt))
                     log_json = {"group": "test_addnode_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('node: %s' % str(node)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('cmd: %s' % str(cmd)[:MAX_LOG_LENGTH])
 
     # getaddednodeinfo dns bool ( "node" )
     # getaddednodeinfo true
@@ -74,15 +76,17 @@ class Network_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_getaddednodeinfo_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.logger.info('test_getaddednodeinfo_invalid ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
-                    xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
                     log_json = {"group": "test_getaddednodeinfo_invalid", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
-
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('dns: %s' % str(dns)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('node: %s' % str(dns)[:MAX_LOG_LENGTH])
+                    
     def test_get_connection_count(self):
         try:
             log_json = ""
@@ -152,6 +156,7 @@ class Network_UnitTest(unittest.TestCase):
 
 # unittest.main()
 
+"""
 suite = unittest.TestSuite()
 for i in range(1):
     # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
@@ -160,3 +165,4 @@ for i in range(1):
 # suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
+"""

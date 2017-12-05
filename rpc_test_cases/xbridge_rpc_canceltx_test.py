@@ -27,20 +27,46 @@ class cancelUnitTest(unittest.TestCase):
                     if isinstance(basic_garbage_str, str):
                         self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
                     else:
-                        self.assertRaises(JSONRPCException, xbridge_rpc.cancel_tx, basic_garbage_str)
+                        self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.cancel_tx, basic_garbage_str)
                     log_json = {"group": "test_invalid_cancel_1", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
                     log_json = {"group": "test_invalid_cancel_1", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_cancel_1 FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_invalid_cancel_1", "success": 0,  "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_invalid_cancel_1 ERROR: %s' % str(json_excpt))
-                    xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
+    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
+    def test_invalid_cancel_1b(self):
+        for basic_garbage_str in xbridge_utils.basic_garbage_list:
+            with self.subTest(basic_garbage_str=basic_garbage_str):
+                try:
+                    if isinstance(basic_garbage_str, str):
+                        self.assertIsInstance(xbridge_rpc.cancel_tx(basic_garbage_str), dict)
+                    else:
+                        self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.cancel_tx, basic_garbage_str)
+                    log_json = {"group": "test_invalid_cancel_1b", "success": 1, "failure": 0, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                except AssertionError as ass_err:
+                    log_json = {"group": "test_invalid_cancel_1b", "success": 0, "failure": 1, "error": 0}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_cancel_1b FAILED: %s' % ass_err)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
+                except JSONRPCException as json_excpt:
+                    log_json = {"group": "test_invalid_cancel_1b", "success": 0,  "failure": 0, "error": 1}
+                    xbridge_utils.ERROR_LOG.append(log_json)
+                    xbridge_logger.logger.info('test_invalid_cancel_1b ERROR: %s' % str(json_excpt))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)                        
+                        
     """
           - We test various random inputs from individual character classes.
           - We then combine those character classes.

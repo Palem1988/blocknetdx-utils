@@ -12,6 +12,7 @@ sys.path.insert(0,'..')
 import xbridge_config
 
 subTest_count = xbridge_config.get_conf_subtests_run_number()
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class Misc_UnitTest(unittest.TestCase):
     def setUp(self):
@@ -52,14 +53,17 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_signmessage_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
-                    xbridge_logger.logger.info('param: %s \n' % message)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info(
+                            'invalid_blocknet_address: %s \n' % str(invalid_blocknet_address)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('param: %s \n' % str(message)[:MAX_LOG_LENGTH])
                 except JSONRPCException as json_excpt:
                     log_json = {"group": "test_signmessage_invalid", "success": 0, "failure": 0, "error": 1}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_signmessage_invalid ERROR: %s' % json_excpt)
-                    xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % invalid_blocknet_address)
-                    xbridge_logger.logger.info('param: %s \n' % message)
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('invalid_blocknet_address: %s \n' % str(invalid_blocknet_address)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('param: %s \n' % str(message)[:MAX_LOG_LENGTH])
 
     # autocombinerewards <true/false> threshold
     def test_autocombinerewards_valid(self):
@@ -83,9 +87,10 @@ class Misc_UnitTest(unittest.TestCase):
             log_json = {"group": "test_autocombinerewards_valid", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
             xbridge_logger.logger.info('test_autocombinerewards_valid FAILED: %s' % ass_err)
-            xbridge_logger.logger.info('fixed_positive_int: %s \n' % str(xbridge_utils.fixed_positive_int))
-            xbridge_logger.logger.info('fixed_negative_int: %s \n' % str(xbridge_utils.fixed_negative_int))
-            xbridge_logger.logger.info('valid_random_positive_int: %s \n' % str(xbridge_utils.valid_random_positive_int))
+            if MAX_LOG_LENGTH > 0:
+                xbridge_logger.logger.info('fixed_positive_int: %s \n' % str(xbridge_utils.fixed_positive_int))
+                xbridge_logger.logger.info('fixed_negative_int: %s \n' % str(xbridge_utils.fixed_negative_int))
+                xbridge_logger.logger.info('valid_random_positive_int: %s \n' % str(xbridge_utils.valid_random_positive_int))
         except JSONRPCException as json_excpt:
             log_json = {"group": "test_autocombinerewards_valid", "success": 0, "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
@@ -109,8 +114,9 @@ class Misc_UnitTest(unittest.TestCase):
                     log_json = {"group": "test_autocombinerewards_invalid", "success": 0, "failure": 1, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.logger.info('test_autocombinerewards_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('true_false: %s' % str(true_false))
-                    xbridge_logger.logger.info('threshold: %s' % str(threshold))
+                    if MAX_LOG_LENGTH > 0:
+                        xbridge_logger.logger.info('true_false: %s' % str(true_false)[:MAX_LOG_LENGTH])
+                        xbridge_logger.logger.info('threshold: %s' % str(threshold)[:MAX_LOG_LENGTH])
 
     # move "fromaccount" "toaccount" amount ( minconf "comment" )
     def test_move_invalid(self):
@@ -133,21 +139,8 @@ class Misc_UnitTest(unittest.TestCase):
                     # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.move, fromAccount, toaccount, amount, optional_minconf, optional_comment)
                     self.assertRaises(JSONRPCException, xbridge_rpc.rpc_connection.move, fromAccount, toaccount, amount,
                                       optional_minconf, optional_comment)
-                    """
-                    log_json = {"group": "test_move_invalid", "success": 1, "failure": 0, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
                     xbridge_logger.XLOG("test_move_invalid", 0)
-                    """
                 except AssertionError as ass_err:
-                    """
-                    log_json = {"group": "test_move_invalid", "success": 0, "failure": 1, "error": 0}
-                    xbridge_utils.ERROR_LOG.append(log_json)
-                    xbridge_logger.logger.info('test_move_invalid FAILED: %s' % ass_err)
-                    xbridge_logger.logger.info('fromAccount: %s' % fromAccount)
-                    xbridge_logger.logger.info('toaccount: %s' % toaccount)
-                    xbridge_logger.logger.info('optional_minconf: %s' % str(optional_minconf)[:max_Char_Length])
-                    xbridge_logger.logger.info('optional_comment: %s' % str(optional_comment)[:max_Char_Length])
-                    """
                     xbridge_logger.XLOG("test_move_invalid", 1, ass_err, [fromAccount, toaccount, amount, optional_minconf, optional_comment])
                 except JSONRPCException as json_excpt:
                     xbridge_logger.XLOG("test_move_invalid", 2, json_excpt, [fromAccount, toaccount, amount, optional_minconf, optional_comment])
