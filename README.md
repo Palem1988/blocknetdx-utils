@@ -46,6 +46,9 @@ IP = 127.0.0.1:41414
 LOGIN = Your_login
 PASSWORD = Your_password
 
+[WALLET]
+wallet_decryption_passphrase = mypwd
+
 [OUTPUT]
 LOG_DIR = C:\Users\...\Blocknet_unit_tests\test_outputs\
 
