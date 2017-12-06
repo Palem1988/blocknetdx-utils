@@ -19,29 +19,47 @@ class send_UnitTest(unittest.TestCase):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
     # multisend <command>
-    @unittest.skip("IN REVIEW")
-    def test_multisend_valid(self):
+    def test_multisend_valid_1(self):
         log_json = ""
-        valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
         try:
             self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("print"), list)
             self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("enableall"), list)
             self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable"), list)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
             self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate"), list)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
-            self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
             self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("clear"), dict)
-            log_json = {"group": "test_multisend_valid", "success": 1, "failure": 0, "error": 0}
+            log_json = {"group": "test_multisend_valid_1", "success": 1, "failure": 0, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
         except AssertionError as ass_err:
-            log_json = {"group": "test_multisend", "success": 0, "failure": 1, "error": 0}
+            log_json = {"group": "test_multisend_valid_1", "success": 0, "failure": 1, "error": 0}
             xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_multisend_valid FAILED: %s' % ass_err)
+            xbridge_logger.logger.info('test_multisend_valid_1 FAILED: %s' % ass_err)
         except JSONRPCException as json_excpt:
-            xbridge_logger.logger.info('test_multisend_valid ERROR: %s' % str(json_excpt))
-            log_json = {"group": "test_multisend_valid", "success": 0,  "failure": 0, "error": 1}
+            xbridge_logger.logger.info('test_multisend_valid_1 ERROR: %s' % str(json_excpt))
+            log_json = {"group": "test_multisend_valid_1", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
+
+    @unittest.skip("IN REVIEW")
+    def test_multisend_valid_2(self):
+            log_json = ""
+            valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
+            try:
+                # self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
+                # self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
+                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
+                log_json = {"group": "test_multisend_valid_2", "success": 1, "failure": 0, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
+            except AssertionError as ass_err:
+                log_json = {"group": "test_multisend_valid_2", "success": 0, "failure": 1, "error": 0}
+                xbridge_utils.ERROR_LOG.append(log_json)
+                xbridge_logger.logger.info('test_multisend_valid_2 FAILED: %s' % ass_err)
+                if MAX_LOG_LENGTH > 0:
+                    xbridge_logger.logger.info('param: %s \n' % str(valid_blocknet_address)[:MAX_LOG_LENGTH])
+            except JSONRPCException as json_excpt:
+                xbridge_logger.logger.info('test_multisend_valid_2 ERROR: %s' % str(json_excpt))
+                log_json = {"group": "test_multisend_valid", "success": 0, "failure": 0, "error": 1}
+                xbridge_utils.ERROR_LOG.append(log_json)
+                if MAX_LOG_LENGTH > 0:
+                    xbridge_logger.logger.info('param: %s \n' % str(valid_blocknet_address)[:MAX_LOG_LENGTH])
 
     # multisend <command>
     @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
@@ -176,10 +194,8 @@ print(xbridge_rpc.rpc_connection.walletpassphrase("mypwd", 60, False))
 
 suite = unittest.TestSuite()
 for i in range(1):
-    suite.addTest(send_UnitTest("test_senttoaddress_valid"))
+    suite.addTest(send_UnitTest("test_multisend_valid_1"))
     # suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
-
-
