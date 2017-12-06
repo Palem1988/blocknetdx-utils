@@ -51,12 +51,11 @@ class create_Tx_Test(unittest.TestCase):
                                             xbridge_utils.fixed_large_positive_int, 0]
 
     # Sometimes return a None object
-    @unittest.skip("IN REVIEW")
+    # @unittest.skip("IN REVIEW")
     def test_invalid_create_tx_v0(self):
         for i in range(subTest_count):
             with self.subTest("random garbage"):
                 try:
-                    txid = random.choice(xbridge_utils.set_of_invalid_parameters)
                     src_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     dest_Address = random.choice(xbridge_utils.set_of_invalid_parameters)
                     src_Token = random.choice(xbridge_utils.set_of_invalid_parameters)
@@ -66,9 +65,9 @@ class create_Tx_Test(unittest.TestCase):
                     self.assertIsInstance(xbridge_rpc.create_tx(src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount), dict)
                     xbridge_logger.XLOG("test_invalid_create_tx_v0", 0)
                 except AssertionError as ass_err:
-                    xbridge_logger.XLOG("test_invalid_create_tx_v0", 1, ass_err, [txid, src_Address, dest_Address, src_Token, dest_Token, fromAmount, toAmount])
+                    xbridge_logger.XLOG("test_invalid_create_tx_v0", 1, ass_err, [src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount])
                 except JSONRPCException as json_excpt:
-                    xbridge_logger.XLOG("test_invalid_create_tx_v0", 2, json_excpt, [txid, src_Address, dest_Address, src_Token, dest_Token, fromAmount, toAmount])
+                    xbridge_logger.XLOG("test_invalid_create_tx_v0", 2, json_excpt, [src_Address, src_Token, fromAmount, dest_Address, dest_Token, toAmount])
 
     # Numerical parameter combinations
     def test_invalid_create_tx_v1(self):
@@ -325,10 +324,8 @@ class create_Tx_Test(unittest.TestCase):
 
 # unittest.main()
 
-"""
 suite = unittest.TestSuite()
 for i in range(10):
-    suite.addTest(create_Tx_Test("test_invalid_create_tx_v3"))
+    suite.addTest(create_Tx_Test("test_invalid_create_tx_v0"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
-"""
