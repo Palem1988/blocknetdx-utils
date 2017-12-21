@@ -56,7 +56,21 @@ def cancel_tx(txid=None):
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
-    
+
+def dxGetTradeHistory(fromCurrency=None, toCurrency=None, unix_starttime=None, unix_endtime=None, txids=None):
+    try:
+        return rpc_connection.dxGetTradeHistory(fromCurrency, toCurrency, unix_starttime, unix_endtime, txids)
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
+def dxGetOrderBook(detailLevel=None, src=None, dest=None, maxOrders=None, showTxids=None):
+    try:
+        return rpc_connection.dxGetOrderBook(detailLevel, src, dest, maxOrders, showTxids)
+    except JSONRPCException as json_excpt:
+        if any(t in str(json_excpt) for t in valid_msgs):
+            raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
+
 def get_tx_info(txid):
     try:
         return rpc_connection.dxGetTransactionInfo(txid)
@@ -86,13 +100,6 @@ def dxGetTransactions():
 
 def dxGetTransactionsHistory():
     return rpc_connection.dxGetTransactionsHistory()
-
-#  dxGetOrderBook (the level of detail) (from currency) (to currency) (max orders - optional, default = 50)  (code -1)
-def dxGetOrderBook():
-    return rpc_connection.dxGetOrderBook()
-
-def dxGetTradeHistory():
-    return rpc_connection.dxGetTradeHistory()
 
 def get_core_version():
     try:
