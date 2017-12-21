@@ -1,5 +1,8 @@
 ## BlocknetDX Utils Recent Changelog
 
+- Added unit tests for dxGetOrderbook.
+- Added unit tests for dxGetTradeHistory.
+
 - Improved and updated the existing unit tests to the latest API names and behaviors.
 - Expanded coverage.
 - Increased entropy (among others for dxCreate and dxAccept, among others).
