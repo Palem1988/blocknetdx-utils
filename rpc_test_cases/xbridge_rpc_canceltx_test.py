@@ -4,21 +4,18 @@ from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from interface import xbridge_rpc
 from utils import xbridge_utils
+from utils import xbridge_custom_exceptions
 
 from strgen import StringGenerator
 
+import sys
+sys.path.insert(0,'..')
+import xbridge_config
+
+MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
+
 class cancelUnitTest(unittest.TestCase):
-    @unittest.skip("TEMPORARILY DISABLED - THE TXID IS NOT AVAILABLE ANYMORE")
-    def test_valid_cancel_1(self):
-        try:
-            self.assertIsInstance(xbridge_rpc.cancel_tx("c9a59af05356605a9c028ea7c0b9f535393d9ffe32cda4af23e3c9ccc0e5f64a"), dict)
-            log_json = {"group": "test_valid_cancel_1", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_valid_cancel_1", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_valid_cancel_1 FAILED: %s' % ass_err)
-    
+
     @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_invalid_cancel_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
