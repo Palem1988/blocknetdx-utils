@@ -1,5 +1,9 @@
 ## BlocknetDX Utils Recent Changelog
 
+- Re-enabled some skipped tests.
+- Log files are now always written to the relative log folder (support platform independent paths).
+
+
 - Added unit tests for dxGetOrderbook.
 - Added unit tests for dxGetTradeHistory.
 
