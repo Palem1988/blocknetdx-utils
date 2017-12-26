@@ -6,7 +6,8 @@ from utils import xbridge_utils
 os.chdir(os.path.dirname(__file__))
 program_dir = os.getcwd()
 
-LOG_DIR = program_dir + "\\test_outputs\\"
+# LOG_DIR = program_dir + "\\logs\\"
+LOG_DIR = program_dir + os.sep + "logs"
 
 max_Char_Length = xbridge_config.get_param_max_char_length_to_display()
 
@@ -19,7 +20,8 @@ except OSError as e:
         raise
 
 log_time_str = time.strftime("%Y%m%d-%H%M%S")
-log_file_name_str = xbridge_config.get_conf_log_dir() + log_time_str + "_testing_log.txt"
+# log_file_name_str = xbridge_config.get_conf_log_dir() + log_time_str + "_testing_log.txt"
+log_file_name_str = LOG_DIR + os.sep + log_time_str + "_testing_log.txt"
 print("log files will be logged there: %s" % log_file_name_str)
 
 logger = logging.getLogger(__name__)

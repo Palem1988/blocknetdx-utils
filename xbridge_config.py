@@ -16,6 +16,7 @@ def conf_exists():
     else:
         return True
 
+"""
 def get_conf_log_dir():
     try:
         if not conf_exists():
@@ -28,6 +29,7 @@ def get_conf_log_dir():
         return ""
     except configparser.NoOptionError:
         return ""
+"""
 
 def get_conf_login():
     try:
