@@ -38,7 +38,8 @@ valid_msgs = ["-22: TX decode failed",
                     "get_value<",
                     "Insufficient funds", 
                     "Invalid amount",
-                    "running with an unencrypted wallet, but walletpassphrase was called", 
+                    "bad lexical cast",
+                    "running with an unencrypted wallet, but walletpassphrase was called",
                     "Error: The wallet passphrase entered was incorrect",
                     "Invalid spork name",
                     "-1: walletpassphrasechange",
@@ -137,7 +138,8 @@ def sendfrom(fromaccount=None, toblocknetdxaddress=None, amount=None, minconf=No
 # multisend <command>
 def multisend(cmd=None):
     try:
-        return rpc_connection.multisend(cmd)
+        rst = rpc_connection.multisend(cmd)
+        return rst
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt    
@@ -466,7 +468,11 @@ def mnbudgetvoteraw(txhash=None, txindex=None, proposal_hash=None, yes_no=None, 
 
 def spork(name_param=None, value_param=None):
     try:
-        return rpc_connection.spork(name_param, value_param)
+        rst = rpc_connection.spork(name_param, value_param)
+        if rst == "Invalid spork name":
+            raise xbridge_custom_exceptions.ValidBlockNetException
+        else:
+            return rst
     except JSONRPCException as json_excpt:
         if any(t in str(json_excpt) for t in valid_msgs):
             raise xbridge_custom_exceptions.ValidBlockNetException from json_excpt
