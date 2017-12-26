@@ -2,6 +2,7 @@
 
 - Re-enabled some skipped tests.
 - Log files are now always written to the relative log folder (support platform independent paths).
+- Code cleanings.
 
 
 - Added unit tests for dxGetOrderbook.
