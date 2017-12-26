@@ -49,7 +49,7 @@ class Encrypt_UnitTest(unittest.TestCase):
                     xbridge_logger.XLOG("test_walletpassphrasechange_invalid", 2, json_excpt, [old_pwd, new_pwd])
 
     # walletpassphrase "passphrase" timeout ( anonymizeonly )
-    @unittest.skip("IN TESTING")
+    # @unittest.skip("IN TESTING")
     def test_walletpassphrase_invalid(self):
         try:
             log_json = ""
@@ -71,7 +71,7 @@ class Encrypt_UnitTest(unittest.TestCase):
 
     # This test group tests walletpassphrase + dump + walletlock
     # walletpassphrase "passphrase" timeout ( anonymizeonly )
-    @unittest.skip("WAITING FOR API RETURN VALUES TO BE FIXED")
+    # @unittest.skip("WAITING FOR API RETURN VALUES TO BE FIXED")
     def test_walletpassphrase_valid(self):
         try:
             log_json = ""
@@ -90,6 +90,7 @@ class Encrypt_UnitTest(unittest.TestCase):
         except JSONRPCException as json_excpt:
             xbridge_logger.XLOG("test_walletpassphrase_valid", 2, json_excpt, [dumped_wallet_str])
 
+    """
     @unittest.skip("DO NOT TEST")
     def test_encryptwallet_noseq(self):
         try:
@@ -104,7 +105,8 @@ class Encrypt_UnitTest(unittest.TestCase):
             xbridge_logger.XLOG("test_encryptwallet_noseq", 1, ass_err, [random_str])
         except JSONRPCException as json_excpt:
             xbridge_logger.XLOG("test_encryptwallet_noseq", 2, json_excpt, [random_str])
-    
+    """
+
     def test_bip38encrypt_invalid(self):
         for i in range(subTest_count):
             log_json = ""
@@ -136,10 +138,9 @@ class Encrypt_UnitTest(unittest.TestCase):
 
 """
 suite = unittest.TestSuite()
-for i in range(20):
+for i in range(50):
     suite.addTest(Encrypt_UnitTest("test_walletpassphrase_valid"))
-    suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
+    suite.addTest(Encrypt_UnitTest("test_walletpassphrase_invalid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
-

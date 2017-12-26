@@ -33,9 +33,8 @@ class Misc_UnitTest(unittest.TestCase):
 
     # signmessage "blocknetdxaddress" "message"
     # Please enter the wallet passphrase with walletpassphrase first.
-    # TODO: valid test
     # True, False, returns None
-    @unittest.skip("IN REVIEW")
+    # @unittest.skip("IN REVIEW")
     def test_signmessage_invalid(self):
         if xbridge_config.get_wallet_decryption_passphrase() == "":
             return
@@ -169,11 +168,10 @@ class Misc_UnitTest(unittest.TestCase):
 
 """
 suite = unittest.TestSuite()
-for i in range(20):
-    suite.addTest(Misc_UnitTest("test_bip38encrypt_invalid"))
-    suite.addTest(Misc_UnitTest("test_bip38decrypt_invalid"))
-    # suite.addTest(Misc_UnitTest("test_signmessage_invalid"))
+for i in range(50):
+    # suite.addTest(Misc_UnitTest("test_bip38encrypt_invalid"))
+    # suite.addTest(Misc_UnitTest("test_bip38decrypt_invalid"))
+    suite.addTest(Misc_UnitTest("test_signmessage_invalid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
 """
-

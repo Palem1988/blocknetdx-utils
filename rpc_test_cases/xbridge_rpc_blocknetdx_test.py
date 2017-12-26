@@ -40,7 +40,7 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                     xbridge_logger.XLOG("test_mnbudgetvoteraw", 2, json_excpt, [service_node_tx_hash, service_node_tx_index, service_node_tx_proposal_hash, service_node_tx_proposal_yes_no, service_node_tx_proposal_time, service_node_tx_proposal_vote_sig])
 
     # spork <name> [<value>]
-    @unittest.skip("DISABLED - IN REVIEW - HAS SOMETIMES UNPREDICTABLE BEHAVIOR")
+    # @unittest.skip("DISABLED - IN REVIEW - HAS SOMETIMES UNPREDICTABLE BEHAVIOR")
     def test_spork(self):
         for i in range(subTest_count):
             log_json = ""
@@ -163,3 +163,12 @@ class Blocknetdx_UnitTest(unittest.TestCase):
                     xbridge_logger.XLOG("test_mnfinalbudget_invalid", 1, ass_err, [cmd_param, optional_passphrase])
     
 # unittest.main()
+
+"""
+suite = unittest.TestSuite()
+for i in range(50):
+    suite.addTest(Blocknetdx_UnitTest("test_spork"))
+# suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""

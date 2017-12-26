@@ -54,28 +54,6 @@ class private_Key_UnitTest(unittest.TestCase):
                         xbridge_logger.logger.info('optional_label: %s \n' % str(optional_label)[:MAX_LOG_LENGTH])
                         xbridge_logger.logger.info('optional_rescan: %s \n' % str(optional_rescan)[:MAX_LOG_LENGTH])
 
-    # importprivkey "blocknetdxprivkey" ( "label" rescan )
-    @unittest.skip("DISABLED - IN PROGRESS - UNTESTED")
-    def test_importprivkey_valid(self):
-        try:
-            log_json = ""
-            valid_blocknetdx_address = xbridge_utils.generate_valid_blocknet_address()
-            self.assertIsInstance(xbridge_rpc.importprivkey(valid_blocknetdx_address), dict)
-            log_json = {"group": "test_importprivkey_valid", "success": 1, "failure": 0, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-        except AssertionError as ass_err:
-            log_json = {"group": "test_importprivkey_valid", "success": 0, "failure": 1, "error": 0}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_importprivkey_valid FAILED: %s' % ass_err)
-            if MAX_LOG_LENGTH > 0:
-                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
-        except JSONRPCException as json_excpt:
-            log_json = {"group": "test_importprivkey_valid", "success": 0,  "failure": 0, "error": 1}
-            xbridge_utils.ERROR_LOG.append(log_json)
-            xbridge_logger.logger.info('test_importprivkey_valid ERROR: %s' % str(json_excpt))
-            if MAX_LOG_LENGTH > 0:
-                xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
-    
      # dumpprivkey "blocknetdxaddress"
     def test_dumpprivkey_invalid(self):
         self.assertIsNone(xbridge_rpc.dumpprivkey(-9999999999999999999999999999999999999999999999999999999999999999))
@@ -127,3 +105,11 @@ class private_Key_UnitTest(unittest.TestCase):
                 xbridge_logger.logger.info('valid_blocknetdx_address: %s \n' % str(valid_blocknetdx_address)[:MAX_LOG_LENGTH])
     
 # unittest.main()
+
+"""
+suite = unittest.TestSuite()
+for i in range(50):
+    suite.addTest(private_Key_UnitTest("test_importprivkey_invalid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""

@@ -19,20 +19,15 @@ class signUnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=xbridge_utils.INVALID_DATA, char_min_size=1, char_max_size=10000)
 
+    """
     @unittest.skip("Disabled")
     def test_valid_tx_id_1(self):
         try:
-            """
-                [I] 2017-Oct-31 23:42:48 [0xb8] rpc call <signrawtransaction>
-                [I] 2017-Oct-31 23:42:48 [0xb8] HTTP: req  signrawtransaction {"method":"signrawtransaction","params":["01000000814ef9590108a03740afeb62f97908aba6d79ba512162a0448ead78c1d9acb808b658149140000000000ffffffff0290ab1e000000000017a9145abd1ae96433936b627d249c0c1a57770456323587b0a8db02000000001976a914a5a4651accd909fccaa66e34a7fb5c275c6270ef88ac00000000",null,null],"id":1}
-
-                [I] 2017-Oct-31 23:42:48 [0xb8] HTTP: resp 200 {"result":{"hex":"01000000814ef9590108a03740afeb62f97908aba6d79ba512162a0448ead78c1d9acb808b65814914000000006a4730440220111cbcdb9ccdc0e17b65e7fa1e4ec265bf76dcba8202b304b3e34ac833c297b6022008d37ca8ca5ed54bb5d217f5bcdb19c8159059e437a7dbe665c2455b1cfb93fc0121036fa429dbb28304585ebfdae5688bbac546339e578ac4403dcafdc7e15b4f08e1ffffffff0290ab1e000000000017a9145abd1ae96433936b627d249c0c1a57770456323587b0a8db02000000001976a914a5a4651accd909fccaa66e34a7fb5c275c6270ef88ac00000000","complete":true},"error":null,"id":1}
-                
-            """
             self.assertIsInstance(xbridge_rpc.sign_tx("240c472714c1ff14e5f66a6c93ae6f0efb2f4eff593ae31435e829126a0006cc"), dict)
         except AssertionError as e:
             xbridge_logger.logger.info('dxSign valid unit test group 1 FAILED')
-    
+    """
+
     def test_invalid_sign_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):

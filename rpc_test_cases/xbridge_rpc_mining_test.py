@@ -48,7 +48,6 @@ class Mining_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('reserve: %s \n' % reserve)
                     xbridge_logger.logger.info('amount: %s \n' % amount)
 
-
     # submitblock "hexdata" ( "jsonparametersobject" )
     def test_submitblock(self):
         for i in range(subTest_count):

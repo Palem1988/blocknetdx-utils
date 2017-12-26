@@ -18,7 +18,7 @@ class Network_UnitTest(unittest.TestCase):
     def setUp(self):
         xbridge_utils.generate_new_set_of_data(data_nature=3, char_min_size=1, char_max_size=10000)
 
-    @unittest.skip("IN REVIEW")
+    # @unittest.skip("IN REVIEW")
     def test_addnode_invalid(self):
         if xbridge_config.get_wallet_decryption_passphrase() == "":
             return
@@ -159,8 +159,8 @@ class Network_UnitTest(unittest.TestCase):
 
 """
 suite = unittest.TestSuite()
-for i in range(1):
-    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_5"))
+for i in range(50):
+    # suite.addTest(accept_Tx_Test("test_addnode_invalid"))
     # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
     suite.addTest(Network_UnitTest("test_addnode_invalid"))
 # suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))

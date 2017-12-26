@@ -15,8 +15,7 @@ import xbridge_config
 MAX_LOG_LENGTH = xbridge_config.get_param_max_char_length_to_display()
 
 class cancelUnitTest(unittest.TestCase):
-
-    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
+    # @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_invalid_cancel_1(self):
         for basic_garbage_str in xbridge_utils.set_of_invalid_parameters:
             with self.subTest(basic_garbage_str=basic_garbage_str):
@@ -40,7 +39,7 @@ class cancelUnitTest(unittest.TestCase):
                     if MAX_LOG_LENGTH > 0:
                         xbridge_logger.logger.info('param: %s \n' % basic_garbage_str)
 
-    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
+    # @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_invalid_cancel_1b(self):
         for basic_garbage_str in xbridge_utils.basic_garbage_list:
             with self.subTest(basic_garbage_str=basic_garbage_str):
@@ -109,7 +108,6 @@ class cancelUnitTest(unittest.TestCase):
           - Same as before, but now the random input parameters are of random length [1-4 000]
     """
     def test_invalid_cancel_4(self):
-        run_count = 0
         string_lower_bound=1
         string_upper_bound=4000
         for itm in [xbridge_utils.one_classes_list, xbridge_utils.two_classes_list, xbridge_utils.three_classes_list, xbridge_utils.four_classes_list, xbridge_utils.five_classes_list]:
@@ -132,3 +130,13 @@ if __name__ == '__main__':
 unittest.main()
 """
 
+"""
+suite = unittest.TestSuite()
+for i in range(50):
+    suite.addTest(cancelUnitTest("test_invalid_cancel_1b"))
+    # suite.addTest(cancelUnitTest("test_invalid_cancel_2"))
+    # suite.addTest(accept_Tx_Test("test_invalid_accept_tx_0a_noseq"))
+# suite.addTest(accept_Tx_Test("test_getrawmempool_valid"))
+runner = unittest.TextTestRunner()
+runner.run(suite)
+"""

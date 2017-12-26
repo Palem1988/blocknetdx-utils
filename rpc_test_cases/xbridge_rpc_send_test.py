@@ -38,14 +38,13 @@ class send_UnitTest(unittest.TestCase):
             log_json = {"group": "test_multisend_valid_1", "success": 0,  "failure": 0, "error": 1}
             xbridge_utils.ERROR_LOG.append(log_json)
 
-    @unittest.skip("IN REVIEW")
+    # @unittest.skip("IN REVIEW")
     def test_multisend_valid_2(self):
             log_json = ""
             valid_blocknet_address = xbridge_utils.generate_valid_blocknet_address()
             try:
-                # self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("disable", valid_blocknet_address), list)
-                # self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("deactivate", valid_blocknet_address), list)
-                self.assertIsInstance(xbridge_rpc.rpc_connection.multisend("delete", valid_blocknet_address), list)
+                self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException,
+                                  xbridge_rpc.multisend, "delete", valid_blocknet_address)
                 log_json = {"group": "test_multisend_valid_2", "success": 1, "failure": 0, "error": 0}
                 xbridge_utils.ERROR_LOG.append(log_json)
             except AssertionError as ass_err:
@@ -62,13 +61,14 @@ class send_UnitTest(unittest.TestCase):
                     xbridge_logger.logger.info('param: %s \n' % str(valid_blocknet_address)[:MAX_LOG_LENGTH])
 
     # multisend <command>
-    @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
+    # @unittest.skip("TEMPORARILY DISABLED - IN REVIEW")
     def test_multisend_invalid(self):
         for i in range(subTest_count):
             with self.subTest("comb"):
                 try:
                     random_elt = random.choice(xbridge_utils.set_of_invalid_parameters)
-                    self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.multisend, random_elt)
+                    # self.assertRaises(xbridge_custom_exceptions.ValidBlockNetException, xbridge_rpc.multisend, random_elt)
+                    self.assertIsNone(xbridge_rpc.multisend(random_elt))
                     log_json = {"group": "test_multisend_invalid", "success": 1, "failure": 0, "error": 0}
                     xbridge_utils.ERROR_LOG.append(log_json)
                 except AssertionError as ass_err:
@@ -189,12 +189,12 @@ class send_UnitTest(unittest.TestCase):
 
 # unittest.main()
 
-"""
-print(xbridge_rpc.rpc_connection.walletpassphrase("mypwd", 60, False))
+# print(xbridge_rpc.rpc_connection.walletpassphrase("mypwd", 60, False))
 
+"""
 suite = unittest.TestSuite()
-for i in range(1):
-    suite.addTest(send_UnitTest("test_multisend_valid_1"))
+for i in range(50):
+    suite.addTest(send_UnitTest("test_multisend_valid_2"))
     # suite.addTest(Encrypt_UnitTest("test_walletpassphrasechange_valid"))
 runner = unittest.TextTestRunner()
 runner.run(suite)
